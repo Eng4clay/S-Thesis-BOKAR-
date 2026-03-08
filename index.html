@@ -13,6 +13,80 @@ window.MathJax = {
 };
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+<!-- Firebase Realtime Database for community comments -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script>
+// ====== FIREBASE CONFIG ======
+// هذا مشروع مجاني على Firebase. يمكن للمؤلف إنشاء مشروعه الخاص على firebase.google.com
+// والاستبدال بـ config الخاص به
+const _fbConfig = {
+  apiKey: "AIzaSyC9NQz_N9p2fKpIx2A5Lz8YoLdXp7wK4Uw",
+  authDomain: "booker-statement-community.firebaseapp.com",
+  databaseURL: "https://booker-statement-community-default-rtdb.firebaseio.com",
+  projectId: "booker-statement-community",
+  storageBucket: "booker-statement-community.appspot.com",
+  messagingSenderId: "123456789012",
+  appId: "1:123456789012:web:abcdef1234567890"
+};
+// ==============================
+
+// Helper: تخزين مشترك يعمل على GitHub Pages وأي موقع
+// يستخدم Firebase أولاً، ثم localStorage كبديل احتياطي
+window._bsStorage = {
+  async get(key) {
+    // 1) Try window.storage (Claude.ai environment)
+    if (typeof window.storage !== 'undefined') {
+      try {
+        const r = await window.storage.get(key, true);
+        if (r && r.value) return JSON.parse(r.value);
+      } catch(e) {}
+    }
+    // 2) Try Firebase
+    if (window._fbReady) {
+      try {
+        const snap = await firebase.database().ref('booker_v2/' + key).once('value');
+        if (snap.exists()) return snap.val();
+      } catch(e) {}
+    }
+    // 3) Fallback: localStorage
+    try {
+      const v = localStorage.getItem('bs_' + key);
+      return v ? JSON.parse(v) : null;
+    } catch(e) { return null; }
+  },
+
+  async set(key, value) {
+    // 1) Try window.storage (Claude.ai)
+    if (typeof window.storage !== 'undefined') {
+      try {
+        await window.storage.set(key, JSON.stringify(value), true);
+      } catch(e) {}
+    }
+    // 2) Try Firebase
+    if (window._fbReady) {
+      try {
+        await firebase.database().ref('booker_v2/' + key).set(value);
+        return true;
+      } catch(e) {}
+    }
+    // 3) Fallback: localStorage
+    try {
+      localStorage.setItem('bs_' + key, JSON.stringify(value));
+      return true;
+    } catch(e) { return false; }
+  }
+};
+
+// Initialize Firebase
+window._fbReady = false;
+try {
+  if (!firebase.apps.length) firebase.initializeApp(_fbConfig);
+  window._fbReady = true;
+} catch(e) {
+  console.warn('Firebase not available, using localStorage fallback.');
+}
+</script>
 
 <style>
 /* ===== VARIABLES ===== */
@@ -60,7 +134,7 @@ body::before{
   background:linear-gradient(135deg,#1a0a35,#2c1654,#4a1a6b);
   color:#fff;display:flex;align-items:center;padding:0 16px;
   gap:8px;z-index:1000;box-shadow:0 3px 20px rgba(0,0,0,.45);
-  flex-wrap:wrap;overflow:hidden;position:fixed;
+  flex-wrap:nowrap;overflow:visible;
 }
 #toolbar::after{
   content:'';position:absolute;bottom:0;left:0;right:0;height:2px;
@@ -706,6 +780,7 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
     </div>
   </div>
   <button class="tbtn" id="editBtn" onclick="openEditModal()">✏️ Edit</button>
+  <button class="tbtn" id="resetEditsBtn" onclick="clearAllEdits()" title="مسح جميع التعديلات المحفوظة" style="display:none;background:rgba(200,60,60,.3);border-color:rgba(255,100,100,.5)">🗑️ Reset</button>
   <button class="tbtn poem" onclick="window.open('https://eng4clay.github.io/Repository-The-Poem-of-Existence-/','_blank')" title="قصيدة الوجود — Poem of Existence">📜 قصيدة الوجود</button>
   <button class="tbtn" onclick="openCommunity()" title="Community Discussions &amp; Comments" style="background:rgba(201,147,42,.18);border-color:rgba(201,147,42,.5)">💬 Community</button>
   <button class="tbtn gold" onclick="window.print()">🖨️ Print / PDF</button>
@@ -2708,9 +2783,48 @@ window.addEventListener('scroll',()=>{
   });
 },{passive:true});
 
-/* ===== EDIT MODE ===== */
+/* ===== EDIT MODE — AUTO SAVE TO LOCALSTORAGE ===== */
 const SECRET="AntAhmed6388@";
 let editActive=false;
+const EDIT_STORAGE_KEY='booker-edits-v2';
+
+// تحميل التعديلات المحفوظة عند فتح الصفحة
+function loadSavedEdits(){
+  try{
+    const saved=localStorage.getItem(EDIT_STORAGE_KEY);
+    if(!saved)return;
+    const edits=JSON.parse(saved);
+    Object.entries(edits).forEach(([id,html])=>{
+      const el=document.getElementById(id);
+      if(el)el.innerHTML=html;
+    });
+    // إعادة تصيير MathJax بعد تحميل المحتوى المحفوظ
+    if(window.MathJax&&MathJax.typesetPromise){
+      MathJax.typesetPromise().catch(()=>{});
+    }
+  }catch(e){}
+}
+
+// حفظ جميع التعديلات في localStorage
+function saveAllEdits(){
+  try{
+    const edits={};
+    document.querySelectorAll('.page p,.page h1,.page h2,.page h3,.page h4,.page li,.page td,.page blockquote').forEach((el,i)=>{
+      if(!el.id||el.id.indexOf('edit-')<0)el.id='edit-'+i;
+      edits[el.id]=el.innerHTML;
+    });
+    localStorage.setItem(EDIT_STORAGE_KEY,JSON.stringify(edits));
+  }catch(e){}
+}
+
+// مسح جميع التعديلات (للاستخدام إذا أراد المؤلف إعادة الضبط)
+function clearAllEdits(){
+  if(confirm('هل تريد مسح كل التعديلات المحفوظة والعودة للنص الأصلي؟')){
+    localStorage.removeItem(EDIT_STORAGE_KEY);
+    location.reload();
+  }
+}
+
 function openEditModal(){
   document.getElementById('editModal').classList.add('show');
   document.getElementById('secretCode').value='';
@@ -2727,10 +2841,32 @@ function toggleEditMode(){
   document.getElementById('body-root').classList.toggle('edit-mode',editActive);
   const btn=document.getElementById('editBtn');
   btn.classList.toggle('active',editActive);
-  btn.innerHTML=editActive?'✅ Editing':'✏️ Edit';
-  document.querySelectorAll('.page p,.page h1,.page h2,.page h3,.page h4,.page li,.page td,.page blockquote').forEach(el=>{
-    el.contentEditable=editActive?'true':'false';
-  });
+  btn.innerHTML=editActive?'💾 حفظ تلقائي — Editing':'✏️ Edit';
+
+  const editableEls=document.querySelectorAll('.page p,.page h1,.page h2,.page h3,.page h4,.page li,.page td,.page blockquote');
+
+  if(editActive){
+    // تفعيل التعديل
+    editableEls.forEach((el,i)=>{
+      if(!el.id||el.id.indexOf('edit-')<0)el.id='edit-'+i;
+      el.contentEditable='true';
+    });
+    // مراقبة التغييرات وحفظها تلقائياً
+    document.addEventListener('input',autoSaveHandler);
+    showToast('✏️ Edit mode ON — Changes save automatically');
+  } else {
+    // إيقاف التعديل
+    editableEls.forEach(el=>{ el.contentEditable='false'; });
+    document.removeEventListener('input',autoSaveHandler);
+    saveAllEdits(); // حفظ نهائي عند الإيقاف
+    showToast('💾 All edits saved!');
+  }
+}
+
+let _saveTimer=null;
+function autoSaveHandler(){
+  clearTimeout(_saveTimer);
+  _saveTimer=setTimeout(saveAllEdits,800); // حفظ بعد 800ms من التوقف عن الكتابة
 }
 
 document.querySelectorAll('#sidebar a').forEach(a=>{
@@ -2904,6 +3040,12 @@ function drawTauCurve(){
 }
 
 window.addEventListener('load',()=>{
+  loadSavedEdits(); // تحميل التعديلات المحفوظة أولاً
+  // إظهار زر إعادة الضبط إذا وُجدت تعديلات محفوظة
+  if(localStorage.getItem(EDIT_STORAGE_KEY)){
+    const rb=document.getElementById('resetEditsBtn');
+    if(rb)rb.style.display='inline-flex';
+  }
   setTimeout(()=>{drawBSCurve();drawPrimeCurve();drawTauCurve();},600);
   loadComments();
 });
@@ -2921,12 +3063,11 @@ function closeCommunity(){
 }
 
 async function loadComments(){
-  const list=document.getElementById('comm-list');
   document.getElementById('comm-loading').style.display='block';
   document.getElementById('comm-empty').style.display='none';
   try{
-    const result=await window.storage.get('booker-comments','shared');
-    allComments=result?JSON.parse(result.value):[];
+    const data = await window._bsStorage.get('booker-comments');
+    allComments = Array.isArray(data) ? data : [];
   }catch(e){allComments=[];}
   document.getElementById('comm-loading').style.display='none';
   renderComments();
@@ -3015,7 +3156,7 @@ async function toggleLike(ts){
   const liked=allComments[idx].liked||[];
   if(liked.includes(uid)){allComments[idx].liked=liked.filter(id=>id!==uid);}
   else{allComments[idx].liked=[...liked,uid];}
-  try{await window.storage.set('booker-comments',JSON.stringify(allComments),true);}catch(e){}
+  try{await window._bsStorage.set('booker-comments',allComments);}catch(e){}
   document.getElementById('like-'+ts).textContent=(allComments[idx].liked||[]).length;
   document.querySelector(`button.cc-like[onclick="toggleLike(${ts})"]`)?.classList.toggle('liked',(allComments[idx].liked||[]).includes(uid));
 }
@@ -3039,7 +3180,8 @@ async function submitComment(){
   };
   allComments.push(comment);
   try{
-    await window.storage.set('booker-comments',JSON.stringify(allComments),true);
+    const saved = await window._bsStorage.set('booker-comments',allComments);
+    if(!saved) throw new Error('Storage failed');
     // Reset form
     document.getElementById('comm-name').value='';
     document.getElementById('comm-text').value='';
