@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" id="html-root">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Booker Statement · System 𝕊 | Mathematical Trinity (2026)</title>
+
+<!-- MathJax -->
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']], displayMath: [['$$','$$'],['\\[','\\]']], tags:'ams' },
+  options: { skipHtmlTags: ['script','noscript','style','textarea','pre'] }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-chtml.min.js"></script>
+
+<style>
+/* ===== VARIABLES ===== */
+:root{
+  --p:#2c1654; --a:#7b2d8b; --gold:#c9932a;
+  --lp:#d1c4e9; --lb:#b2ebf2; --lr:#ffcdd2;
+  --ly:#fff9c4; --lg:#c8e6c9;
+  --text:#1a1a2e; --bg:#f0edf8; --white:#fff;
+  --border:#e0d7f0; --shadow:0 6px 30px rgba(44,22,84,.12);
+  --ff:'Georgia','Times New Roman',serif;
+  --fs:'Segoe UI','Helvetica Neue',sans-serif;
+  --fm:'Courier New',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--ff);background:var(--bg);color:var(--text);line-height:1.7;font-size:11pt}
+
+/* ===== TOOLBAR ===== */
+#toolbar{
+  position:fixed;top:0;left:0;right:0;height:58px;
+  background:linear-gradient(135deg,#1a0a35,#2c1654,#4a1a6b);
+  color:#fff;display:flex;align-items:center;padding:0 16px;
+  gap:8px;z-index:1000;box-shadow:0 3px 15px rgba(0,0,0,.4);
+  flex-wrap:wrap;
+}
+#toolbar .t-title{font-size:11pt;font-weight:bold;letter-spacing:.5px;margin-right:auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:320px}
+.tbtn{
+  background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.3);
+  color:#fff;padding:5px 12px;border-radius:20px;font-size:9pt;
+  font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.tbtn:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.6)}
+.tbtn.active{background:#2a7a3b;border-color:#9bff9b}
+.tbtn.gold{background:var(--gold);color:var(--p);border-color:#e8aa40}
+
+/* ===== LANG DROPDOWN ===== */
+#lang-wrap{position:relative}
+#lang-menu{
+  display:none;position:absolute;top:36px;right:0;
+  background:#fff;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.2);
+  min-width:170px;overflow:hidden;z-index:2000;
+  border:1px solid #e0d0f5;
+}
+#lang-menu.open{display:block}
+#lang-menu button{
+  display:block;width:100%;padding:9px 16px;text-align:left;
+  background:none;border:none;cursor:pointer;font-size:9.5pt;
+  color:#333;transition:.15s;font-family:var(--fs);
+}
+#lang-menu button:hover{background:#f3e8ff;color:var(--p)}
+#lang-menu button.active-lang{background:var(--lp);font-weight:700;color:var(--p)}
+
+/* ===== TRANSLATION INDICATOR ===== */
+#trans-indicator{
+  position:fixed;bottom:20px;right:20px;
+  background:var(--p);color:#fff;
+  padding:8px 16px;border-radius:20px;font-size:9pt;
+  box-shadow:0 4px 15px rgba(0,0,0,.25);z-index:900;
+  display:none;align-items:center;gap:8px;font-family:var(--fs);
+  transition:opacity .3s;
+}
+#trans-indicator.show{display:flex}
+
+/* ===== SIDEBAR ===== */
+#sidebar{
+  width:250px;position:fixed;left:0;top:58px;
+  height:calc(100vh - 58px);background:#1a0a35;
+  overflow-y:auto;z-index:100;padding:12px 0;
+  transition:transform .3s;
+}
+#sidebar.hidden{transform:translateX(-100%)}
+#sidebar h3{
+  padding:8px 14px 10px;color:var(--gold);font-size:8pt;
+  letter-spacing:2px;text-transform:uppercase;
+  border-bottom:1px solid rgba(255,255,255,.1);margin-bottom:6px;
+  font-family:var(--fs);
+}
+#sidebar .sp{
+  padding:6px 14px 2px;color:rgba(255,200,100,.8);
+  font-size:7.5pt;letter-spacing:1.5px;text-transform:uppercase;
+  font-family:var(--fs);margin-top:6px;
+}
+#sidebar a{
+  display:block;padding:4px 14px;color:rgba(255,255,255,.8);
+  text-decoration:none;font-size:9pt;transition:.15s;
+  border-left:3px solid transparent;
+}
+#sidebar a:hover,#sidebar a.active{
+  background:rgba(255,255,255,.08);
+  border-left-color:var(--gold);color:#fff;
+}
+#sidebar a.sub{padding-left:24px;font-size:8.5pt;color:rgba(255,255,255,.6)}
+
+/* ===== DOCUMENT ===== */
+#doc{margin-left:250px;padding:28px 32px;transition:margin .3s}
+#doc.full{margin-left:0}
+
+/* ===== PAGES ===== */
+.page{
+  background:var(--white);max-width:760px;margin:0 auto 28px;
+  padding:28mm 22mm;box-shadow:var(--shadow);
+  border:1px solid var(--border);position:relative;
+  page-break-after:always;
+}
+.page::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--p),var(--a),var(--gold));
+}
+.page-num{
+  position:absolute;bottom:14px;right:20px;
+  font-size:8pt;color:#aaa;font-family:var(--fm);
+}
+
+/* ===== COVER ===== */
+.cover{
+  text-align:center;
+  background:linear-gradient(160deg,#f8f5ff,#ede7f6,#e8f4f8);
+  min-height:260mm;display:flex;flex-direction:column;
+  justify-content:space-between;padding:24mm 22mm 18mm;
+}
+.cover-badge{
+  display:inline-block;background:var(--p);color:#fff;
+  padding:4px 18px;border-radius:20px;font-size:8pt;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;
+  font-family:var(--fs);
+}
+.trinity-sym{
+  font-size:52pt;margin:12px 0;
+  background:linear-gradient(135deg,var(--p),var(--gold));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  line-height:1;
+}
+.cover h1{font-size:26pt;color:var(--p);margin:6px 0;border:none;padding:0}
+.cover-sub{font-size:12pt;color:var(--a);font-style:italic;margin:4px 0}
+.cover-eq{
+  background:var(--p);color:#fff;
+  padding:10px 22px;border-radius:8px;
+  display:inline-block;font-size:15pt;
+  margin:14px 0;letter-spacing:2px;
+}
+.author-box{
+  border:2px solid var(--p);border-radius:10px;
+  padding:14px 18px;background:#fff;text-align:left;margin-top:auto;
+}
+.author-box h4{color:var(--p);font-size:11pt;margin-bottom:8px}
+.author-box p{font-size:9pt;color:#444;margin:2px 0;font-family:var(--fs)}
+.author-box a{color:var(--a);text-decoration:none}
+
+/* ===== TYPOGRAPHY ===== */
+h1{font-size:18pt;color:var(--p);border-bottom:3px solid var(--gold);padding-bottom:7px;margin:18px 0 12px}
+h2{font-size:14pt;color:var(--p);margin:16px 0 8px;border-left:4px solid var(--a);padding-left:10px}
+h3{font-size:12pt;color:var(--a);margin:12px 0 6px}
+h4{font-size:11pt;color:var(--p);margin:8px 0 4px}
+p{margin:6px 0;text-align:justify}
+blockquote{
+  border-left:4px solid var(--gold);background:#fdf9f0;
+  padding:9px 12px;margin:10px 0;font-style:italic;
+  color:#5a4a2a;border-radius:0 6px 6px 0;
+}
+.part-hdr{
+  background:linear-gradient(135deg,var(--p),var(--a));
+  color:#fff;padding:12px 18px;border-radius:8px;
+  margin:18px 0 12px;font-size:13pt;font-weight:bold;
+  display:flex;align-items:center;gap:8px;
+}
+
+/* ===== TABLES ===== */
+table{width:100%;border-collapse:collapse;margin:10px 0;font-size:9.5pt;font-family:var(--fs)}
+th{background:var(--p);color:#fff;padding:7px 10px;text-align:center;font-size:9pt}
+td{padding:6px 10px;border:1px solid var(--border);text-align:center;vertical-align:middle}
+tr:nth-child(even) td{background:#f5f0fc}
+tr:hover td{background:#ebe0f8}
+
+/* ===== EQ BOXES ===== */
+.eq{
+  background:linear-gradient(135deg,#ede7f6,#f3e5f5);
+  border:2px solid var(--lp);border-radius:8px;
+  padding:12px 16px;margin:10px 0;text-align:center;overflow-x:auto;
+}
+.eq.imp{border-color:var(--a);background:linear-gradient(135deg,#e8d5ff,#d0eef8);font-size:1.1em}
+.eq-lbl{font-family:var(--fs);font-size:8pt;color:var(--a);text-align:right;margin-top:3px;font-style:italic}
+
+/* ===== INFO BOXES ===== */
+.ib{border-radius:8px;padding:10px 14px;margin:8px 0;border-left:5px solid}
+.ib.purple{background:#f3e5f5;border-color:var(--a)}
+.ib.blue{background:#e3f2fd;border-color:#1976d2}
+.ib.green{background:#e8f5e9;border-color:#388e3c}
+.ib.yellow{background:#fffde7;border-color:#f9a825}
+.ib.red{background:#ffebee;border-color:#c62828}
+.ib.teal{background:var(--lb);border-color:#00838f}
+.ib h4{margin-bottom:5px;font-size:10.5pt}
+
+/* ===== TRINITY CARDS ===== */
+.t3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:12px 0}
+.tc{text-align:center;padding:18px 8px;border-radius:16px;border:2px solid}
+.tc .sym{font-size:30pt;display:block;line-height:1}
+.tc .bsv{font-size:14pt;font-weight:700;margin:4px 0}
+.tc .lbl{font-size:8.5pt;color:#555}
+.tc1{background:var(--lr);border-color:#c62828}
+.tc2{background:#eceff1;border-color:#607d8b}
+.tc3{background:var(--lp);border-color:var(--a)}
+
+/* ===== PREDICTION BOXES ===== */
+.pred{
+  background:linear-gradient(135deg,#e2f0f2,#cae3e7);
+  border:2px solid #0f5c6b;border-radius:12px;
+  padding:12px 16px;margin:10px 0;
+}
+.pred h5{color:#0f5c6b;font-size:11pt;margin-bottom:6px}
+
+/* ===== CODE ===== */
+pre{
+  background:#1e1e2f;color:#e6e9f0;
+  padding:12px;border-radius:12px;font-family:var(--fm);
+  font-size:8.5pt;overflow-x:auto;margin:10px 0;line-height:1.6;
+}
+code{font-family:var(--fm);background:#f0ebf5;padding:2px 5px;border-radius:5px;font-size:9.5pt}
+
+/* ===== BS BARS ===== */
+.bs-chart{background:#fafafa;border:1px solid var(--border);border-radius:8px;padding:12px;margin:10px 0}
+.bs-row{display:flex;align-items:center;gap:6px;margin:3px 0;font-size:9pt;font-family:var(--fs)}
+.bs-lbl{width:32px;text-align:right;font-weight:bold}
+.bs-wrap{flex:1;background:#f0eaf8;border-radius:4px;height:14px}
+.bs-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--p),var(--a))}
+.bs-val{width:50px;font-weight:bold;color:var(--p)}
+
+/* ===== DETAILS/SUMMARY ===== */
+details{margin:8px 0;padding:6px 12px;background:#f9f5ff;border-radius:10px;border-left:4px solid var(--a)}
+summary{font-weight:700;color:var(--p);cursor:pointer;font-size:10pt}
+
+/* ===== TIMELINE ===== */
+.tl{position:relative;padding-left:24px;margin:10px 0}
+.tl::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(180deg,var(--p),var(--gold))}
+.tl-item{position:relative;margin-bottom:12px}
+.tl-item::before{content:'';position:absolute;left:-20px;top:5px;width:10px;height:10px;background:var(--gold);border-radius:50%;border:2px solid var(--p)}
+.tl-date{font-size:8pt;color:var(--a);font-weight:bold;font-family:var(--fs)}
+.tl-txt{font-size:9.5pt}
+
+/* ===== AUTHOR FOOTER ===== */
+.af{border-top:3px solid var(--gold);padding-top:12px;margin-top:18px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;font-family:var(--fs)}
+.av{width:50px;height:50px;background:linear-gradient(135deg,var(--p),var(--a));border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20pt;font-weight:bold}
+.ai p{font-size:8.5pt;margin:1px 0;color:#555}
+.ai strong{color:var(--p);font-size:10pt}
+.ai a{color:var(--a);text-decoration:none;font-size:8.5pt}
+
+/* ===== MODAL ===== */
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;align-items:center;justify-content:center}
+.modal.show{display:flex}
+.modal-card{background:#fff;border-radius:16px;padding:24px;max-width:380px;width:90%;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.modal-card h3{color:var(--p);margin-bottom:10px;border:none;padding:0}
+.modal-card input{width:100%;padding:10px;border:2px solid var(--border);border-radius:8px;font-size:11pt;letter-spacing:3px;text-align:center;margin:8px 0}
+.modal-card input:focus{outline:none;border-color:var(--a)}
+.mbtn-row{display:flex;gap:8px;justify-content:flex-end;margin-top:12px}
+.mbtn{padding:7px 18px;border:none;border-radius:20px;font-weight:600;cursor:pointer;font-size:9.5pt}
+.mbtn.p{background:var(--a);color:#fff}
+.mbtn.s{background:#ddd;color:#333}
+
+/* ===== EDIT MODE ===== */
+.edit-mode [contenteditable="true"]{outline:2px dashed var(--gold);background:#fffde7!important}
+
+/* ===== PRINT ===== */
+@media print{
+  #toolbar,#sidebar,#trans-indicator,.modal,.tbtn,#lang-menu{display:none!important}
+  body,#doc,#main{background:#fff!important;margin:0!important;padding:0!important}
+  #doc{margin-left:0!important}
+  .page{max-width:100%!important;width:210mm!important;margin:0!important;padding:20mm 18mm!important;box-shadow:none!important;border:none!important;page-break-after:always!important}
+  .page::before{display:none}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
+  h1{font-size:16pt}h2{font-size:13pt}h3{font-size:11pt}
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%)}
+  #sidebar.open{transform:translateX(0)}
+  #doc{margin-left:0!important}
+  .page{padding:14px}
+  .t3{grid-template-columns:1fr}
+}
+
+/* ===== RTL MODE ===== */
+body.rtl .page{direction:rtl}
+body.rtl #sidebar{left:auto;right:0;transform:translateX(100%)}
+body.rtl #sidebar.hidden{transform:translateX(100%)}
+body.rtl #doc{margin-left:0;margin-right:250px}
+body.rtl h2{border-left:none;border-right:4px solid var(--a);padding-left:0;padding-right:10px}
+body.rtl #doc.full{margin-right:0}
+
+/* ===== LANG SWITCHER BADGE ===== */
+#active-lang-badge{
+  background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);
+  color:#fff;padding:4px 10px;border-radius:14px;font-size:8.5pt;
+  font-family:var(--fs);letter-spacing:.5px;min-width:28px;text-align:center;
+}
+
+/* === COMPAT STYLES FOR ORIGINAL PAGES (pg2, pg4, pg5, pg13, pg14) === */
+h2.pt{font-size:20px;color:#fff;background:linear-gradient(135deg,var(--p),#1a0a35);padding:12px 22px;margin:-28mm -22mm 28px;letter-spacing:.8px;}
+h2.st{font-size:17px;color:var(--p);border-left:5px solid var(--a);padding:7px 14px;margin:28px 0 14px;background:var(--lp);border-radius:0 4px 4px 0;}
+h3.ss{font-size:14.5px;color:#333;margin:20px 0 10px;padding-bottom:5px;border-bottom:2px solid var(--lp);}
+h4.sss{font-size:13.5px;color:var(--p);margin:14px 0 7px;font-style:italic;}
+.ib.def{background:var(--lp);border-color:var(--p);}
+.ib.note{background:var(--lb);}
+.ib.ok{background:var(--lg);border-color:#2E7D32;}
+.ib.warn{background:var(--ly);border-color:#F9A825;}
+.ib.qt{background:#e8e8e8;font-style:italic;color:#555;border-color:#888;}
+.ib strong{display:block;margin-bottom:5px;font-size:11px;text-transform:uppercase;letter-spacing:1px;}
+.fd{background:#fafafa;border:1px solid #ddd;border-radius:8px;padding:20px;margin:14px 0;text-align:center;}
+.fdt{font-size:12px;color:#777;margin-bottom:14px;font-style:italic;}
+.fr{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;margin:7px 0;}
+.fn{padding:9px 14px;border-radius:6px;font-size:12.5px;font-weight:700;text-align:center;min-width:90px;border:2px solid;}
+.fa{font-size:18px;color:#999;}
+.pb{background:linear-gradient(135deg,var(--lb),var(--lg));border:2px solid #00838F;border-radius:8px;padding:14px;margin:14px 0;}
+.pb h4{color:#00838F;margin-bottom:7px;}
+.bsg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0;}
+.bsc{text-align:center;padding:14px;border-radius:8px;border:2px solid;}
+.bsc .bss{font-size:30px;display:block;margin-bottom:7px;}
+.bsc .bsv{font-size:19px;font-weight:700;}
+.bsc .bsl{font-size:11px;color:#777;margin-top:3px;}
+.div{height:3px;background:linear-gradient(90deg,var(--p),var(--a),var(--p));border-radius:2px;margin:28px 0;}
+.nb{display:inline-block;background:var(--p);color:#fff;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;font-weight:700;font-size:13px;margin-right:7px;}
+.ea{outline:none;border-radius:3px;transition:background .2s;}
+.edit-mode .ea{background:#fffde7 !important;border:1px dashed #F9A825;padding:3px;cursor:text;}
+.tw{overflow-x:auto;margin:14px 0;}
+.pn{position:absolute;bottom:18px;right:26px;font-size:11px;color:#bbb;}
+.pf{margin-top:36px;padding-top:14px;border-top:1px solid #eee;font-size:11px;color:#999;display:flex;justify-content:space-between;}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.trin{display:flex;justify-content:center;gap:32px;margin:28px 0;flex-wrap:wrap;}
+.tc .s{font-size:38px;display:block;margin-bottom:6px;}
+.tc .n{font-size:12.5px;font-weight:700;}
+.tc .b{font-size:11px;color:#777;margin-top:3px;}
+ul,ol{margin-left:22px;margin-bottom:11px;}
+ul li,ol li{margin-bottom:3px;}
+
+</style>
+</head>
+<body id="body-root">
+
+<!-- ===== TOOLBAR ===== -->
+<div id="toolbar">
+  <span class="t-title">📘 The Booker Statement — System 𝕊 | Mathematical Trinity</span>
+
+  <!-- Language Switcher -->
+  <div id="lang-wrap">
+    <button class="tbtn" onclick="toggleLangMenu()" title="Switch Language">
+      🌐 <span id="active-lang-badge">EN</span> ▾
+    </button>
+    <div id="lang-menu">
+      <button onclick="setLang('en')" class="active-lang">🇬🇧 English</button>
+      <button onclick="setLang('ar')">🇸🇦 العربية</button>
+      <button onclick="setLang('fr')">🇫🇷 Français</button>
+      <button onclick="setLang('de')">🇩🇪 Deutsch</button>
+      <button onclick="setLang('es')">🇪🇸 Español</button>
+      <button onclick="setLang('zh')">🇨🇳 中文</button>
+      <button onclick="setLang('ru')">🇷🇺 Русский</button>
+      <button onclick="setLang('tr')">🇹🇷 Türkçe</button>
+      <button onclick="setLang('ja')">🇯🇵 日本語</button>
+      <button onclick="setLang('ur')">🇵🇰 اردو</button>
+    </div>
+  </div>
+
+  <button class="tbtn" id="editBtn" onclick="openEditModal()">✏️ Edit</button>
+  <button class="tbtn gold" onclick="window.print()">🖨️ Print / PDF</button>
+  <button class="tbtn" id="tocBtn" onclick="toggleSidebar()">☰ Contents</button>
+</div>
+
+<!-- ===== EDIT MODAL ===== -->
+<div class="modal" id="editModal">
+  <div class="modal-card">
+    <h3>🔒 Author Access</h3>
+    <p style="font-size:9pt;color:#555;font-family:var(--fs)">Enter the secret code to enable editing.</p>
+    <input type="password" id="secretCode" placeholder="••••••••••••••" onkeydown="if(event.key==='Enter')checkCode()">
+    <p id="codeError" style="color:#c00;font-size:8.5pt;font-family:var(--fs)"></p>
+    <div class="mbtn-row">
+      <button class="mbtn s" onclick="closeEditModal()">Cancel</button>
+      <button class="mbtn p" onclick="checkCode()">Unlock</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TRANSLATION INDICATOR ===== -->
+<div id="trans-indicator">
+  <span id="trans-flag">🌐</span>
+  <span id="trans-text">Translating...</span>
+</div>
+
+<!-- ===== SIDEBAR TOC ===== -->
+<div id="sidebar">
+  <h3 id="toc-title">📋 Table of Contents</h3>
+
+  <div class="sp" data-i18n="toc-front">FRONT MATTER</div>
+  <a href="#pg-cover" data-i18n="toc-cover">Cover Page</a>
+  <a href="#pg-abstract" data-i18n="toc-abstract">Executive Summary</a>
+
+  <div class="sp" data-i18n="toc-p1">PART I — THEORY</div>
+  <a href="#pg-rg" data-i18n="toc-rg">Reader's Guide</a>
+  <a href="#pg-fw" class="sub">Theoretical Framework</a>
+  <a href="#pg-bg" class="sub">Research Background</a>
+  <a href="#pg-intro" data-i18n="toc-intro">§1. Introduction</a>
+  <a href="#pg-defs" class="sub" data-i18n="toc-defs">1.1 Foundational Definitions</a>
+  <a href="#pg-hist" class="sub" data-i18n="toc-hist">1.2 Historical Evolution</a>
+  <a href="#pg-crisis" class="sub" data-i18n="toc-crisis">1.3 Foundations Crisis</a>
+  <a href="#pg-rg" data-i18n="toc-rg">Reader's Guide</a>
+  <a href="#pg-fw" class="sub" data-i18n="toc-fw">Theoretical Framework</a>
+  <a href="#pg-bg" class="sub" data-i18n="toc-bg">Research Background</a>
+  <a href="#pg-ops" data-i18n="toc-ops">§2. Dynamic Operations</a>
+  <a href="#pg-bs" data-i18n="toc-bs">§3. Structural Stability BS</a>
+
+  <div class="sp" data-i18n="toc-p2">PART II — APPLICATIONS</div>
+  <a href="#pg-math" data-i18n="toc-math">§4. Mathematical Applications</a>
+  <a href="#pg-phys" data-i18n="toc-phys">§5. Physics Applications</a>
+  <a href="#pg-comp" data-i18n="toc-comp">§6. Computational / AI</a>
+  <a href="#pg-phil" data-i18n="toc-phil">§7. Philosophical</a>
+  <a href="#pg-empirical" data-i18n="toc-emp">§8. Empirical Studies</a>
+
+  <div class="sp" data-i18n="toc-p3">PART III — FUTURE</div>
+  <a href="#pg-compare" data-i18n="toc-compare">§9. Comparative Studies</a>
+  <a href="#pg-tools-full" class="sub">Tools & Software (Full)</a>
+  <a href="#pg-future-full" class="sub">Future Visions (Full)</a>
+  <a href="#pg-tools" data-i18n="toc-tools">§10. Tools & Software</a>
+  <a href="#pg-future" data-i18n="toc-future">§11. Future Vision</a>
+
+  <div class="sp" data-i18n="toc-app">APPENDICES</div>
+  <a href="#pg-glossary" data-i18n="toc-glossary">Appendix A: Glossary</a>
+  <a href="#pg-refs" data-i18n="toc-refs">Appendix B: References</a>
+  <a href="#pg-creds" data-i18n="toc-creds">Appendix C: Credentials</a>
+</div>
+
+<!-- ===== DOCUMENT ===== -->
+<div id="doc">
+
+<!-- ========== COVER ========== -->
+<div class="page cover" id="pg-cover">
+  <div>
+    <span class="cover-badge" data-i18n="badge">Enhanced Edition 2026 | Scholarly Monograph</span>
+    <div class="trinity-sym">❶ · 0ₚ · ∞</div>
+    <h1 data-i18n="main-title">The Booker Statement</h1>
+    <p class="cover-sub" data-i18n="subtitle">A Unified Mathematical Trinity — System 𝕊</p>
+    <p style="font-size:13pt;color:var(--a);margin:4px 0;direction:rtl" data-i18n="arabic-title">الأطروحة البوكرية في الثالوث الرياضي — نظام 𝕊</p>
+    <div class="cover-eq">❶ ⊕ 0<sub>p</sub> = ① = ∞</div>
+    <p style="font-size:9pt;color:#666;margin-top:8px;max-width:500px;text-align:center;margin-left:auto;margin-right:auto" data-i18n="cover-desc">
+      A unified philosophical-mathematical-physical framework proposing testable predictions for the structure of existence, number theory, quantum mechanics, and cosmological constants.
+    </p>
+  </div>
+
+  <div class="t3" style="margin-top:14px">
+    <div class="tc tc1"><span class="sym">𝟙</span><div class="bsv">BS = 1</div><div class="lbl" data-i18n="card-abs">The Absolute One</div></div>
+    <div class="tc tc2"><span class="sym">0<sub>p</sub></span><div class="bsv">BS = 1/3</div><div class="lbl" data-i18n="card-pos">Pure Possibility</div></div>
+    <div class="tc tc3"><span class="sym">∞</span><div class="bsv">BS = 2/3</div><div class="lbl" data-i18n="card-rel">Relational Infinity</div></div>
+  </div>
+
+  <div class="author-box">
+    <h4 data-i18n="author-info">Author Information</h4>
+    <p><strong>Eng. Ahmad Ali Bouker Naseeb</strong> — م. أحمد علي بوكر نسيب</p>
+    <p data-i18n="author-degree">B.Sc. Mechanical Engineering — University of Jazan, 2018</p>
+    <p data-i18n="author-cert">Stanford Online: Quantum Mechanics for Scientists and Engineers 1</p>
+    <p>📧 <a href="/cdn-cgi/l/email-protection#eca9828bc28d84818d88c2dedcdddd8e83878d9eac8b818d8580c28f8381"><span class="__cf_email__" data-cfemail="0a4f646d246b62676b6e24383a3b3b6865616b784a6d676b636624696567">[email&#160;protected]</span></a></p>
+    <p>🔗 <a href="https://github.com/Eng4clay/The-Booker-Statement-" target="_blank">github.com/Eng4clay/The-Booker-Statement</a></p>
+    <p style="font-size:8pt;color:#999;margin-top:6px" data-i18n="copyright">© 2026 Ahmad Ali Bouker Naseeb | All Rights Reserved</p>
+  </div>
+  <div class="page-num">Cover</div>
+</div>
+
+
+<!-- ========== EXECUTIVE SUMMARY ========== -->
+<div class="page" id="pg-abstract">
+  <div class="part-hdr"><span>📄</span> <span data-i18n="abs-title">Executive Summary — What is System 𝕊?</span></div>
+
+  <h2 data-i18n="abs-core">The Core Idea</h2>
+  <p data-i18n="abs-desc">System 𝕊 (the Mathematical Trinity) is a unified philosophical-mathematical-physical framework built on three ontological axioms. It provides a single coherent language bridging foundations of mathematics, theoretical physics, and epistemology.</p>
+
+  <div class="eq imp">$$\boxed{❶ \oplus 0_p = ① = \infty}$$
+    <div class="eq-lbl" data-i18n="eq01-lbl">Central Equation of System 𝕊 — Eq. (0.1)</div>
+  </div>
+
+  <h2 data-i18n="abs-pred">Testable Predictions</h2>
+  <table>
+    <thead><tr><th data-i18n="th-pred">Prediction</th><th data-i18n="th-dom">Domain</th><th data-i18n="th-val">Value / Form</th><th data-i18n="th-det">Detection</th></tr></thead>
+    <tbody>
+      <tr><td data-i18n="pred1-n">CMB Modulation</td><td data-i18n="pred1-d">Cosmology</td><td>~0.115 Hz</td><td data-i18n="pred1-det">BICEP / Planck</td></tr>
+      <tr><td data-i18n="pred2-n">Casimir Modification</td><td data-i18n="pred2-d">Quantum vacuum</td><td>$F \cdot BS$</td><td data-i18n="pred2-det">Force measurement</td></tr>
+      <tr><td data-i18n="pred3-n">Boukon Particle</td><td data-i18n="pred3-d">Dark matter</td><td>$\approx 1.35 \times 10^{-49}$ kg</td><td data-i18n="pred3-det">Gravitational lensing</td></tr>
+      <tr><td data-i18n="pred4-n">Bouker Constant</td><td data-i18n="pred4-d">Dimensionless</td><td>$6.184 \times 10^{-42}$</td><td data-i18n="pred4-det">Multi-domain test</td></tr>
+    </tbody>
+  </table>
+  <div class="page-num">i</div>
+</div>
+
+
+
+<!-- ========== READER'S GUIDE (from original) ========== -->
+<div class="page" id="pg-rg">
+  <h2 class="pt">&#128214; Part 0 &mdash; Introduction &amp; Reader's Guide</h2>
+  <div class="ea" contenteditable="false">
+  <h2 class="st"><span class="nb">1</span>Welcome to System &#120138;</h2>
+  <p>This thesis is the fruit of more than a decade of contemplation and research into questions of existence, mathematics, and physics. It aims to present a unified framework that answers ancient philosophical questions in modern mathematical language, while offering experimentally testable predictions.</p>
+  <h3 class="ss">For Whom Is This Thesis?</h3>
+  <div class="tw"><table><tr><th>Audience</th><th>What They Will Find</th></tr>
+  <tr><td><strong>Philosophers</strong></td><td>New vision in epistemology, philosophy of mathematics, and metaphysics</td></tr>
+  <tr><td><strong>Mathematicians</strong></td><td>Redefinition of numbers, primes, geometry from an ontological perspective</td></tr>
+  <tr><td><strong>Physicists</strong></td><td>Modified Friedmann equations, uncertainty principle, new constant &#119966;&#8492;</td></tr>
+  <tr><td><strong>Computer Scientists</strong></td><td>Manifestation Algorithms and Trinitary Neural Networks (TNN)</td></tr>
+  <tr><td><strong>Interdisciplinary Researchers</strong></td><td>Unified language connecting physics, biology, economics, neuroscience</td></tr>
+  <tr><td><strong>Students</strong></td><td>Introduction to new scientific thinking with examples and exercises</td></tr>
+  </table></div>
+  <h2 class="st"><span class="nb">2</span>Symbol Reference</h2>
+  <div class="tw"><table><tr><th>Symbol</th><th>Name</th><th>Description</th></tr>
+  <tr><td><strong>&#10122;</strong></td><td>The Absolute One</td><td>Source of all existence, BS = 1, &#10122; &notin; &#8477;</td></tr>
+  <tr><td><strong>0<sub>p</sub></strong></td><td>Pure Possibility</td><td>Active void, field of possibilities, BS = 1/3</td></tr>
+  <tr><td><strong>&infin;</strong></td><td>Relational Infinity</td><td>Space of relations, BS = 2/3</td></tr>
+  <tr><td><strong>&#9312;</strong></td><td>Natural One</td><td>First stable manifestation, 1 &isin; &#8469;</td></tr>
+  <tr><td><strong>&epsilon;, &delta;, &eta;</strong></td><td>Gift, Formation, Manifestation</td><td>Dynamic operations of the Trinity</td></tr>
+  <tr><td><strong>&oplus;, &otimes;</strong></td><td>Trinitary Sum, Interaction</td><td>Core algebraic operations</td></tr>
+  <tr><td><strong>BS</strong></td><td>Structural Stability</td><td>Coherence measure &isin; [0, 1]</td></tr>
+  <tr><td><strong>&tau;</strong></td><td>Manifestation Parameter</td><td>Evolutionary variable</td></tr>
+  <tr><td><strong>&#119966;&#8492;</strong></td><td>Bouker Constant</td><td>6.184033 &times; 10&sup4;&#8315;&#178; (dimensionless)</td></tr>
+  </table></div>
+  </div>
+  <div class="pn">1</div>
+</div>
+
+<!-- ========== THEORETICAL FRAMEWORK (from original) ========== -->
+<div class="page" id="pg-fw">
+  <h2 class="pt">&#128216; Part 1 &mdash; Theoretical Framework &amp; Historical Foundations</h2>
+  <div class="ea" contenteditable="false">
+  <h2 class="st"><span class="nb">01.2</span>Philosophical Genealogy of Trinitary Thought</h2>
+  <div class="tw"><table><tr><th>Period</th><th>Thinker</th><th>Trinitary Concept</th><th>System &#120138; Link</th></tr>
+  <tr><td>550 BCE</td><td>Pythagoras</td><td>&ldquo;All is number&rdquo; &mdash; mathematics as cosmic basis</td><td>Mathematical foundations of manifestation</td></tr>
+  <tr><td>500 BCE</td><td>Parmenides</td><td>Being vs. Non-being</td><td>&#10122; vs. 0<sub>p</sub> (active non-being)</td></tr>
+  <tr><td>380 BCE</td><td>Plato</td><td>World of Forms vs. Sensibles</td><td>&infin; as space of Forms; &#9312; as first Form</td></tr>
+  <tr><td>850 CE</td><td>Al-Kindi</td><td>True One &ne; Numerical One</td><td>&#10122; &ne; &#9312; (foundational distinction)</td></tr>
+  <tr><td>950 CE</td><td>Al-Farabi</td><td>Emanation: One &rarr; First Intellect &rarr; ...</td><td>&#10122; &rarr; &#9312; &rarr; &#9313;... (succession via &eta;)</td></tr>
+  <tr><td>1030 CE</td><td>Ibn Sina</td><td>Necessary vs. Possible Being</td><td>&#10122; (necessary) and 0<sub>p</sub> (possible)</td></tr>
+  <tr><td>1807</td><td>Hegel</td><td>Thesis &mdash; Antithesis &mdash; Synthesis</td><td>&#10122; &oplus; 0<sub>p</sub> = &infin; (dialectical trinity)</td></tr>
+  <tr><td>1931</td><td>G&ouml;del</td><td>Incompleteness Theorems</td><td>Confirms &#10122; transcends all formal systems</td></tr>
+  <tr><td>1963</td><td>Cohen</td><td>Independence of Continuum Hypothesis</td><td>Multiple valid manifestations exist</td></tr>
+  <tr><td>2026</td><td>System &#120138;</td><td>Unified Mathematical Trinity, BS, &#119966;&#8492;</td><td>Culmination and integration</td></tr>
+  </table></div>
+  <h2 class="st"><span class="nb">01.2b</span>Why Trinity, Not Duality?</h2>
+  <p>Binary oppositions (matter/spirit, being/non-being, subject/object) fail to explain mediation, transition, and relation. Between opposing poles there is always an intermediate field of possibility and transformation. This field is 0<sub>p</sub>, making the Trinity a dynamic rather than static structure.</p>
+  <div class="fd"><div class="fdt">Figure 1.2 &mdash; The Dialectical Advantage of Trinarity over Duality</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;text-align:center;">
+  <div style="padding:14px;background:var(--red);border:2px solid var(--redD);border-radius:6px;"><strong>Duality &mdash; Unbridgeable Gap</strong><br>Pole A &nbsp; &harr; &nbsp; Pole B<br><small style="color:#777;">(no mechanism for transition)</small></div>
+  <div style="padding:14px;background:var(--grn);border:2px solid var(--grnD);border-radius:6px;"><strong>Trinity &mdash; Dynamic Cycle</strong><br>&#10122; &rarr; 0<sub>p</sub> &rarr; &infin; &rarr; &#10122;<br><small style="color:#555;">(self-sustaining generation)</small></div>
+  </div></div>
+  <h2 class="st"><span class="nb">01.2c</span>Scientific Correspondences</h2>
+  <div class="tw"><table><tr><th>Physics Domain</th><th>Concept</th><th>System &#120138; Equivalent</th></tr>
+  <tr><td>Relativity</td><td>Spacetime curvature</td><td>Change in BS due to mass distribution</td></tr>
+  <tr><td>Relativity</td><td>Speed of light c</td><td>BS = 1 limit &mdash; maximum manifestation rate</td></tr>
+  <tr><td>Quantum Mechanics</td><td>Superposition</td><td>0<sub>p</sub> contains all states simultaneously</td></tr>
+  <tr><td>Quantum Mechanics</td><td>Measurement / Collapse</td><td>Manifestation operation &eta;</td></tr>
+  <tr><td>Quantum Mechanics</td><td>Entanglement</td><td>&infin; as non-local relational structure</td></tr>
+  <tr><td>String Theory</td><td>6 Calabi-Yau dimensions</td><td>\(\infty \otimes 6\) &mdash; six iterations of relational infinity</td></tr>
+  </table></div>
+  </div>
+  <div class="pn">3</div>
+</div>
+
+<!-- ========== RESEARCH BACKGROUND (from original) ========== -->
+<div class="page" id="pg-bg">
+  <h2 class="pt">&#128216; Part 1 &mdash; Research Background &amp; Motivation</h2>
+  <div class="ea" contenteditable="false">
+  <h2 class="st"><span class="nb">01.3</span>A Decade of Research: The Central Question</h2>
+  <blockquote>"How can mathematics be a language of existence rather than merely a tool for counting?"</blockquote>
+  <p>This question guided over a decade of independent research by Ahmad Ali Bouker Nasib, beginning as philosophical curiosity about the nature of numbers, evolving into an ambitious project to rebuild the foundations of mathematics and physics together.</p>
+  <h2 class="st"><span class="nb">01.3a</span>The Foundations Crisis</h2>
+  <div class="tw"><table><tr><th>Event</th><th>Year</th><th>Content</th><th>Impact on Foundations</th></tr>
+  <tr><td>Russell's Paradox</td><td>1901</td><td>The set of all sets that do not contain themselves leads to contradiction</td><td>Revealed that naive set theory generates contradictions</td></tr>
+  <tr><td>G&ouml;del's Theorems</td><td>1931</td><td>Any formal system containing arithmetic is either incomplete or inconsistent</td><td>Set a definitive limit to the Hilbert Program</td></tr>
+  <tr><td>Cohen's Independence</td><td>1963</td><td>Continuum Hypothesis is independent of ZFC</td><td>Multiple mathematical models are valid; axioms underdetermine reality</td></tr>
+  </table></div>
+  <div class="ib def"><strong>Three Lessons for System &#120138;</strong>
+  <ol><li>Formal foundations alone cannot guarantee mathematical truth</li><li>An ontological foundation is needed connecting mathematics to reality</li><li>Mathematics is not a closed edifice but multiple manifestations of a deeper truth</li></ol>
+  </div>
+  <h2 class="st"><span class="nb">01.3b</span>Gaps in Modern Physics</h2>
+  <div class="tw"><table><tr><th>Domain</th><th>Problem</th></tr>
+  <tr><td>General Relativity</td><td>Singularities in black holes and Big Bang indicate incompleteness</td></tr>
+  <tr><td>Quantum Mechanics</td><td>Measurement problem; reconciliation with gravity unresolved</td></tr>
+  <tr><td>Quantum Gravity</td><td>No complete, widely accepted theory exists</td></tr>
+  <tr><td>Dark Matter &amp; Energy</td><td>Represent 95% of the universe; nature completely unknown</td></tr>
+  </table></div>
+  <h2 class="st"><span class="nb">01.3c</span>Core Research Questions</h2>
+  <p><strong>Philosophical:</strong> What is existence? Is it one or many? What is infinity? How to reconcile the stability of the Absolute with the flux of phenomena?</p>
+  <p><strong>Mathematical:</strong> Why do prime numbers exist? Why do formal systems fail to prove all truths? Can mathematics be built on an ontological rather than formal basis?</p>
+  <p><strong>Physical:</strong> Why do physical constants have their values? What is the origin of quantum entanglement? Can the forces be unified?</p>
+  <div class="ib qt"><strong>Personal Motivation</strong>"I did not write this system to demolish what others have built, but to complete what they began. Mathematics lost its soul when it separated from philosophy, and philosophy lost its rigor when it separated from mathematics." &mdash; <em>A. Bouker Nasib</em></div>
+  </div>
+  <div class="pn">4</div>
+</div>
+
+<!-- ========== PART I: INTRODUCTION ========== -->
+<div class="page" id="pg-intro">
+  <div class="part-hdr"><span>📘</span> <span data-i18n="p1-title">Part I — §1. Introduction to the Mathematical Trinity</span></div>
+
+  <h2 data-i18n="intro-why">Why the Trinity?</h2>
+  <p data-i18n="intro-p1">Since the dawn of philosophical inquiry, the question of foundational structure has persisted: does existence rest on a single principle, a duality, or a triad? Deep examination of existence — from quantum physics to number theory — reveals a recurring triadic pattern: unity as source, potentiality as medium, relation as actualization.</p>
+
+  <div class="ib purple">
+    <h4 data-i18n="def-title">Definition 1.1 — The Three Axioms of System 𝕊</h4>
+    <p><strong>❶ <span data-i18n="def-abs">The Absolute One:</span></strong> <span data-i18n="def-abs-desc">Unconditioned existence, prime mover, source of all determination.</span> $❶ \notin \mathbb{R},\; ❶^2 = ❶$</p>
+    <p><strong>0ₚ <span data-i18n="def-pos">Pure Possibility:</span></strong> <span data-i18n="def-pos-desc">Active nothingness, field of undetermined probabilities.</span> $0_p = \lim_{\epsilon \to 0^+} \epsilon \cdot ①$</p>
+    <p><strong>∞ <span data-i18n="def-rel">Relational Infinity:</span></strong> <span data-i18n="def-rel-desc">Space of relations and networks.</span> $∞ = \bigoplus_{i=1}^{\infty} R_i$</p>
+  </div>
+
+  <h2 data-i18n="hist-title" id="pg-hist">Historical Evolution of Triadic Concepts</h2>
+  <table>
+    <thead><tr><th data-i18n="th-period">Period</th><th data-i18n="th-thinker">Thinker</th><th data-i18n="th-contrib">Main Contribution</th><th data-i18n="th-link">Link to 𝕊</th></tr></thead>
+    <tbody>
+      <tr><td>550 BCE</td><td>Pythagoras</td><td data-i18n="pyth">"All is number"</td><td data-i18n="pyth-l">Numbers as epiphanies</td></tr>
+      <tr><td>850 CE</td><td>Al-Kindi</td><td data-i18n="kindi">True One ≠ Numerical One</td><td>❶ ≠ ①</td></tr>
+      <tr><td>950 CE</td><td>Al-Farabi</td><td data-i18n="farabi">Emanation: One → Multiplicity</td><td data-i18n="farabi-l">η as manifestation</td></tr>
+      <tr><td>1030 CE</td><td>Ibn Sina</td><td data-i18n="sina">Necessary vs. Possible</td><td data-i18n="sina-l">❶ / 0ₚ</td></tr>
+      <tr><td>1807</td><td>Hegel</td><td data-i18n="hegel">Dialectic (Thesis-Synthesis)</td><td>❶ ⊕ 0ₚ = ∞</td></tr>
+      <tr><td>1931</td><td>Gödel</td><td data-i18n="godel">Incompleteness theorems</td><td data-i18n="godel-l">❶ transcends formalism</td></tr>
+      <tr><td>2026</td><td>System 𝕊</td><td data-i18n="s-contrib">Mathematical Trinity</td><td data-i18n="s-l">Complete integration</td></tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="crisis-title" id="pg-crisis">Foundations Crisis</h2>
+  <div class="ib red">
+    <h4 data-i18n="crisis-h">Three Fatal Blows to Hilbert's Program</h4>
+    <p>• <strong data-i18n="crisis1-n">Russell's Paradox (1901):</strong> <span data-i18n="crisis1">The set of all sets not containing themselves leads to contradiction.</span></p>
+    <p>• <strong data-i18n="crisis2-n">Gödel's Theorems (1931):</strong> <span data-i18n="crisis2">Any formal system including arithmetic is either incomplete or inconsistent.</span></p>
+    <p>• <strong data-i18n="crisis3-n">Cohen's Independence (1963):</strong> <span data-i18n="crisis3">The Continuum Hypothesis is independent of ZFC.</span></p>
+  </div>
+  <div class="page-num">1</div>
+</div>
+
+
+<!-- ========== OPERATIONS & BS ========== -->
+<div class="page" id="pg-ops">
+  <div class="part-hdr"><span>⚙️</span> <span data-i18n="ops-title">§2. Dynamic Operations & §3. Structural Stability</span></div>
+
+  <h2 data-i18n="ops-h">Dynamic Operations</h2>
+  <table>
+    <thead><tr><th data-i18n="op-name">Operation</th><th>Symbol</th><th data-i18n="op-def">Definition</th><th data-i18n="op-meaning">Philosophical Meaning</th></tr></thead>
+    <tbody>
+      <tr><td data-i18n="op1">Gift</td><td>ε</td><td>$\varepsilon: ❶ \to 0_p$</td><td data-i18n="op1-m">Absolute overflows without diminishment</td></tr>
+      <tr><td data-i18n="op2">Formation</td><td>δ</td><td>$\delta: 0_p \to ∞$</td><td data-i18n="op2-m">Possibility organizes into relations</td></tr>
+      <tr><td data-i18n="op3">Epiphany</td><td>η</td><td>$\eta = \delta \circ \varepsilon,\; \eta(❶)=①$</td><td data-i18n="op3-m">Absolute manifests as Natural One</td></tr>
+      <tr><td data-i18n="op4">Successor</td><td>sₙ</td><td>$s_n(k) = k \oplus ①$</td><td data-i18n="op4-m">Numbers emerge through connection to source</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="pg-bs" data-i18n="bs-h">Structural Stability (BS)</h2>
+  <div class="eq imp">
+    $$\boxed{BS_\tau(S) = \alpha(\tau)\cdot S_c + \beta(\tau)\cdot S_s + \gamma(\tau)\cdot S_d + \delta(\tau)}$$
+    <div class="eq-lbl" data-i18n="bs-eq-lbl">Eq. (1.3) — General BS Formula. Components: consistency $S_c$, symmetry $S_s$, dynamics $S_d$</div>
+  </div>
+
+  <div class="eq">
+    $$\begin{aligned}
+    \alpha(\tau) &= 0.7\,e^{-0.3\tau} + 0.2\,(1 - e^{-0.3\tau}) \\
+    \beta(\tau) &= 0.1 + \frac{0.5}{1 + e^{-0.5(\tau-3.0)}} \\
+    \gamma(\tau) &= 0.4\,\sin^2\!\left(\frac{2\pi}{5.0}\tau\right) + 0.1 \\
+    \delta(\tau) &= 0.15\,e^{-0.1\tau^2}
+    \end{aligned}$$
+    <div class="eq-lbl" data-i18n="bs-weights-lbl">Eq. (1.4) — Weighting functions for BS (τ = epiphany parameter)</div>
+  </div>
+
+  <div class="eq">
+    $$BS(n) = \begin{cases} \frac{7}{10}, & n=1 \\ \frac{4}{7}, & n=2 \\ \frac{8}{17}, & n=3 \\ \frac{10}{27}, & n=4 \\ \frac{2}{2n-3}, & n\ge5 \end{cases}$$
+    <div class="eq-lbl" data-i18n="bs-n-lbl">Eq. (1.5) — BS for natural numbers. Decreases → 0 as n → ∞</div>
+  </div>
+
+  <div class="bs-chart">
+    <div style="font-family:var(--fs);font-size:8.5pt;color:#666;margin-bottom:8px" data-i18n="bschart-title">Figure — BS(n) Stability Curve for n = 1 to 10</div>
+    <div class="bs-row"><span class="bs-lbl">n=1</span><div class="bs-wrap"><div class="bs-bar" style="width:70%"></div></div><span class="bs-val">0.7000</span></div>
+    <div class="bs-row"><span class="bs-lbl">n=2</span><div class="bs-wrap"><div class="bs-bar" style="width:57%"></div></div><span class="bs-val">0.5714</span></div>
+    <div class="bs-row"><span class="bs-lbl">n=3</span><div class="bs-wrap"><div class="bs-bar" style="width:47%"></div></div><span class="bs-val">0.4706</span></div>
+    <div class="bs-row"><span class="bs-lbl">n=5</span><div class="bs-wrap"><div class="bs-bar" style="width:28.6%"></div></div><span class="bs-val">0.2857</span></div>
+    <div class="bs-row"><span class="bs-lbl">n=7</span><div class="bs-wrap"><div class="bs-bar" style="width:18.2%"></div></div><span class="bs-val">0.1818</span></div>
+    <div class="bs-row"><span class="bs-lbl">n=10</span><div class="bs-wrap"><div class="bs-bar" style="width:11.8%"></div></div><span class="bs-val">0.1176</span></div>
+  </div>
+  <div class="page-num">2</div>
+</div>
+
+
+<!-- ========== PHYSICS ========== -->
+<div class="page" id="pg-phys">
+  <div class="part-hdr"><span>⚛️</span> <span data-i18n="phys-title">Part II — §5. Physics Applications</span></div>
+
+  <h2 data-i18n="phys-cosmo">5.1 Modified Friedmann Equations</h2>
+  <div class="eq imp">
+    $$\left(\frac{\dot{a}}{a}\right)^2 = \frac{8\pi G}{3}\rho - \frac{k}{a^2} + \frac{\Lambda}{3} + \beta(\tau)\,\dot{\tau}^2$$
+    <div class="eq-lbl" data-i18n="fried-lbl">Eq. (5.1) — Modified Friedmann. Extra term $\beta(\tau)\dot{\tau}^2$ represents "epiphany pressure". Reduces to standard GR at $\dot{\tau}=0$.</div>
+  </div>
+
+  <h2 data-i18n="phys-qm">5.2 Modified Quantum Mechanics</h2>
+  <div class="eq">
+    $$\Delta x\,\Delta p \ge \frac{\hbar}{2} \cdot \frac{1}{BS(\text{apparatus})}$$
+    <div class="eq-lbl" data-i18n="heis-lbl">Eq. (5.3) — Modified Uncertainty Principle. Reduces to standard $\hbar/2$ at BS = 1.</div>
+  </div>
+  <div class="eq">
+    $$P(a) = |\langle a|\psi\rangle|^2 \cdot BS(\text{apparatus}) \cdot \eta(\tau)$$
+    <div class="eq-lbl" data-i18n="born-lbl">Eq. (5.4) — Modified Born Rule.</div>
+  </div>
+  <div class="eq">
+    $$BS_{\text{entangled}} = \frac{2}{3}\,C$$
+    <div class="eq-lbl" data-i18n="ent-lbl">Eq. (5.5) — Entanglement BS = (2/3) × concurrence. At max entanglement: BS = 2/3 = BS(∞).</div>
+  </div>
+
+  <h2 data-i18n="phys-const">5.3 The Bouker Constant 𝒞ℬ</h2>
+  <div class="eq imp" style="font-size:1.3em">
+    $$\boxed{\mathcal{CB} = \frac{2}{43} \cdot \frac{\alpha}{137} \cdot \sqrt{\frac{c^3}{\hbar G}} = 6.184033 \times 10^{-42}}$$
+    <div class="eq-lbl" data-i18n="cb-lbl">Eq. (5.6) — Bouker Constant. Dimensionless. Derived from prime 23 where BS(23) = 2/43.</div>
+  </div>
+
+  <div class="pred">
+    <h5 data-i18n="pred-cmb">🌌 CMB Prediction</h5>
+    $$f_{\mathcal{CB}} = \mathcal{CB} \cdot \frac{c}{\ell_P} \approx 0.115 \text{ Hz}$$
+  </div>
+  <div class="pred">
+    <h5 data-i18n="pred-particle">🔬 Boukon Particle</h5>
+    $$m_{\mathcal{CB}} = \mathcal{CB} \cdot m_P \approx 1.35 \times 10^{-49} \text{ kg}$$
+  </div>
+  <div class="page-num">3</div>
+</div>
+
+
+<!-- ========== MATH APPLICATIONS ========== -->
+<div class="page" id="pg-math">
+  <div class="part-hdr"><span>🔢</span> <span data-i18n="math-title">§4. Mathematical Applications</span></div>
+
+  <h2 data-i18n="math-primes">4.1 Primes as Pure Epiphanies</h2>
+  <div class="eq">
+    $$BS(p) = \begin{cases} \frac{4}{7}, & p=2 \\ \frac{8}{17}, & p=3 \\ \frac{2}{2p-3}, & p\ge5 \end{cases}$$
+    <div class="eq-lbl" data-i18n="prime-lbl">Eq. (4.1) — BS for prime numbers. Primes have higher BS than composites of similar magnitude.</div>
+  </div>
+  <div class="eq">
+    $$\sum_{p \le x} BS(p) \sim \frac{1}{2} \log \log x \qquad \zeta_\mathbb{S}(s) = \sum_{n=1}^{\infty} \frac{BS(n)}{n^s}$$
+    <div class="eq-lbl" data-i18n="zeta-lbl">Eq. (4.2-4.3) — Prime sum theorem in 𝕊; BS-weighted Riemann zeta function.</div>
+  </div>
+
+  <h2 data-i18n="math-geo">4.2 Non-Euclidean Geometry</h2>
+  <table>
+    <thead><tr><th data-i18n="geo-type">Geometry</th><th data-i18n="geo-curv">Curvature κ</th><th data-i18n="geo-elem">𝕊 Element</th><th data-i18n="geo-phys">Physical Analog</th></tr></thead>
+    <tbody>
+      <tr><td data-i18n="geo-ell">Elliptic</td><td>κ > 0</td><td>❶ (closed)</td><td data-i18n="geo-ell-p">Closed universe, Ω > 1</td></tr>
+      <tr><td data-i18n="geo-hyp">Hyperbolic</td><td>κ < 0</td><td>0ₚ (open)</td><td data-i18n="geo-hyp-p">Open universe, Ω < 1</td></tr>
+      <tr><td data-i18n="geo-euc">Euclidean</td><td>κ = 0</td><td>∞ (balanced)</td><td data-i18n="geo-euc-p">Flat universe, Ω = 1</td></tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="math-top">4.3 Algebraic Topology & Functional Analysis</h2>
+  <div class="eq">
+    $$\pi_1^\mathbb{S}(X) = \pi_1(X) \times [0,1]_{BS} \qquad \langle f,g\rangle_\mathbb{S} = \int f(x)\,\overline{g(x)}\,BS(x)\,d\mu(x)$$
+    <div class="eq-lbl" data-i18n="top-lbl">Eq. (4.4-4.5) — BS-enriched fundamental group; BS-weighted inner product for 𝕊-Hilbert spaces.</div>
+  </div>
+  <div class="page-num">4</div>
+</div>
+
+
+<!-- ========== COMPUTATIONAL / AI ========== -->
+<div class="page" id="pg-comp">
+  <div class="part-hdr"><span>💻</span> <span data-i18n="comp-title">§6. Computational Applications & AI</span></div>
+
+  <h2 data-i18n="comp-np">6.1 Epiphany Algorithms for NP Problems</h2>
+  <table>
+    <thead><tr><th data-i18n="comp-prob">Problem</th><th data-i18n="comp-class">Classical</th><th data-i18n="comp-s">𝕊 Approach</th><th data-i18n="comp-imp">Improvement</th></tr></thead>
+    <tbody>
+      <tr><td>TSP</td><td>O(n!), ~85%</td><td data-i18n="tsp-s">BS landscape navigation</td><td>O(n² log n), ~94%</td></tr>
+      <tr><td>SAT</td><td>O(2ⁿ), ~78%</td><td data-i18n="sat-s">Triadic clause reduction</td><td>O(n²), ~91%</td></tr>
+      <tr><td>Knapsack</td><td>O(2ⁿ)</td><td data-i18n="kp-s">BS dynamic programming</td><td data-i18n="kp-imp">Structural pruning</td></tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="comp-tnn">6.2 Triadic Neural Networks (TNN)</h2>
+  <div class="eq">
+    $$\mathcal{L}_{TNN} = \alpha\,\mathcal{L}_{\text{accuracy}} + \beta\,\mathcal{L}_{\text{symmetry}} + \gamma\,\mathcal{L}_{\text{dynamics}}$$
+    <div class="eq-lbl" data-i18n="tnn-lbl">Eq. (6.1) — Triadic loss function combining accuracy, structural symmetry, and dynamic adaptability.</div>
+  </div>
+  <div class="ib teal">
+    <h4 data-i18n="tnn-arch">TNN Architecture: Three Functional Layers</h4>
+    <p>• <strong>❶-Layer:</strong> <span data-i18n="tnn-l1">Extracts invariant features; high BS; promotes consistency.</span></p>
+    <p>• <strong>0ₚ-Layer:</strong> <span data-i18n="tnn-l2">Generates hypotheses; stochastic dropout for exploration.</span></p>
+    <p>• <strong>∞-Layer:</strong> <span data-i18n="tnn-l3">Graph-based relational reasoning; output layer.</span></p>
+  </div>
+
+  <h2 data-i18n="comp-agi">6.3 AGI Consciousness Model</h2>
+  <div class="eq">
+    $$\Psi_{\text{Consciousness}} = \oint_{\tau} \left[ \alpha \cdot BS_{ID} + \beta \cdot BS_{Pot} + \gamma \cdot BS_{Rel} \right] \cdot \eta(\tau)\, d\tau$$
+    <div class="eq-lbl" data-i18n="agi-lbl">Eq. (6.2) — Consciousness integral. Typical human: Ψ ≈ 0.57. AGI target: Ψ > 0.7.</div>
+  </div>
+
+  <h2 data-i18n="comp-code">6.4 Python Implementation</h2>
+  <pre><span style="color:#81c784">def</span> BS(n):
+    <span style="color:#81c784">if</span> n==<span style="color:#f78c6c">1</span>: <span style="color:#81c784">return</span> <span style="color:#f78c6c">0.7</span>
+    <span style="color:#81c784">elif</span> n==<span style="color:#f78c6c">2</span>: <span style="color:#81c784">return</span> <span style="color:#f78c6c">4</span>/<span style="color:#f78c6c">7</span>
+    <span style="color:#81c784">elif</span> n==<span style="color:#f78c6c">3</span>: <span style="color:#81c784">return</span> <span style="color:#f78c6c">8</span>/<span style="color:#f78c6c">17</span>
+    <span style="color:#81c784">elif</span> n==<span style="color:#f78c6c">4</span>: <span style="color:#81c784">return</span> <span style="color:#f78c6c">10</span>/<span style="color:#f78c6c">27</span>
+    <span style="color:#81c784">elif</span> n>=<span style="color:#f78c6c">5</span>: <span style="color:#81c784">return</span> <span style="color:#f78c6c">2</span>/(<span style="color:#f78c6c">2</span>*n-<span style="color:#f78c6c">3</span>)
+    <span style="color:#888"># Available on github.com/Eng4clay/The-Booker-Statement-</span></pre>
+  <div class="page-num">5</div>
+</div>
+
+
+<!-- ========== PHILOSOPHICAL ========== -->
+<div class="page" id="pg-phil">
+  <div class="part-hdr"><span>🧠</span> <span data-i18n="phil-title">§7. Philosophical Applications</span></div>
+
+  <h2 data-i18n="phil-logic">7.1 Triadic Logic</h2>
+  <table>
+    <thead><tr><th>Symbol</th><th data-i18n="logic-val">Value</th><th data-i18n="logic-int">Interpretation</th><th>BS</th></tr></thead>
+    <tbody>
+      <tr><td>❶</td><td data-i18n="logic-abs">Absolute Truth</td><td data-i18n="logic-abs-d">Necessary, tautological</td><td>1</td></tr>
+      <tr><td>0ₚ</td><td data-i18n="logic-pos">Pure Possibility</td><td data-i18n="logic-pos-d">Undetermined, contingent</td><td>1/3</td></tr>
+      <tr><td>∞</td><td data-i18n="logic-rel">Relational Truth</td><td data-i18n="logic-rel-d">True within context, empirical</td><td>2/3</td></tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="phil-epis">7.2 Structural Epistemology</h2>
+  <div class="ib purple">
+    <h4 data-i18n="epis-def">Definition 7.1 — Structural Truth</h4>
+    <p data-i18n="epis-desc">Truth is not binary but graded: $T_\mathbb{S}(P) = BS(\text{epistemic system representing }P)$. Truth measures coherence between the epistemic structure and the Absolute.</p>
+  </div>
+
+  <h2 data-i18n="phil-mystical">7.3 Mystical Experience & BS</h2>
+  <div class="eq">$$\lim_{BS \to 1} (\text{subjective differentiation from }❶) = 0$$
+    <div class="eq-lbl" data-i18n="myst-lbl">Eq. (7.2) — Non-dual awareness: as BS → 1, experiential distinction from the Absolute vanishes.</div>
+  </div>
+
+  <h2 data-i18n="phil-dial">7.4 Virtual Philosophical Dialogues (Selected)</h2>
+  <blockquote>
+    <strong>Gödel:</strong> <span data-i18n="dial-godel-q">Incompleteness shows limits of any formal system. How does System 𝕊 avoid this?</span><br>
+    <strong>Bouker:</strong> <span data-i18n="dial-godel-a">It does not try to be a complete formal system; it is an ontological framework. The Absolute ❶ transcends all formal systems. Incompleteness reflects the inexhaustible depth of the source.</span>
+  </blockquote>
+  <blockquote>
+    <strong>Einstein:</strong> <span data-i18n="dial-ein-q">God does not play dice. Can your τ parameter restore determinism?</span><br>
+    <strong>Bouker:</strong> <span data-i18n="dial-ein-a">Not full determinism, but structural determinism: BS evolves deterministically, while actualization of possibilities retains an element of spontaneity — a compromise between you and Bohr.</span>
+  </blockquote>
+  <div class="page-num">6</div>
+</div>
+
+
+<!-- ========== EMPIRICAL ========== -->
+<div class="page" id="pg-empirical">
+  <div class="part-hdr"><span>🔬</span> <span data-i18n="emp-title">§8. Empirical Studies</span></div>
+
+  <h2 data-i18n="emp-econ">8.1 Behavioral Economics</h2>
+  <table>
+    <thead><tr><th data-i18n="econ-phen">Phenomenon</th><th data-i18n="econ-class">Classical</th><th data-i18n="econ-s">𝕊 Explanation</th></tr></thead>
+    <tbody>
+      <tr><td data-i18n="econ-loss">Loss Aversion</td><td data-i18n="econ-loss-c">Prospect theory</td><td data-i18n="econ-loss-s">Losses reduce BS faster than equivalent gains increase it</td></tr>
+      <tr><td data-i18n="econ-frame">Framing Effects</td><td data-i18n="econ-frame-c">Context-dependent preferences</td><td data-i18n="econ-frame-s">Different frames activate different BS configurations</td></tr>
+      <tr><td data-i18n="econ-disc">Temporal Discounting</td><td data-i18n="econ-disc-c">Hyperbolic models</td><td data-i18n="econ-disc-s">Future events have lower BS (higher τ separation)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="emp-neuro">8.2 Neuroscience</h2>
+  <div class="eq">$$BS_{\text{neural}} = 1 - \frac{H_{\text{firing}}}{\log_2 N_{\text{neurons}}}$$
+    <div class="eq-lbl" data-i18n="neuro-lbl">Eq. (8.1) — Neural BS: normalized entropy of firing patterns. High BS = coherent synchronized patterns.</div>
+  </div>
+  <table>
+    <thead><tr><th data-i18n="neuro-state">State</th><th data-i18n="neuro-bs">BS Range</th><th data-i18n="neuro-char">Characteristics</th></tr></thead>
+    <tbody>
+      <tr><td data-i18n="neuro-awake">Alert consciousness</td><td>> 0.6</td><td data-i18n="neuro-awake-d">Focused attention, coherent neural patterns</td></tr>
+      <tr><td data-i18n="neuro-rem">REM sleep</td><td>0.4–0.6</td><td data-i18n="neuro-rem-d">Near ∞ — creative, relational processing</td></tr>
+      <tr><td data-i18n="neuro-deep">Deep sleep</td><td>0.3–0.4</td><td data-i18n="neuro-deep-d">Near 0ₚ — restoration, possibility field</td></tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="emp-eco">8.3 Ecological Systems</h2>
+  <div class="eq">$$BS_{\text{ecosystem}} = \frac{\text{clustering} \cdot \text{transitivity}}{1 + \text{modularity gap}}$$
+    <div class="eq-lbl" data-i18n="eco-lbl">Eq. (8.2) — Ecosystem BS. Collapse threshold: BS &lt; 0.2 (below 𝒞ℬ)</div>
+  </div>
+  <div class="page-num">7</div>
+</div>
+
+
+<!-- ========== COMPARATIVE / TOOLS / FUTURE ========== -->
+<div class="page" id="pg-compare">
+  <div class="part-hdr"><span>🔍</span> <span data-i18n="comp-title2">Part III — §9–11. Comparative Studies, Tools, Future</span></div>
+
+  <h2 id="pg-tools" data-i18n="compare-h">9.1 System 𝕊 vs. ZFC & Category Theory</h2>
+  <table>
+    <thead><tr><th data-i18n="cmp-feat">Feature</th><th>ZFC</th><th data-i18n="cmp-cat">Category Theory</th><th>System 𝕊</th></tr></thead>
+    <tbody>
+      <tr><td data-i18n="cmp-found">Foundations</td><td data-i18n="cmp-zfc-f">Axiomatic formal</td><td data-i18n="cmp-ct-f">Universal structures</td><td data-i18n="cmp-s-f">Ontological (❶ as source)</td></tr>
+      <tr><td data-i18n="cmp-comp">Completeness</td><td data-i18n="cmp-zfc-c">Incomplete (Gödel)</td><td data-i18n="cmp-ct-c">Framework-relative</td><td data-i18n="cmp-s-c">Open by design (❶ transcends)</td></tr>
+      <tr><td data-i18n="cmp-phys">Physical link</td><td data-i18n="cmp-zfc-p">None direct</td><td data-i18n="cmp-ct-p">Structural only</td><td data-i18n="cmp-s-p">Via BS and 𝒞ℬ (testable)</td></tr>
+    </tbody>
+  </table>
+
+  <h2 data-i18n="tools-h">10. Tools & Software</h2>
+  <table>
+    <thead><tr><th data-i18n="tools-res">Resource</th><th>URL / Detail</th></tr></thead>
+    <tbody>
+      <tr><td data-i18n="tools-gh">GitHub Repository</td><td>github.com/Eng4clay/The-Booker-Statement</td></tr>
+      <tr><td>SMath (Python)</td><td data-i18n="tools-py">Core BS, epiphany dynamics, algorithms</td></tr>
+      <tr><td>SSystem (R)</td><td data-i18n="tools-r">Statistical BS analysis for empirical data</td></tr>
+      <tr><td data-i18n="tools-dash">Interactive Dashboard</td><td>Dash/Plotly — cosmological & quantum simulations</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="pg-future" data-i18n="future-h">11. Future Roadmap</h2>
+  <div class="tl">
+    <div class="tl-item"><div class="tl-date">2026–2028</div><div class="tl-txt" data-i18n="road1">Phase I: Rigorous formalization; peer review; normalization fix for BS weights.</div></div>
+    <div class="tl-item"><div class="tl-date">2028–2031</div><div class="tl-txt" data-i18n="road2">Phase II: CMB frequency test with Planck/CMB-S4; Casimir experiment design.</div></div>
+    <div class="tl-item"><div class="tl-date">2031–2035</div><div class="tl-txt" data-i18n="road3">Phase III: Benchmark epiphany algorithms; release SMath on PyPI; launch problem database.</div></div>
+    <div class="tl-item"><div class="tl-date">2035+</div><div class="tl-txt" data-i18n="road4">Phase IV–V: AGI architecture; interdisciplinary integration; unified mathematics monograph.</div></div>
+  </div>
+  <div class="page-num">8</div>
+</div>
+
+
+<!-- ========== GLOSSARY ========== -->
+
+<!-- ========== TOOLS & SOFTWARE FULL (from original) ========== -->
+<div class="page" id="pg-tools-full">
+  <h2 class="pt">&#128218; Part 3 &mdash; Chapter 10: Tools &amp; Software</h2>
+  <div class="ea" contenteditable="false">
+  <h2 class="st"><span class="nb">10.1</span>SMath Python Library</h2>
+  <div style="background:#1a1a2e;color:#e0e0e0;padding:14px;border-radius:6px;font-family:monospace;font-size:12px;margin:12px 0;overflow-x:auto;">
+<pre style="margin:0;color:#e0e0e0;"><span style="color:#64b5f6;">import</span> smath <span style="color:#64b5f6;">as</span> S
+
+<span style="color:#81c784;"># Compute BS for a natural number</span>
+bs = S.structural_stability(n=<span style="color:#ffb74d;">7</span>)
+<span style="color:#e0e0e0;">print</span>(f<span style="color:#a5d6a7;">"BS(7) = {bs:.6f}"</span>)  <span style="color:#81c784;"># 0.181818</span>
+
+<span style="color:#81c784;"># Compute the Bouker Constant</span>
+CB = S.bouker_constant()
+<span style="color:#e0e0e0;">print</span>(f<span style="color:#a5d6a7;">"CB = {CB:.6e}"</span>)  <span style="color:#81c784;"># 6.184033e-42</span>
+
+<span style="color:#81c784;"># Trinitary neural network</span>
+model = S.TritaryNeuralNetwork(layers=[<span style="color:#ffb74d;">64</span>, <span style="color:#ffb74d;">32</span>, <span style="color:#ffb74d;">16</span>])
+model.fit(X_train, y_train, loss=<span style="color:#a5d6a7;">'trinitary'</span>)</pre></div>
+  <h2 class="st"><span class="nb">10.2</span>SSystem R Package</h2>
+  <div style="background:#1a1a2e;color:#e0e0e0;padding:14px;border-radius:6px;font-family:monospace;font-size:12px;margin:12px 0;overflow-x:auto;">
+<pre style="margin:0;color:#e0e0e0;"><span style="color:#64b5f6;">library</span>(SSystem)
+<span style="color:#81c784;"># Compute BS for a dataset</span>
+result &lt;- compute_bs(data, tau = <span style="color:#ffb74d;">0.5</span>)
+plot_bs_distribution(result)
+<span style="color:#81c784;"># Test manifestation hypothesis</span>
+test &lt;- manifestation_test(observed, null_model = <span style="color:#a5d6a7;">"ZFC"</span>)
+summary(test)</pre></div>
+  <h2 class="st"><span class="nb">10.3</span>Resources</h2>
+  <div class="tw"><table><tr><th>Resource</th><th>URL / Location</th></tr>
+  <tr><td>GitHub Repository</td><td><code>github.com/Eng4clay/The-Booker-Statement-</code></td></tr>
+  <tr><td>SMath Library</td><td><code>github.com/bouker/SMath</code></td></tr>
+  <tr><td>SSystem Package</td><td><code>github.com/bouker/SSystem</code></td></tr>
+  <tr><td>Interactive Dashboard</td><td><code>github.com/bouker/SMath_Dash</code></td></tr>
+  <tr><td>Database Portal</td><td><code>db.smath.org</code></td></tr>
+  <tr><td>Educational Site</td><td><code>learn.smath.org</code></td></tr>
+  </table></div>
+  <h2 class="st"><span class="nb">10.4</span>Open Problems Database</h2>
+  <div class="tw"><table><tr><th>Domain</th><th>Problem</th><th>Priority</th><th>Status</th></tr>
+  <tr><td>Mathematics</td><td>Formal P=NP Manifestation proof</td><td>Critical</td><td>In Progress</td></tr>
+  <tr><td>Physics</td><td>CMB 0.115 Hz detection</td><td>High</td><td>Proposed</td></tr>
+  <tr><td>Physics</td><td>Boukerion particle search</td><td>High</td><td>Theoretical</td></tr>
+  <tr><td>Mathematics</td><td>BS-Riemann Hypothesis proof</td><td>High</td><td>In Progress</td></tr>
+  <tr><td>Computing</td><td>TNN benchmark &amp; deployment</td><td>Medium</td><td>Beta</td></tr>
+  <tr><td>Neuroscience</td><td>BS-consciousness correlation study</td><td>Medium</td><td>Design Phase</td></tr>
+  </table></div>
+  </div>
+  <div class="pn">12</div>
+</div>
+
+<!-- ========== FUTURE VISIONS (from original) ========== -->
+<div class="page" id="pg-future-full">
+  <h2 class="pt">&#128218; Part 3 &mdash; Chapter 11: Future Visions</h2>
+  <div class="ea" contenteditable="false">
+  <h2 class="st"><span class="nb">11.1</span>Research Roadmap 2026&ndash;2036</h2>
+  <div class="tw"><table><tr><th>Phase</th><th>Period</th><th>Goals</th><th>Key Milestones</th></tr>
+  <tr><td>Phase 1</td><td>2026&ndash;2028</td><td>Formal Mathematical Foundations</td><td>BS normalization proof; Manifestation Spaces formalization; ZFC compatibility</td></tr>
+  <tr><td>Phase 2</td><td>2028&ndash;2031</td><td>Physical Verification</td><td>CMB data analysis; Casimir correction; Boukerion search at CERN</td></tr>
+  <tr><td>Phase 3</td><td>2031&ndash;2034</td><td>Computational Implementation</td><td>SMath v2.0; TNN production; AGI prototype</td></tr>
+  <tr><td>Phase 4</td><td>2034&ndash;2036</td><td>Interdisciplinary Integration</td><td>BS standard across sciences; unified curriculum; Nobel Prize submission</td></tr>
+  </table></div>
+  <h2 class="st"><span class="nb">11.2</span>Education Vision</h2>
+  <div class="fd"><div class="fdt">Figure 11.1 &mdash; System &#120138; Curriculum Flow</div>
+  <div class="fr">
+    <div class="fn" style="background:var(--red);border-color:var(--redD);">Ontology<br><small>Grades 1&ndash;3</small></div>
+    <div class="fa">&rarr;</div>
+    <div class="fn" style="background:var(--yel);border-color:var(--yelD);">Arithmetic as<br>Manifestation<br><small>Grades 3&ndash;6</small></div>
+    <div class="fa">&rarr;</div>
+    <div class="fn" style="background:var(--grn);border-color:var(--grnD);">Algebra &amp;<br>BS Analysis<br><small>Grades 7&ndash;10</small></div>
+    <div class="fa">&rarr;</div>
+    <div class="fn" style="background:var(--purL);border-color:var(--pur);">Unified<br>System &#120138;<br><small>Grade 11+</small></div>
+  </div></div>
+  <h2 class="st"><span class="nb">11.3</span>Vision for Unified Mathematics</h2>
+  <ol>
+  <li>Bridge pure and applied mathematics via BS metric</li>
+  <li>Connect mathematics to physics through the Bouker Constant &#119966;&#8492;</li>
+  <li>Ground philosophy in mathematical rigor and empirical testability</li>
+  <li>Provide AI and cognitive science with a framework for consciousness</li>
+  <li>Unify the Islamic Golden Age intellectual tradition with modern science</li>
+  </ol>
+  <div class="ib def"><strong>The Ultimate Goal</strong><p>A single framework &mdash; System &#120138; &mdash; that serves simultaneously as the most fundamental mathematical theory, the most complete physical theory, the most coherent philosophical system, and the blueprint for conscious AI. Not through reductionism, but through recognition that &#10122;, 0<sub>p</sub>, and &infin; are the three faces of a single underlying reality.</p></div>
+  <div class="ib qt"><strong>Closing Reflection</strong>"I did not write this system to demolish what others have built, but to complete what they began. Mathematics lost its soul when it separated from philosophy, and philosophy lost its rigor when it separated from mathematics. I wanted to restore the connection between them, and to remind everyone that number is not merely a tool, but a letter in the book of the cosmos." &mdash; <em>Ahmad Ali Bouker Nasib</em></div>
+  </div>
+  <div class="pn">13</div>
+</div>
+
+<div class="page" id="pg-glossary">
+  <div class="part-hdr"><span>📚</span> <span data-i18n="glos-title">Appendix A — Glossary</span></div>
+  <table>
+    <thead><tr><th>Symbol</th><th data-i18n="glos-term">Term</th><th data-i18n="glos-def">Definition</th></tr></thead>
+    <tbody>
+      <tr><td>❶</td><td data-i18n="gl-abs">Absolute One</td><td data-i18n="gl-abs-d">Unconditioned source; BS=1; ❶∉ℝ.</td></tr>
+      <tr><td>0ₚ</td><td data-i18n="gl-pos">Pure Possibility</td><td data-i18n="gl-pos-d">Active nothingness; BS=1/3; all potential states.</td></tr>
+      <tr><td>∞</td><td data-i18n="gl-rel">Relational Infinity</td><td data-i18n="gl-rel-d">Space of all relations; BS=2/3.</td></tr>
+      <tr><td>①</td><td data-i18n="gl-nat">Natural One</td><td data-i18n="gl-nat-d">First stable epiphany; 1∈ℕ; BS=2/3.</td></tr>
+      <tr><td>BS</td><td data-i18n="gl-bs">Structural Stability</td><td data-i18n="gl-bs-d">Measure of coherence ∈[0,1].</td></tr>
+      <tr><td>𝒞ℬ</td><td data-i18n="gl-cb">Bouker Constant</td><td data-i18n="gl-cb-d">6.184033×10⁻⁴²; minimum stability for manifestation.</td></tr>
+      <tr><td>τ</td><td data-i18n="gl-tau">Epiphany Parameter</td><td data-i18n="gl-tau-d">Governs evolution of BS weights; fifth dimension.</td></tr>
+      <tr><td>η</td><td data-i18n="gl-eta">Epiphany</td><td data-i18n="gl-eta-d">η = δ∘ε; maps Absolute to Natural One.</td></tr>
+      <tr><td>⊕</td><td data-i18n="gl-sum">Triadic Sum</td><td data-i18n="gl-sum-d">A⊕B = AB+BA; non-commutative.</td></tr>
+      <tr><td>Boukon</td><td data-i18n="gl-bk">Predicted Particle</td><td data-i18n="gl-bk-d">Mass ≈1.35×10⁻⁴⁹ kg; dark matter candidate.</td></tr>
+    </tbody>
+  </table>
+  <div class="page-num">App-A</div>
+</div>
+
+
+<!-- ========== REFERENCES ========== -->
+<div class="page" id="pg-refs">
+  <div class="part-hdr"><span>📖</span> <span data-i18n="refs-title">Appendix B — References</span></div>
+  <h3 data-i18n="refs-primary">Classical & Historical Sources</h3>
+  <p style="font-family:var(--fs);font-size:9pt;line-height:2">
+  Al-Kindi (c.850). <em>Risala fi al-'Aql</em>.<br>
+  Al-Farabi (c.950). <em>Ara' Ahl al-Madina al-Fadila</em>.<br>
+  Ibn Sina / Avicenna (1027). <em>Kitab al-Shifa: Ilahiyyat</em>.<br>
+  Plato (c.380 BCE). <em>Timaeus &amp; The Republic</em>.<br>
+  Plotinus (c.270 CE). <em>The Enneads</em>.<br>
+  Hegel, G.W.F. (1807). <em>Phenomenology of Spirit</em>.<br>
+  Kant, I. (1781). <em>Critique of Pure Reason</em>.
+  </p>
+  <h3 data-i18n="refs-math">Mathematical Foundations</h3>
+  <p style="font-family:var(--fs);font-size:9pt;line-height:2">
+  Gödel, K. (1931). Über formal unentscheidbare Sätze. <em>Monatshefte für Mathematik</em>, 38, 173–198.<br>
+  Cohen, P. (1963). Independence of the Continuum Hypothesis. <em>PNAS</em>, 50(6), 1143–1148.<br>
+  Russell, B. &amp; Whitehead, A.N. (1910). <em>Principia Mathematica</em>.<br>
+  Riemann, B. (1859). Über die Anzahl der Primzahlen. <em>Berliner Akademie</em>.
+  </p>
+  <h3 data-i18n="refs-phys">Theoretical Physics</h3>
+  <p style="font-family:var(--fs);font-size:9pt;line-height:2">
+  Einstein, A. (1915). Die Feldgleichungen der Gravitation. <em>Preussische Akademie</em>.<br>
+  Friedmann, A. (1922). Über die Krümmung des Raumes. <em>Z. Physik</em>, 10, 377.<br>
+  Heisenberg, W. (1927). Über den anschaulichen Inhalt. <em>Z. Physik</em>, 43, 172.<br>
+  Witten, E. (1995). String Theory Dynamics. <em>Nuclear Physics B</em>, 443, 85.<br>
+  Bell, J.S. (1964). On the EPR Paradox. <em>Physics</em>, 1(3), 195.
+  </p>
+  <h3 data-i18n="refs-cont">Contemporary Works</h3>
+  <p style="font-family:var(--fs);font-size:9pt;line-height:2">
+  Penrose, R. (2004). <em>The Road to Reality</em>. Jonathan Cape.<br>
+  Tegmark, M. (2014). <em>Our Mathematical Universe</em>. Knopf.<br>
+  Bouker Naseeb, A.A. (2026). <em>The Booker Statement — System 𝕊</em>. GitHub.
+  </p>
+  <div class="page-num">App-B</div>
+</div>
+
+
+<!-- ========== CREDENTIALS ========== -->
+<div class="page" id="pg-creds">
+  <div class="part-hdr"><span>🏅</span> <span data-i18n="creds-title">Appendix C — Author Credentials & Final Note</span></div>
+
+  <div class="af">
+    <div class="av">A</div>
+    <div class="ai">
+      <strong>Eng. Ahmad Ali Bouker Naseeb</strong>
+      <p>م. أحمد علي بوكر نسيب</p>
+      <p data-i18n="cred-deg">B.Sc. Mechanical Engineering — University of Jazan, KSA, 2018</p>
+      <p data-i18n="cred-cert">Stanford Online: Quantum Mechanics for Scientists and Engineers 1</p>
+      <p data-i18n="cred-res">Independent Researcher in Philosophy of Mathematics & Theoretical Physics, 2015–present</p>
+      <p>📧 <a href="/cdn-cgi/l/email-protection#33765d541d525b5e52571d01030202515c58524173545e525a5f1d505c5e"><span class="__cf_email__" data-cfemail="3c79525b125d54515d58120e0c0d0d5e53575d4e7c5b515d5550125f5351">[email&#160;protected]</span></a></p>
+      <p>🔗 <a href="https://github.com/Eng4clay/The-Booker-Statement-">github.com/Eng4clay/The-Booker-Statement</a></p>
+    </div>
+  </div>
+
+  <h2 data-i18n="ack-title" style="margin-top:20px">Acknowledgements</h2>
+  <blockquote data-i18n="ack-quote">
+    "This thesis is not mine — it belongs to everyone who seeks truth. I am only the one who gave it mathematical form. Its essence is older than me and will endure after me. I dedicate it to every scholar who ever asked: what is the nature of number? What is the source of existence? How do the many arise from the one?"
+    <br><br>— Ahmad Ali Bouker Naseeb, 2026
+  </blockquote>
+
+  <div style="text-align:center;background:var(--p);color:#fff;padding:16px;border-radius:12px;margin-top:18px">
+    <div style="font-size:16pt;letter-spacing:3px;margin-bottom:4px">❶ ⊕ 0<sub>p</sub> = ① = ∞</div>
+    <div style="font-size:9pt;opacity:.8" data-i18n="final-tag">System 𝕊 | The Booker Statement | Enhanced Edition 2026</div>
+    <div style="font-size:8.5pt;opacity:.7;margin-top:4px" data-i18n="final-pred">🔭 Testable: CMB ~0.115 Hz · Casimir modification · Boukon particle · 𝒞ℬ = 6.184 × 10⁻⁴²</div>
+  </div>
+
+  <div class="ib yellow" style="margin-top:14px">
+    <h4 data-i18n="license-h">Licensing</h4>
+    <p data-i18n="license-p">© 2026 Ahmad Ali Bouker Naseeb. All mathematical formulations, BS framework, Bouker Constant derivation, and System 𝕊 architecture are original contributions. Freely citable for academic purposes with attribution. Commercial use requires written permission.</p>
+  </div>
+  <div class="page-num">App-C</div>
+</div>
+
+</div><!-- end #doc -->
+
+<!-- ===== TRANSLATION ENGINE ===== -->
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* =====================================================
+   MULTI-LANGUAGE INSTANT TRANSLATION ENGINE
+   Supports: EN, AR, FR, DE, ES, ZH, RU, TR, JA, UR
+   ===================================================== */
+
+const TRANSLATIONS = {
+en: {
+  /* toolbar/ui */
+  "badge":"Enhanced Edition 2026 | Scholarly Monograph",
+  "main-title":"The Booker Statement",
+  "subtitle":"A Unified Mathematical Trinity — System 𝕊",
+  "arabic-title":"الأطروحة البوكرية في الثالوث الرياضي — نظام 𝕊",
+  "cover-desc":"A unified philosophical-mathematical-physical framework proposing testable predictions for the structure of existence, number theory, quantum mechanics, and cosmological constants.",
+  "author-info":"Author Information",
+  "author-degree":"B.Sc. Mechanical Engineering — University of Jazan, 2018",
+  "author-cert":"Stanford Online: Quantum Mechanics for Scientists and Engineers 1",
+  "copyright":"© 2026 Ahmad Ali Bouker Naseeb | All Rights Reserved",
+  "card-abs":"The Absolute One", "card-pos":"Pure Possibility", "card-rel":"Relational Infinity",
+  /* abstract */
+  "abs-title":"Executive Summary — What is System 𝕊?",
+  "abs-core":"The Core Idea",
+  "abs-desc":"System 𝕊 (the Mathematical Trinity) is a unified philosophical-mathematical-physical framework built on three ontological axioms.",
+  "abs-pred":"Testable Predictions",
+  "th-pred":"Prediction","th-dom":"Domain","th-val":"Value/Form","th-det":"Detection",
+  "pred1-n":"CMB Modulation","pred1-d":"Cosmology","pred1-det":"BICEP / Planck",
+  "pred2-n":"Casimir Modification","pred2-d":"Quantum vacuum","pred2-det":"Force measurement",
+  "pred3-n":"Boukon Particle","pred3-d":"Dark matter","pred3-det":"Gravitational lensing",
+  "pred4-n":"Bouker Constant","pred4-d":"Dimensionless","pred4-det":"Multi-domain test",
+  "eq01-lbl":"Central Equation of System 𝕊 — Eq. (0.1)",
+  /* part 1 */
+  "p1-title":"Part I — §1. Introduction to the Mathematical Trinity",
+  "intro-why":"Why the Trinity?",
+  "intro-p1":"Since the dawn of philosophical inquiry, the question of foundational structure has persisted. Deep examination reveals a recurring triadic pattern: unity as source, potentiality as medium, relation as actualization.",
+  "def-title":"Definition 1.1 — The Three Axioms of System 𝕊",
+  "def-abs":"The Absolute One:","def-abs-desc":"Unconditioned existence, prime mover.",
+  "def-pos":"Pure Possibility:","def-pos-desc":"Active nothingness, field of undetermined probabilities.",
+  "def-rel":"Relational Infinity:","def-rel-desc":"Space of relations and networks.",
+  "hist-title":"Historical Evolution of Triadic Concepts",
+  "th-period":"Period","th-thinker":"Thinker","th-contrib":"Main Contribution","th-link":"Link to 𝕊",
+  "pyth":'"All is number"',"pyth-l":"Numbers as epiphanies",
+  "kindi":"True One ≠ Numerical One","farabi":"Emanation: One → Multiplicity","farabi-l":"η as manifestation",
+  "sina":"Necessary vs. Possible","sina-l":"❶ / 0ₚ","hegel":"Dialectic (Thesis-Synthesis)",
+  "godel":"Incompleteness theorems","godel-l":"❶ transcends formalism",
+  "s-contrib":"Mathematical Trinity","s-l":"Complete integration",
+  "crisis-title":"Foundations Crisis",
+  "crisis-h":"Three Fatal Blows to Hilbert's Program",
+  "crisis1-n":"Russell's Paradox (1901):","crisis1":"The set of all sets not containing themselves leads to contradiction.",
+  "crisis2-n":"Gödel's Theorems (1931):","crisis2":"Any formal system including arithmetic is either incomplete or inconsistent.",
+  "crisis3-n":"Cohen's Independence (1963):","crisis3":"The Continuum Hypothesis is independent of ZFC.",
+  /* operations/BS */
+  "ops-title":"§2. Dynamic Operations & §3. Structural Stability",
+  "ops-h":"Dynamic Operations",
+  "op-name":"Operation","op-def":"Definition","op-meaning":"Philosophical Meaning",
+  "op1":"Gift","op1-m":"Absolute overflows without diminishment",
+  "op2":"Formation","op2-m":"Possibility organizes into relations",
+  "op3":"Epiphany","op3-m":"Absolute manifests as Natural One",
+  "op4":"Successor","op4-m":"Numbers emerge through connection to source",
+  "bs-h":"Structural Stability (BS)",
+  "bs-eq-lbl":"Eq. (1.3) — General BS Formula",
+  "bs-weights-lbl":"Eq. (1.4) — Weighting functions for BS",
+  "bs-n-lbl":"Eq. (1.5) — BS for natural numbers. Decreases → 0 as n → ∞",
+  "bschart-title":"Figure — BS(n) Stability Curve for n = 1 to 10",
+  /* physics */
+  "phys-title":"Part II — §5. Physics Applications",
+  "phys-cosmo":"5.1 Modified Friedmann Equations",
+  "fried-lbl":"Eq. (5.1) — Modified Friedmann. Extra term represents 'epiphany pressure'.",
+  "phys-qm":"5.2 Modified Quantum Mechanics",
+  "heis-lbl":"Eq. (5.3) — Modified Uncertainty Principle.",
+  "born-lbl":"Eq. (5.4) — Modified Born Rule.",
+  "ent-lbl":"Eq. (5.5) — Entanglement BS.",
+  "phys-const":"5.3 The Bouker Constant 𝒞ℬ",
+  "cb-lbl":"Eq. (5.6) — Bouker Constant. Derived from prime 23.",
+  "pred-cmb":"🌌 CMB Prediction","pred-particle":"🔬 Boukon Particle",
+  /* math */
+  "math-title":"§4. Mathematical Applications",
+  "math-primes":"4.1 Primes as Pure Epiphanies",
+  "prime-lbl":"Eq. (4.1) — BS for prime numbers.",
+  "zeta-lbl":"Eq. (4.2-4.3) — Prime sum theorem; BS-weighted Riemann zeta.",
+  "math-geo":"4.2 Non-Euclidean Geometry",
+  "geo-type":"Geometry","geo-curv":"Curvature κ","geo-elem":"𝕊 Element","geo-phys":"Physical Analog",
+  "geo-ell":"Elliptic","geo-ell-p":"Closed universe","geo-hyp":"Hyperbolic","geo-hyp-p":"Open universe",
+  "geo-euc":"Euclidean","geo-euc-p":"Flat universe",
+  "math-top":"4.3 Algebraic Topology","top-lbl":"Eq. (4.4-4.5) — BS-enriched topological structures.",
+  /* comp */
+  "comp-title":"§6. Computational Applications & AI",
+  "comp-np":"6.1 Epiphany Algorithms for NP Problems",
+  "comp-prob":"Problem","comp-class":"Classical","comp-s":"𝕊 Approach","comp-imp":"Improvement",
+  "tsp-s":"BS landscape navigation","sat-s":"Triadic clause reduction",
+  "kp-s":"BS dynamic programming","kp-imp":"Structural pruning",
+  "comp-tnn":"6.2 Triadic Neural Networks (TNN)","tnn-lbl":"Eq. (6.1) — Triadic loss function.",
+  "tnn-arch":"TNN Architecture: Three Functional Layers",
+  "tnn-l1":"Extracts invariant features; high BS; promotes consistency.",
+  "tnn-l2":"Generates hypotheses; stochastic dropout for exploration.",
+  "tnn-l3":"Graph-based relational reasoning; output layer.",
+  "comp-agi":"6.3 AGI Consciousness Model","agi-lbl":"Eq. (6.2) — Consciousness integral.",
+  "comp-code":"6.4 Python Implementation",
+  /* phil */
+  "phil-title":"§7. Philosophical Applications",
+  "phil-logic":"7.1 Triadic Logic",
+  "logic-val":"Value","logic-int":"Interpretation",
+  "logic-abs":"Absolute Truth","logic-abs-d":"Necessary, tautological",
+  "logic-pos":"Pure Possibility","logic-pos-d":"Undetermined, contingent",
+  "logic-rel":"Relational Truth","logic-rel-d":"True within context, empirical",
+  "phil-epis":"7.2 Structural Epistemology",
+  "epis-def":"Definition 7.1 — Structural Truth",
+  "epis-desc":"Truth is graded: T(P) = BS(epistemic system). Truth measures coherence with the Absolute.",
+  "phil-mystical":"7.3 Mystical Experience & BS",
+  "myst-lbl":"Eq. (7.2) — Non-dual awareness.",
+  "phil-dial":"7.4 Virtual Philosophical Dialogues",
+  "dial-godel-q":"Incompleteness shows limits of any formal system. How does 𝕊 avoid this?",
+  "dial-godel-a":"System 𝕊 is an ontological framework, not a formal system. ❶ transcends all formalism.",
+  "dial-ein-q":"God does not play dice. Can τ restore determinism?",
+  "dial-ein-a":"Structural determinism: BS evolves deterministically while actualization retains spontaneity.",
+  /* empirical */
+  "emp-title":"§8. Empirical Studies",
+  "emp-econ":"8.1 Behavioral Economics",
+  "econ-phen":"Phenomenon","econ-class":"Classical","econ-s":"𝕊 Explanation",
+  "econ-loss":"Loss Aversion","econ-loss-c":"Prospect theory","econ-loss-s":"Losses reduce BS faster than gains increase it",
+  "econ-frame":"Framing Effects","econ-frame-c":"Context-dependent","econ-frame-s":"Different frames activate different BS configurations",
+  "econ-disc":"Temporal Discounting","econ-disc-c":"Hyperbolic models","econ-disc-s":"Future events have lower BS (higher τ separation)",
+  "emp-neuro":"8.2 Neuroscience","neuro-lbl":"Eq. (8.1) — Neural BS.",
+  "neuro-state":"State","neuro-bs":"BS Range","neuro-char":"Characteristics",
+  "neuro-awake":"Alert consciousness","neuro-awake-d":"Focused attention, coherent neural patterns",
+  "neuro-rem":"REM sleep","neuro-rem-d":"Near ∞ — creative, relational processing",
+  "neuro-deep":"Deep sleep","neuro-deep-d":"Near 0ₚ — restoration, possibility field",
+  "emp-eco":"8.3 Ecological Systems","eco-lbl":"Eq. (8.2) — Ecosystem BS.",
+  /* part 3 */
+  "comp-title2":"Part III — §9–11. Comparative Studies, Tools, Future",
+  "compare-h":"9.1 System 𝕊 vs. ZFC & Category Theory",
+  "cmp-feat":"Feature","cmp-cat":"Category Theory",
+  "cmp-found":"Foundations","cmp-zfc-f":"Axiomatic formal","cmp-ct-f":"Universal structures","cmp-s-f":"Ontological (❶ as source)",
+  "cmp-comp":"Completeness","cmp-zfc-c":"Incomplete (Gödel)","cmp-ct-c":"Framework-relative","cmp-s-c":"Open by design",
+  "cmp-phys":"Physical link","cmp-zfc-p":"None direct","cmp-ct-p":"Structural only","cmp-s-p":"Via BS and 𝒞ℬ (testable)",
+  "tools-h":"10. Tools & Software",
+  "tools-res":"Resource","tools-gh":"GitHub Repository","tools-py":"Core BS, epiphany dynamics, algorithms","tools-r":"Statistical BS analysis","tools-dash":"Interactive Dashboard",
+  "future-h":"11. Future Roadmap",
+  "road1":"Phase I: Rigorous formalization; peer review; normalization fix for BS weights.",
+  "road2":"Phase II: CMB frequency test; Casimir experiment design.",
+  "road3":"Phase III: Benchmark epiphany algorithms; release SMath on PyPI.",
+  "road4":"Phase IV–V: AGI architecture; unified mathematics monograph.",
+  /* glossary */
+  "glos-title":"Appendix A — Glossary",
+  "glos-term":"Term","glos-def":"Definition",
+  "gl-abs":"Absolute One","gl-abs-d":"Unconditioned source; BS=1; ❶∉ℝ.",
+  "gl-pos":"Pure Possibility","gl-pos-d":"Active nothingness; BS=1/3.",
+  "gl-rel":"Relational Infinity","gl-rel-d":"Space of all relations; BS=2/3.",
+  "gl-nat":"Natural One","gl-nat-d":"First stable epiphany; 1∈ℕ; BS=2/3.",
+  "gl-bs":"Structural Stability","gl-bs-d":"Measure of coherence ∈[0,1].",
+  "gl-cb":"Bouker Constant","gl-cb-d":"6.184×10⁻⁴²; minimum stability for manifestation.",
+  "gl-tau":"Epiphany Parameter","gl-tau-d":"Governs BS weights; fifth dimension.",
+  "gl-eta":"Epiphany","gl-eta-d":"η = δ∘ε; maps Absolute to Natural One.",
+  "gl-sum":"Triadic Sum","gl-sum-d":"A⊕B = AB+BA; non-commutative.",
+  "gl-bk":"Predicted Particle","gl-bk-d":"Mass ≈1.35×10⁻⁴⁹ kg; dark matter candidate.",
+  /* refs */
+  "refs-title":"Appendix B — References",
+  "refs-primary":"Classical & Historical Sources","refs-math":"Mathematical Foundations",
+  "refs-phys":"Theoretical Physics","refs-cont":"Contemporary Works",
+  /* creds */
+  "creds-title":"Appendix C — Author Credentials & Final Note",
+  "cred-deg":"B.Sc. Mechanical Engineering — University of Jazan, KSA, 2018",
+  "cred-cert":"Stanford Online: Quantum Mechanics for Scientists and Engineers 1",
+  "cred-res":"Independent Researcher in Philosophy of Mathematics & Theoretical Physics, 2015–present",
+  "ack-title":"Acknowledgements",
+  "ack-quote":"\"This thesis is not mine — it belongs to everyone who seeks truth. I am only the one who gave it mathematical form. Its essence is older than me and will endure after me.\" — Ahmad Ali Bouker Naseeb, 2026",
+  "final-tag":"System 𝕊 | The Booker Statement | Enhanced Edition 2026",
+  "final-pred":"🔭 Testable: CMB ~0.115 Hz · Casimir modification · Boukon particle · 𝒞ℬ = 6.184 × 10⁻⁴²",
+  "license-h":"Licensing","license-p":"© 2026 Ahmad Ali Bouker Naseeb. All rights reserved. Freely citable with attribution.",
+  /* toc */
+  "toc-front":"FRONT MATTER","toc-cover":"Cover Page","toc-abstract":"Executive Summary",
+  "toc-p1":"PART I — THEORY","toc-intro":"§1. Introduction","toc-defs":"1.1 Foundational Definitions",
+  "toc-hist":"1.2 Historical Evolution","toc-crisis":"1.3 Foundations Crisis","toc-ops":"§2. Dynamic Operations",
+  "toc-bs":"§3. Structural Stability BS","toc-p2":"PART II — APPLICATIONS",
+  "toc-math":"§4. Mathematical","toc-phys":"§5. Physics","toc-comp":"§6. Computational / AI",
+  "toc-phil":"§7. Philosophical","toc-emp":"§8. Empirical Studies",
+  "toc-p3":"PART III — FUTURE","toc-compare":"§9. Comparative","toc-tools":"§10. Tools","toc-future":"§11. Future",
+  "toc-app":"APPENDICES","toc-glossary":"Glossary","toc-refs":"References","toc-creds":"Credentials"
+},
+
+ar: {
+  "badge":"النسخة المحسّنة 2026 | أطروحة علمية",
+  "main-title":"البيان البوكري",
+  "subtitle":"الثالوث الرياضي الموحّد — نظام 𝕊",
+  "arabic-title":"The Booker Statement — System 𝕊",
+  "cover-desc":"إطار فلسفي-رياضي-فيزيائي موحّد يقدم تنبؤات قابلة للاختبار حول بنية الوجود ونظرية الأعداد وميكانيكا الكم والثوابت الكونية.",
+  "author-info":"معلومات المؤلف",
+  "author-degree":"بكالوريوس هندسة ميكانيكية — جامعة جازان، 2018",
+  "author-cert":"Stanford Online: ميكانيكا الكم للعلماء والمهندسين 1",
+  "copyright":"© 2026 م. أحمد علي بوكر نسيب | جميع الحقوق محفوظة",
+  "card-abs":"الواحد المطلق","card-pos":"الإمكان المحض","card-rel":"اللانهاية العلائقية",
+  "abs-title":"الملخص التنفيذي — ما هو نظام 𝕊؟",
+  "abs-core":"الفكرة المحورية",
+  "abs-desc":"نظام 𝕊 (الثالوث الرياضي) هو إطار فلسفي-رياضي-فيزيائي موحّد مبنيٌّ على ثلاث مسلّمات وجودية.",
+  "abs-pred":"تنبؤات قابلة للاختبار",
+  "th-pred":"التنبؤ","th-dom":"المجال","th-val":"القيمة","th-det":"طريقة الكشف",
+  "pred1-n":"تعديل CMB","pred1-d":"علم الكون","pred1-det":"بيسيب / بلانك",
+  "pred2-n":"تعديل تأثير كازيمير","pred2-d":"التفريغ الكمومي","pred2-det":"قياس القوة",
+  "pred3-n":"جسيم البوكرون","pred3-d":"المادة المظلمة","pred3-det":"العدسة الجاذبية",
+  "pred4-n":"ثابت بوكر","pred4-d":"بلا أبعاد","pred4-det":"اختبار متعدد المجالات",
+  "eq01-lbl":"المعادلة المركزية لنظام 𝕊 — معادلة (0.1)",
+  "p1-title":"الجزء الأول — §1. مقدمة الثالوث الرياضي",
+  "intro-why":"لماذا الثالوث؟",
+  "intro-p1":"منذ فجر التفكير الفلسفي، استمر السؤال عن البنية التأسيسية. التأمل العميق يكشف نمطاً ثلاثياً متكرراً: الوحدة كمصدر، الإمكان كوسيط، العلاقة كتحقق.",
+  "def-title":"تعريف 1.1 — المسلمات الثلاث لنظام 𝕊",
+  "def-abs":"❶ الواحد المطلق:","def-abs-desc":"الوجود غير المشروط، المحرك الأول.",
+  "def-pos":"0ₚ الإمكان المحض:","def-pos-desc":"العدم النشط، حقل الاحتمالات غير المتعيّنة.",
+  "def-rel":"∞ اللانهاية العلائقية:","def-rel-desc":"فضاء الشبكات والعلاقات.",
+  "hist-title":"التطور التاريخي للمفاهيم الثالوثية",
+  "th-period":"الفترة","th-thinker":"المفكّر","th-contrib":"الإسهام الرئيسي","th-link":"الصلة بـ 𝕊",
+  "pyth":'"كل شيء عدد"',"pyth-l":"الأعداد كتجليات",
+  "kindi":"الواحد الحق ≠ الواحد العددي","farabi":"الفيض: من الواحد إلى الكثرة","farabi-l":"η كآلية تجلٍّ",
+  "sina":"الواجب مقابل الممكن","sina-l":"❶ / 0ₚ","hegel":"الجدلية (أطروحة-تركيب)",
+  "godel":"مبرهنات عدم الاكتمال","godel-l":"❶ يتجاوز الصورانية",
+  "s-contrib":"الثالوث الرياضي","s-l":"التكامل الشامل",
+  "crisis-title":"أزمة الأسس الرياضية",
+  "crisis-h":"ثلاث ضربات قاتلة لبرنامج هيلبرت",
+  "crisis1-n":"مفارقة راسل (1901):","crisis1":"مجموعة كل المجموعات التي لا تحتوي على نفسها تؤدي إلى تناقض.",
+  "crisis2-n":"مبرهنات غودل (1931):","crisis2":"أي نظام صوري يتضمن الحساب إما ناقص أو غير متسق.",
+  "crisis3-n":"استقلالية كوهين (1963):","crisis3":"فرضية الاستمرار مستقلة عن ZFC.",
+  "ops-title":"§2. العمليات الديناميكية و§3. الاستقرار البنيوي",
+  "ops-h":"العمليات الديناميكية",
+  "op-name":"العملية","op-def":"التعريف","op-meaning":"المعنى الفلسفي",
+  "op1":"الهبة","op1-m":"المطلق يفيض دون نقصان",
+  "op2":"التشكّل","op2-m":"الإمكان ينتظم في علاقات",
+  "op3":"التجلي","op3-m":"المطلق يتجلى في الواحد الطبيعي",
+  "op4":"الخليفة","op4-m":"الأعداد تنبثق بالاتصال بالمصدر",
+  "bs-h":"الاستقرار البنيوي (BS)",
+  "bs-eq-lbl":"معادلة (1.3) — الصيغة العامة لـ BS",
+  "bs-weights-lbl":"معادلة (1.4) — دوال الترجيح لـ BS",
+  "bs-n-lbl":"معادلة (1.5) — BS للأعداد الطبيعية. يتناقص نحو 0 عندما n→∞",
+  "bschart-title":"شكل — منحنى BS(n) للأعداد من 1 إلى 10",
+  "phys-title":"الجزء الثاني — §5. التطبيقات الفيزيائية",
+  "phys-cosmo":"5.1 معادلات فريدمان المعدّلة",
+  "fried-lbl":"معادلة (5.1) — فريدمان المعدّلة. الحد الإضافي يمثل 'ضغط التجلي'.",
+  "phys-qm":"5.2 ميكانيكا الكم المعدّلة",
+  "heis-lbl":"معادلة (5.3) — مبدأ الريبة المعدّل.",
+  "born-lbl":"معادلة (5.4) — قاعدة بورن المعدّلة.",
+  "ent-lbl":"معادلة (5.5) — BS للتشابك الكمومي.",
+  "phys-const":"5.3 ثابت بوكر 𝒞ℬ",
+  "cb-lbl":"معادلة (5.6) — ثابت بوكر. مشتق من العدد الأولي 23.",
+  "pred-cmb":"🌌 تنبؤ CMB","pred-particle":"🔬 جسيم البوكرون",
+  "math-title":"§4. التطبيقات الرياضية",
+  "math-primes":"4.1 الأعداد الأولية كتجليات نقية",
+  "prime-lbl":"معادلة (4.1) — BS للأعداد الأولية.",
+  "zeta-lbl":"معادلة (4.2-4.3) — نظرية مجموع الأوليات؛ دالة زيتا الموزونة.",
+  "math-geo":"4.2 الهندسة اللاإقليدية",
+  "geo-type":"نوع الهندسة","geo-curv":"الانحناء κ","geo-elem":"عنصر 𝕊","geo-phys":"المقابل الفيزيائي",
+  "geo-ell":"إهليلجية","geo-ell-p":"كون مغلق","geo-hyp":"زائدية","geo-hyp-p":"كون مفتوح",
+  "geo-euc":"إقليدية","geo-euc-p":"كون مسطح",
+  "math-top":"4.3 الطوبولوجيا الجبرية","top-lbl":"معادلة (4.4-4.5) — بنى طوبولوجية موزونة بـ BS.",
+  "comp-title":"§6. التطبيقات الحاسوبية والذكاء الاصطناعي",
+  "comp-np":"6.1 خوارزميات التجلي لمسائل NP",
+  "comp-prob":"المسألة","comp-class":"الكلاسيكي","comp-s":"نهج 𝕊","comp-imp":"التحسين",
+  "tsp-s":"الملاحة في بيئة BS","sat-s":"تحليل الجمل الثالوثي",
+  "kp-s":"البرمجة الديناميكية بـ BS","kp-imp":"تقليص بنيوي",
+  "comp-tnn":"6.2 الشبكات العصبية الثالوثية (TNN)","tnn-lbl":"معادلة (6.1) — دالة الخسارة الثالوثية.",
+  "tnn-arch":"بنية TNN: ثلاث طبقات وظيفية",
+  "tnn-l1":"تستخرج الميزات الثابتة؛ BS عالية؛ تعزز التسق.",
+  "tnn-l2":"تولّد الفرضيات؛ استكشاف عشوائي.",
+  "tnn-l3":"استدلال علائقي بالرسوم البيانية؛ طبقة الإخراج.",
+  "comp-agi":"6.3 نموذج وعي AGI","agi-lbl":"معادلة (6.2) — تكامل الوعي. الإنسان: Ψ ≈ 0.57.",
+  "comp-code":"6.4 التطبيق بلغة Python",
+  "phil-title":"§7. التطبيقات الفلسفية",
+  "phil-logic":"7.1 المنطق الثالوثي",
+  "logic-val":"القيمة","logic-int":"التفسير",
+  "logic-abs":"الصدق المطلق","logic-abs-d":"ضروري، تحصيلي",
+  "logic-pos":"الإمكان المحض","logic-pos-d":"غير متعيّن، طارئ",
+  "logic-rel":"الصدق العلائقي","logic-rel-d":"صحيح في السياق، تجريبي",
+  "phil-epis":"7.2 نظرية المعرفة البنيوية",
+  "epis-def":"تعريف 7.1 — الحقيقة البنيوية",
+  "epis-desc":"الحقيقة ليست ثنائية بل مدرّجة: T(P) = BS(النظام المعرفي). الحقيقة تقيس التماسك مع المطلق.",
+  "phil-mystical":"7.3 التجربة الصوفية وـ BS",
+  "myst-lbl":"معادلة (7.2) — الوعي غير الثنائي.",
+  "phil-dial":"7.4 حوارات فلسفية افتراضية",
+  "dial-godel-q":"عدم الاكتمال يُظهر حدود أي نظام صوري. كيف يتجنب نظام 𝕊 ذلك؟",
+  "dial-godel-a":"نظام 𝕊 إطار وجودي لا نظام صوري. ❶ يتجاوز كل صورانية.",
+  "dial-ein-q":"الله لا يلعب النرد. هل يمكن لـ τ إعادة الحتمية؟",
+  "dial-ein-a":"حتمية بنيوية: BS يتطور بشكل محدد بينما تحقق الإمكانات يحتفظ بالتلقائية.",
+  "emp-title":"§8. الدراسات التجريبية",
+  "emp-econ":"8.1 الاقتصاد السلوكي",
+  "econ-phen":"الظاهرة","econ-class":"التفسير الكلاسيكي","econ-s":"تفسير 𝕊",
+  "econ-loss":"النفور من الخسارة","econ-loss-c":"نظرية المستقبلية","econ-loss-s":"الخسائر تخفض BS أسرع من رفع المكاسب له",
+  "econ-frame":"تأثيرات التأطير","econ-frame-c":"تفضيلات سياقية","econ-frame-s":"أطر مختلفة تُنشّط تكوينات BS مختلفة",
+  "econ-disc":"الخصم الزمني","econ-disc-c":"نماذج قطعية","econ-disc-s":"الأحداث المستقبلية لها BS أدنى",
+  "emp-neuro":"8.2 علم الأعصاب","neuro-lbl":"معادلة (8.1) — BS العصبي.",
+  "neuro-state":"الحالة","neuro-bs":"نطاق BS","neuro-char":"الخصائص",
+  "neuro-awake":"الوعي اليقظ","neuro-awake-d":"انتباه مركّز، أنماط عصبية متسقة",
+  "neuro-rem":"نوم REM","neuro-rem-d":"قرب ∞ — معالجة إبداعية علائقية",
+  "neuro-deep":"النوم العميق","neuro-deep-d":"قرب 0ₚ — استعادة، حقل الإمكان",
+  "emp-eco":"8.3 الأنظمة البيئية","eco-lbl":"معادلة (8.2) — BS النظام البيئي.",
+  "comp-title2":"الجزء الثالث — §9–11. الدراسات المقارنة والأدوات والمستقبل",
+  "compare-h":"9.1 نظام 𝕊 مقابل ZFC ونظرية الفئات",
+  "cmp-feat":"الميزة","cmp-cat":"نظرية الفئات",
+  "cmp-found":"الأسس","cmp-zfc-f":"صوري بديهي","cmp-ct-f":"بنى كونية","cmp-s-f":"وجودي (❶ كمصدر)",
+  "cmp-comp":"الاكتمال","cmp-zfc-c":"ناقص (غودل)","cmp-ct-c":"نسبي للإطار","cmp-s-c":"مفتوح بالتصميم",
+  "cmp-phys":"الصلة الفيزيائية","cmp-zfc-p":"لا صلة مباشرة","cmp-ct-p":"بنوية فقط","cmp-s-p":"عبر BS و𝒞ℬ (قابل للاختبار)",
+  "tools-h":"10. الأدوات والبرمجيات",
+  "tools-res":"المصدر","tools-gh":"مستودع GitHub","tools-py":"BS الأساسية، ديناميكيات التجلي، الخوارزميات",
+  "tools-r":"التحليل الإحصائي لـ BS","tools-dash":"لوحة تفاعلية",
+  "future-h":"11. خارطة الطريق المستقبلية",
+  "road1":"المرحلة الأولى: التأسيس الصارم؛ المراجعة العلمية؛ إصلاح التطبيع.",
+  "road2":"المرحلة الثانية: اختبار تردد CMB؛ تصميم تجربة كازيمير.",
+  "road3":"المرحلة الثالثة: مقارنة خوارزميات التجلي؛ نشر SMath على PyPI.",
+  "road4":"المرحلتان الرابعة والخامسة: بنية AGI؛ أطروحة الرياضيات الموحدة.",
+  "glos-title":"الملحق أ — معجم المصطلحات",
+  "glos-term":"المصطلح","glos-def":"التعريف",
+  "gl-abs":"الواحد المطلق","gl-abs-d":"المصدر غير المشروط؛ BS=1؛ ❶∉ℝ.",
+  "gl-pos":"الإمكان المحض","gl-pos-d":"العدم النشط؛ BS=1/3.",
+  "gl-rel":"اللانهاية العلائقية","gl-rel-d":"فضاء كل العلاقات؛ BS=2/3.",
+  "gl-nat":"الواحد الطبيعي","gl-nat-d":"أول تجلٍّ مستقر؛ 1∈ℕ؛ BS=2/3.",
+  "gl-bs":"الاستقرار البنيوي","gl-bs-d":"مقياس التماسك ∈[0,1].",
+  "gl-cb":"ثابت بوكر","gl-cb-d":"6.184×10⁻⁴²؛ أدنى استقرار للتجلي.",
+  "gl-tau":"معامل التجلي","gl-tau-d":"يتحكم في أوزان BS؛ البعد الخامس.",
+  "gl-eta":"التجلي","gl-eta-d":"η = δ∘ε؛ يحوّل المطلق إلى الواحد الطبيعي.",
+  "gl-sum":"الجمع الثالوثي","gl-sum-d":"A⊕B = AB+BA؛ غير تبادلي.",
+  "gl-bk":"الجسيم المتنبأ به","gl-bk-d":"كتلة ≈1.35×10⁻⁴⁹ كغ؛ مرشح للمادة المظلمة.",
+  "refs-title":"الملحق ب — المراجع",
+  "refs-primary":"المصادر الكلاسيكية والتاريخية","refs-math":"أسس الرياضيات",
+  "refs-phys":"الفيزياء النظرية","refs-cont":"الأعمال المعاصرة",
+  "creds-title":"الملحق ج — بيانات المؤلف والملاحظة الختامية",
+  "cred-deg":"بكالوريوس هندسة ميكانيكية — جامعة جازان، المملكة العربية السعودية، 2018",
+  "cred-cert":"Stanford Online: ميكانيكا الكم للعلماء والمهندسين 1",
+  "cred-res":"باحث مستقل في فلسفة الرياضيات والفيزياء النظرية، منذ 2015",
+  "ack-title":"شكر وتقدير",
+  "ack-quote":"\"الأطروحة ليست ملكي، إنها ملك لكل من يبحث عن الحقيقة. أنا فقط من صاغها في قالب رياضي. جوهرها أقدم مني وسيبقى بعدي.\" — أحمد علي بوكر نسيب، 2026",
+  "final-tag":"نظام 𝕊 | البيان البوكري | النسخة المحسّنة 2026",
+  "final-pred":"🔭 قابل للاختبار: CMB ~0.115 هرتز · تعديل كازيمير · جسيم البوكرون · 𝒞ℬ = 6.184 × 10⁻⁴²",
+  "license-h":"الترخيص","license-p":"© 2026 م. أحمد علي بوكر نسيب. جميع الحقوق محفوظة. يُسمح الاستشهاد الأكاديمي مع الإسناد.",
+  "toc-front":"المقدمات","toc-cover":"صفحة الغلاف","toc-abstract":"الملخص التنفيذي",
+  "toc-p1":"الجزء الأول — النظرية","toc-intro":"§1. مقدمة","toc-defs":"1.1 التعريفات الأساسية",
+  "toc-hist":"1.2 التطور التاريخي","toc-crisis":"1.3 أزمة الأسس","toc-ops":"§2. العمليات",
+  "toc-bs":"§3. الاستقرار البنيوي","toc-p2":"الجزء الثاني — التطبيقات",
+  "toc-math":"§4. الرياضيات","toc-phys":"§5. الفيزياء","toc-comp":"§6. الحاسوب / AI",
+  "toc-phil":"§7. الفلسفة","toc-emp":"§8. الدراسات التجريبية",
+  "toc-p3":"الجزء الثالث — المستقبل","toc-compare":"§9. المقارنة","toc-tools":"§10. الأدوات","toc-future":"§11. المستقبل",
+  "toc-app":"الملاحق","toc-glossary":"المعجم","toc-refs":"المراجع","toc-creds":"بيانات المؤلف"
+},
+
+fr: {
+  "badge":"Édition Améliorée 2026 | Monographie Scientifique",
+  "main-title":"L'Énoncé Bouker",
+  "subtitle":"Trinité Mathématique Unifiée — Système 𝕊",
+  "arabic-title":"الأطروحة البوكرية في الثالوث الرياضي",
+  "cover-desc":"Un cadre philosophique-mathématique-physique unifié proposant des prédictions vérifiables.",
+  "card-abs":"L'Un Absolu","card-pos":"Possibilité Pure","card-rel":"Infini Relationnel",
+  "abs-title":"Résumé Exécutif — Qu'est-ce que le Système 𝕊 ?",
+  "abs-core":"L'Idée Centrale","abs-pred":"Prédictions Vérifiables",
+  "th-pred":"Prédiction","th-dom":"Domaine","th-val":"Valeur","th-det":"Détection",
+  "pred1-n":"Modulation CMB","pred1-d":"Cosmologie","pred1-det":"BICEP/Planck",
+  "pred2-n":"Correction Casimir","pred2-d":"Vide quantique","pred2-det":"Mesure de force",
+  "pred3-n":"Particule Boukon","pred3-d":"Matière noire","pred3-det":"Lentille gravitationnelle",
+  "pred4-n":"Constante Bouker","pred4-d":"Adimensionnelle","pred4-det":"Test multi-domaine",
+  "eq01-lbl":"Équation Centrale du Système 𝕊 — Éq. (0.1)",
+  "p1-title":"Partie I — §1. Introduction à la Trinité Mathématique",
+  "intro-why":"Pourquoi la Trinité ?","crisis-title":"Crise des Fondements",
+  "phys-title":"Partie II — §5. Applications Physiques","math-title":"§4. Applications Mathématiques",
+  "comp-title":"§6. Applications Informatiques","phil-title":"§7. Applications Philosophiques",
+  "emp-title":"§8. Études Empiriques","comp-title2":"Partie III — §9-11",
+  "glos-title":"Annexe A — Glossaire","refs-title":"Annexe B — Références","creds-title":"Annexe C — Crédentiels",
+  "ack-title":"Remerciements","tools-h":"10. Outils","future-h":"11. Feuille de Route",
+  "final-tag":"Système 𝕊 | L'Énoncé Bouker | Édition Améliorée 2026",
+  "license-h":"Licence","license-p":"© 2026 Ahmad Ali Bouker Naseeb. Tous droits réservés.",
+  "toc-front":"INTRODUCTION","toc-cover":"Page de Couverture","toc-abstract":"Résumé",
+  "toc-p1":"PARTIE I","toc-p2":"PARTIE II","toc-p3":"PARTIE III","toc-app":"ANNEXES",
+  "toc-intro":"§1. Introduction","toc-defs":"1.1 Définitions","toc-hist":"1.2 Évolution Historique",
+  "toc-crisis":"1.3 Crise des Fondements","toc-ops":"§2. Opérations","toc-bs":"§3. Stabilité BS",
+  "toc-math":"§4. Mathématiques","toc-phys":"§5. Physique","toc-comp":"§6. Informatique",
+  "toc-phil":"§7. Philosophie","toc-emp":"§8. Empirique","toc-compare":"§9. Comparaison",
+  "toc-tools":"§10. Outils","toc-future":"§11. Avenir","toc-glossary":"Glossaire",
+  "toc-refs":"Références","toc-creds":"Crédentiels",
+  "author-info":"Informations sur l'Auteur","copyright":"© 2026 Ahmad Ali Bouker Naseeb"
+},
+
+de: {
+  "badge":"Erweiterte Ausgabe 2026 | Wissenschaftliche Monographie",
+  "main-title":"Das Bouker-Statement",
+  "subtitle":"Vereinte Mathematische Dreiheit — System 𝕊",
+  "arabic-title":"الأطروحة البوكرية في الثالوث الرياضي",
+  "cover-desc":"Ein vereintes philosophisch-mathematisch-physikalisches Rahmenwerk mit testbaren Vorhersagen.",
+  "card-abs":"Das Absolute Eine","card-pos":"Reine Möglichkeit","card-rel":"Relationale Unendlichkeit",
+  "abs-title":"Zusammenfassung — Was ist System 𝕊?",
+  "abs-core":"Die Kernidee","abs-pred":"Testbare Vorhersagen",
+  "th-pred":"Vorhersage","th-dom":"Bereich","th-val":"Wert","th-det":"Nachweis",
+  "pred1-n":"CMB-Modulation","pred2-n":"Casimir-Korrektur","pred3-n":"Boukon-Teilchen","pred4-n":"Bouker-Konstante",
+  "eq01-lbl":"Zentrale Gleichung von System 𝕊 — Gl. (0.1)",
+  "p1-title":"Teil I — §1. Einführung in die Mathematische Dreiheit",
+  "intro-why":"Warum die Dreiheit?","crisis-title":"Grundlagenkrise",
+  "phys-title":"Teil II — §5. Physikalische Anwendungen","math-title":"§4. Mathematische Anwendungen",
+  "comp-title":"§6. Informatik / KI","phil-title":"§7. Philosophische Anwendungen",
+  "emp-title":"§8. Empirische Studien","comp-title2":"Teil III — §9-11",
+  "glos-title":"Anhang A — Glossar","refs-title":"Anhang B — Literatur","creds-title":"Anhang C — Angaben",
+  "ack-title":"Danksagungen","tools-h":"10. Werkzeuge","future-h":"11. Zukunftsplan",
+  "final-tag":"System 𝕊 | Das Bouker-Statement | Erweiterte Ausgabe 2026",
+  "license-h":"Lizenz","license-p":"© 2026 Ahmad Ali Bouker Naseeb. Alle Rechte vorbehalten.",
+  "author-info":"Autorinformationen","copyright":"© 2026 Ahmad Ali Bouker Naseeb",
+  "toc-front":"VORDERTEIL","toc-cover":"Titelseite","toc-abstract":"Zusammenfassung",
+  "toc-p1":"TEIL I","toc-p2":"TEIL II","toc-p3":"TEIL III","toc-app":"ANHÄNGE",
+  "toc-intro":"§1. Einführung","toc-defs":"1.1 Definitionen","toc-hist":"1.2 Geschichte",
+  "toc-crisis":"1.3 Grundlagenkrise","toc-ops":"§2. Operationen","toc-bs":"§3. Stabilität BS",
+  "toc-math":"§4. Mathematik","toc-phys":"§5. Physik","toc-comp":"§6. Informatik",
+  "toc-phil":"§7. Philosophie","toc-emp":"§8. Empirisch","toc-compare":"§9. Vergleich",
+  "toc-tools":"§10. Werkzeuge","toc-future":"§11. Zukunft","toc-glossary":"Glossar",
+  "toc-refs":"Literatur","toc-creds":"Angaben"
+},
+
+es: {
+  "badge":"Edición Mejorada 2026 | Monografía Científica",
+  "main-title":"El Enunciado Bouker",
+  "subtitle":"Trinidad Matemática Unificada — Sistema 𝕊",
+  "arabic-title":"الأطروحة البوكرية في الثالوث الرياضي",
+  "cover-desc":"Un marco filosófico-matemático-físico unificado con predicciones verificables.",
+  "card-abs":"El Uno Absoluto","card-pos":"Posibilidad Pura","card-rel":"Infinito Relacional",
+  "abs-title":"Resumen Ejecutivo — ¿Qué es el Sistema 𝕊?",
+  "abs-core":"La Idea Central","abs-pred":"Predicciones Verificables",
+  "th-pred":"Predicción","th-dom":"Dominio","th-val":"Valor","th-det":"Detección",
+  "pred1-n":"Modulación CMB","pred2-n":"Corrección Casimir","pred3-n":"Partícula Boukon","pred4-n":"Constante Bouker",
+  "eq01-lbl":"Ecuación Central del Sistema 𝕊 — Ec. (0.1)",
+  "p1-title":"Parte I — §1. Introducción a la Trinidad Matemática",
+  "intro-why":"¿Por qué la Trinidad?","crisis-title":"Crisis de Fundamentos",
+  "glos-title":"Apéndice A — Glosario","refs-title":"Apéndice B — Referencias","creds-title":"Apéndice C — Credenciales",
+  "ack-title":"Agradecimientos","tools-h":"10. Herramientas","future-h":"11. Hoja de Ruta",
+  "final-tag":"Sistema 𝕊 | El Enunciado Bouker | Edición Mejorada 2026",
+  "license-h":"Licencia","license-p":"© 2026 Ahmad Ali Bouker Naseeb. Todos los derechos reservados.",
+  "author-info":"Información del Autor","copyright":"© 2026 Ahmad Ali Bouker Naseeb",
+  "toc-front":"PRELIMINARES","toc-cover":"Portada","toc-abstract":"Resumen",
+  "toc-p1":"PARTE I","toc-p2":"PARTE II","toc-p3":"PARTE III","toc-app":"APÉNDICES",
+  "toc-intro":"§1. Introducción","toc-defs":"1.1 Definiciones","toc-hist":"1.2 Historia",
+  "toc-crisis":"1.3 Crisis","toc-ops":"§2. Operaciones","toc-bs":"§3. Estabilidad BS",
+  "toc-math":"§4. Matemáticas","toc-phys":"§5. Física","toc-comp":"§6. Computación",
+  "toc-phil":"§7. Filosofía","toc-emp":"§8. Empírico","toc-compare":"§9. Comparación",
+  "toc-tools":"§10. Herramientas","toc-future":"§11. Futuro","toc-glossary":"Glosario",
+  "toc-refs":"Referencias","toc-creds":"Credenciales",
+  "phys-title":"Parte II — §5. Aplicaciones Físicas","math-title":"§4. Aplicaciones Matemáticas",
+  "comp-title":"§6. Aplicaciones Computacionales","phil-title":"§7. Aplicaciones Filosóficas",
+  "emp-title":"§8. Estudios Empíricos","comp-title2":"Parte III — §9-11"
+},
+
+zh: {
+  "badge":"2026年增强版 | 学术专著",
+  "main-title":"布克声明",
+  "subtitle":"统一数学三位一体 — S系统",
+  "arabic-title":"البيان البوكري — نظام 𝕊",
+  "cover-desc":"一个统一的哲学-数学-物理框架，提出关于存在结构的可测试预测。",
+  "card-abs":"绝对之一","card-pos":"纯粹可能性","card-rel":"关系无限",
+  "abs-title":"执行摘要 — S系统是什么？",
+  "abs-core":"核心思想","abs-pred":"可测试预测",
+  "th-pred":"预测","th-dom":"领域","th-val":"数值","th-det":"探测方法",
+  "pred1-n":"CMB调制","pred2-n":"卡西米尔修正","pred3-n":"布克子粒子","pred4-n":"布克常数",
+  "eq01-lbl":"S系统核心方程 — 方程(0.1)",
+  "p1-title":"第一部分 — §1. 数学三位一体简介",
+  "intro-why":"为何是三位一体？","crisis-title":"基础危机",
+  "glos-title":"附录A — 词汇表","refs-title":"附录B — 参考文献","creds-title":"附录C — 作者资质",
+  "ack-title":"致谢","tools-h":"10. 工具与软件","future-h":"11. 未来路线图",
+  "final-tag":"S系统 | 布克声明 | 2026年增强版",
+  "license-h":"许可证","license-p":"© 2026 Ahmad Ali Bouker Naseeb. 保留所有权利。",
+  "author-info":"作者信息","copyright":"© 2026 Ahmad Ali Bouker Naseeb",
+  "toc-front":"前置内容","toc-cover":"封面","toc-abstract":"执行摘要",
+  "toc-p1":"第一部分","toc-p2":"第二部分","toc-p3":"第三部分","toc-app":"附录",
+  "toc-intro":"§1. 简介","toc-defs":"1.1 定义","toc-hist":"1.2 历史","toc-crisis":"1.3 危机",
+  "toc-ops":"§2. 运算","toc-bs":"§3. 结构稳定性","toc-math":"§4. 数学","toc-phys":"§5. 物理",
+  "toc-comp":"§6. 计算","toc-phil":"§7. 哲学","toc-emp":"§8. 实证",
+  "toc-compare":"§9. 比较","toc-tools":"§10. 工具","toc-future":"§11. 未来",
+  "toc-glossary":"词汇表","toc-refs":"参考文献","toc-creds":"作者资质",
+  "phys-title":"第二部分 — §5. 物理应用","math-title":"§4. 数学应用",
+  "comp-title":"§6. 计算应用","phil-title":"§7. 哲学应用",
+  "emp-title":"§8. 实证研究","comp-title2":"第三部分 — §9-11"
+},
+
+ru: {
+  "badge":"Улучшенное издание 2026 | Научная монография",
+  "main-title":"Заявление Бокера",
+  "subtitle":"Единая Математическая Троица — Система 𝕊",
+  "arabic-title":"البيان البوكري — نظام 𝕊",
+  "cover-desc":"Единая философско-математико-физическая структура с проверяемыми предсказаниями.",
+  "card-abs":"Абсолютная Единица","card-pos":"Чистая Возможность","card-rel":"Реляционная Бесконечность",
+  "abs-title":"Краткое резюме — Что такое Система 𝕊?",
+  "abs-core":"Основная идея","abs-pred":"Проверяемые предсказания",
+  "th-pred":"Предсказание","th-dom":"Область","th-val":"Значение","th-det":"Обнаружение",
+  "pred1-n":"Модуляция РКМ","pred2-n":"Поправка Казимира","pred3-n":"Частица Букон","pred4-n":"Константа Бокера",
+  "eq01-lbl":"Центральное уравнение Системы 𝕊 — Ур. (0.1)",
+  "p1-title":"Часть I — §1. Введение в Математическую Троицу",
+  "intro-why":"Почему Троица?","crisis-title":"Кризис оснований",
+  "glos-title":"Приложение А — Глоссарий","refs-title":"Приложение Б — Ссылки","creds-title":"Приложение В — Данные автора",
+  "ack-title":"Благодарности","tools-h":"10. Инструменты","future-h":"11. Дорожная карта",
+  "final-tag":"Система 𝕊 | Заявление Бокера | Улучшенное издание 2026",
+  "license-h":"Лицензия","license-p":"© 2026 Ахмад Али Бокер Насиб. Все права защищены.",
+  "author-info":"Информация об авторе","copyright":"© 2026 Ахмад Али Бокер Насиб",
+  "toc-front":"ПРЕДИСЛОВИЕ","toc-cover":"Титульный лист","toc-abstract":"Резюме",
+  "toc-p1":"ЧАСТЬ I","toc-p2":"ЧАСТЬ II","toc-p3":"ЧАСТЬ III","toc-app":"ПРИЛОЖЕНИЯ",
+  "toc-intro":"§1. Введение","toc-defs":"1.1 Определения","toc-hist":"1.2 История",
+  "toc-crisis":"1.3 Кризис","toc-ops":"§2. Операции","toc-bs":"§3. Структурная стабильность",
+  "toc-math":"§4. Математика","toc-phys":"§5. Физика","toc-comp":"§6. Компьютерные науки",
+  "toc-phil":"§7. Философия","toc-emp":"§8. Эмпирическое","toc-compare":"§9. Сравнение",
+  "toc-tools":"§10. Инструменты","toc-future":"§11. Будущее","toc-glossary":"Глоссарий",
+  "toc-refs":"Ссылки","toc-creds":"Данные автора",
+  "phys-title":"Часть II — §5. Физические приложения","math-title":"§4. Математические приложения",
+  "comp-title":"§6. Вычислительные приложения","phil-title":"§7. Философские приложения",
+  "emp-title":"§8. Эмпирические исследования","comp-title2":"Часть III — §9-11"
+},
+
+tr: {
+  "badge":"Geliştirilmiş Baskı 2026 | Bilimsel Monografi",
+  "main-title":"Bouker Bildirisi",
+  "subtitle":"Birleşik Matematiksel Üçlü — Sistem 𝕊",
+  "arabic-title":"البيان البوكري — نظام 𝕊",
+  "cover-desc":"Varoluşun yapısına ilişkin test edilebilir öngörüler sunan birleşik bir felsefi-matematiksel-fiziksel çerçeve.",
+  "card-abs":"Mutlak Bir","card-pos":"Saf Olasılık","card-rel":"İlişkisel Sonsuzluk",
+  "abs-title":"Yönetici Özeti — Sistem 𝕊 nedir?",
+  "abs-core":"Temel Fikir","abs-pred":"Test Edilebilir Öngörüler",
+  "th-pred":"Öngörü","th-dom":"Alan","th-val":"Değer","th-det":"Tespit",
+  "pred1-n":"CMB Modülasyonu","pred2-n":"Casimir Düzeltmesi","pred3-n":"Boukon Parçacığı","pred4-n":"Bouker Sabiti",
+  "eq01-lbl":"Sistem 𝕊'nin Merkezi Denklemi — Denk. (0.1)",
+  "p1-title":"Bölüm I — §1. Matematiksel Üçlüye Giriş",
+  "intro-why":"Neden Üçlü?","crisis-title":"Temel Kriz",
+  "glos-title":"Ek A — Sözlük","refs-title":"Ek B — Kaynakça","creds-title":"Ek C — Yazar Bilgileri",
+  "ack-title":"Teşekkürler","tools-h":"10. Araçlar","future-h":"11. Gelecek Planı",
+  "final-tag":"Sistem 𝕊 | Bouker Bildirisi | Geliştirilmiş Baskı 2026",
+  "license-h":"Lisans","license-p":"© 2026 Ahmad Ali Bouker Naseeb. Tüm hakları saklıdır.",
+  "author-info":"Yazar Bilgileri","copyright":"© 2026 Ahmad Ali Bouker Naseeb",
+  "toc-front":"ÖN BÖLÜM","toc-cover":"Kapak Sayfası","toc-abstract":"Özet",
+  "toc-p1":"BÖLÜM I","toc-p2":"BÖLÜM II","toc-p3":"BÖLÜM III","toc-app":"EKLER",
+  "toc-intro":"§1. Giriş","toc-defs":"1.1 Tanımlar","toc-hist":"1.2 Tarih","toc-crisis":"1.3 Kriz",
+  "toc-ops":"§2. İşlemler","toc-bs":"§3. Yapısal Kararlılık","toc-math":"§4. Matematik",
+  "toc-phys":"§5. Fizik","toc-comp":"§6. Hesaplama","toc-phil":"§7. Felsefe",
+  "toc-emp":"§8. Ampirik","toc-compare":"§9. Karşılaştırma","toc-tools":"§10. Araçlar",
+  "toc-future":"§11. Gelecek","toc-glossary":"Sözlük","toc-refs":"Kaynakça","toc-creds":"Yazar Bilgileri",
+  "phys-title":"Bölüm II — §5. Fiziksel Uygulamalar","math-title":"§4. Matematiksel Uygulamalar",
+  "comp-title":"§6. Hesaplamalı Uygulamalar","phil-title":"§7. Felsefi Uygulamalar",
+  "emp-title":"§8. Ampirik Çalışmalar","comp-title2":"Bölüm III — §9-11"
+},
+
+ja: {
+  "badge":"2026年改訂版 | 学術モノグラフ",
+  "main-title":"ブーカーの声明",
+  "subtitle":"統一数学三位一体 — Sシステム",
+  "arabic-title":"البيان البوكري — نظام 𝕊",
+  "cover-desc":"存在の構造に関する検証可能な予測を提案する統一的な哲学・数学・物理学的枠組み。",
+  "card-abs":"絶対的な一","card-pos":"純粋な可能性","card-rel":"関係的無限",
+  "abs-title":"エグゼクティブサマリー — Sシステムとは？",
+  "abs-core":"核心的アイデア","abs-pred":"検証可能な予測",
+  "th-pred":"予測","th-dom":"領域","th-val":"値","th-det":"検出",
+  "pred1-n":"CMB変調","pred2-n":"カシミール補正","pred3-n":"ブーコン粒子","pred4-n":"ブーカー定数",
+  "eq01-lbl":"Sシステムの中心方程式 — 式(0.1)",
+  "p1-title":"第1部 — §1. 数学的三位一体への入門",
+  "intro-why":"なぜ三位一体か？","crisis-title":"基礎の危機",
+  "glos-title":"付録A — 用語集","refs-title":"付録B — 参考文献","creds-title":"付録C — 著者情報",
+  "ack-title":"謝辞","tools-h":"10. ツールとソフトウェア","future-h":"11. 将来のロードマップ",
+  "final-tag":"Sシステム | ブーカーの声明 | 2026年改訂版",
+  "license-h":"ライセンス","license-p":"© 2026 Ahmad Ali Bouker Naseeb. 全著作権所有。",
+  "author-info":"著者情報","copyright":"© 2026 Ahmad Ali Bouker Naseeb",
+  "toc-front":"前付け","toc-cover":"表紙","toc-abstract":"要約",
+  "toc-p1":"第1部","toc-p2":"第2部","toc-p3":"第3部","toc-app":"付録",
+  "toc-intro":"§1. 序論","toc-defs":"1.1 定義","toc-hist":"1.2 歴史","toc-crisis":"1.3 危機",
+  "toc-ops":"§2. 演算","toc-bs":"§3. 構造的安定性","toc-math":"§4. 数学","toc-phys":"§5. 物理",
+  "toc-comp":"§6. 計算","toc-phil":"§7. 哲学","toc-emp":"§8. 実証",
+  "toc-compare":"§9. 比較","toc-tools":"§10. ツール","toc-future":"§11. 将来",
+  "toc-glossary":"用語集","toc-refs":"参考文献","toc-creds":"著者情報",
+  "phys-title":"第2部 — §5. 物理学的応用","math-title":"§4. 数学的応用",
+  "comp-title":"§6. 計算機応用","phil-title":"§7. 哲学的応用",
+  "emp-title":"§8. 実証的研究","comp-title2":"第3部 — §9-11"
+},
+
+ur: {
+  "badge":"بہتر ایڈیشن 2026 | علمی مونوگراف",
+  "main-title":"بوکر کا بیانیہ",
+  "subtitle":"متحد ریاضیاتی ثلاثیت — نظام 𝕊",
+  "arabic-title":"البيان البوكري — نظام 𝕊",
+  "cover-desc":"وجود کی ساخت کے بارے میں قابل آزمائش پیشگوئیوں کے ساتھ ایک متحد فلسفیانہ-ریاضیاتی-فزکس فریم ورک۔",
+  "card-abs":"مطلق ایک","card-pos":"خالص امکان","card-rel":"رابطاتی لامحدودیت",
+  "abs-title":"ایگزیکٹو سمری — نظام 𝕊 کیا ہے؟",
+  "abs-core":"بنیادی خیال","abs-pred":"قابل آزمائش پیشگوئیاں",
+  "th-pred":"پیشگوئی","th-dom":"شعبہ","th-val":"قدر","th-det":"پتہ لگانا",
+  "pred1-n":"CMB تبدیلی","pred2-n":"کیسیمیر اصلاح","pred3-n":"بوکون ذرہ","pred4-n":"بوکر ثابت",
+  "eq01-lbl":"نظام 𝕊 کی مرکزی مساوات — مساوات (0.1)",
+  "p1-title":"حصہ اول — §1. ریاضیاتی ثلاثیت کا تعارف",
+  "intro-why":"ثلاثیت کیوں؟","crisis-title":"بنیادوں کا بحران",
+  "glos-title":"ضمیمہ الف — اصطلاحات","refs-title":"ضمیمہ ب — حوالہ جات","creds-title":"ضمیمہ ج — مصنف کی معلومات",
+  "ack-title":"شکریہ","tools-h":"10. اوزار","future-h":"11. مستقبل کا نقشہ",
+  "final-tag":"نظام 𝕊 | بوکر کا بیانیہ | بہتر ایڈیشن 2026",
+  "license-h":"لائسنس","license-p":"© 2026 احمد علی بوکر نسیب۔ تمام حقوق محفوظ ہیں۔",
+  "author-info":"مصنف کی معلومات","copyright":"© 2026 احمد علی بوکر نسیب",
+  "toc-front":"پیش لفظ","toc-cover":"سرورق","toc-abstract":"خلاصہ",
+  "toc-p1":"حصہ اول","toc-p2":"حصہ دوم","toc-p3":"حصہ سوم","toc-app":"ضمائم",
+  "toc-intro":"§1. تعارف","toc-defs":"1.1 تعریفات","toc-hist":"1.2 تاریخ","toc-crisis":"1.3 بحران",
+  "toc-ops":"§2. آپریشن","toc-bs":"§3. ساختی استحکام","toc-math":"§4. ریاضیات","toc-phys":"§5. فزکس",
+  "toc-comp":"§6. کمپیوٹر","toc-phil":"§7. فلسفہ","toc-emp":"§8. تجرباتی",
+  "toc-compare":"§9. تقابل","toc-tools":"§10. اوزار","toc-future":"§11. مستقبل",
+  "toc-glossary":"اصطلاحات","toc-refs":"حوالہ جات","toc-creds":"مصنف کی معلومات",
+  "phys-title":"حصہ دوم — §5. فزکس کی ایپلی کیشنز","math-title":"§4. ریاضیاتی ایپلی کیشنز",
+  "comp-title":"§6. کمپیوٹر ایپلی کیشنز","phil-title":"§7. فلسفیانہ ایپلی کیشنز",
+  "emp-title":"§8. تجرباتی مطالعات","comp-title2":"حصہ سوم — §9-11"
+}
+};
+
+/* Language meta */
+const LANG_META = {
+  en: { name:"English",  flag:"🇬🇧", dir:"ltr", font:"Georgia, serif" },
+  ar: { name:"العربية",  flag:"🇸🇦", dir:"rtl", font:"Arial, Tahoma, sans-serif" },
+  fr: { name:"Français", flag:"🇫🇷", dir:"ltr", font:"Georgia, serif" },
+  de: { name:"Deutsch",  flag:"🇩🇪", dir:"ltr", font:"Georgia, serif" },
+  es: { name:"Español",  flag:"🇪🇸", dir:"ltr", font:"Georgia, serif" },
+  zh: { name:"中文",     flag:"🇨🇳", dir:"ltr", font:"SimSun, serif" },
+  ru: { name:"Русский",  flag:"🇷🇺", dir:"ltr", font:"Georgia, serif" },
+  tr: { name:"Türkçe",   flag:"🇹🇷", dir:"ltr", font:"Georgia, serif" },
+  ja: { name:"日本語",   flag:"🇯🇵", dir:"ltr", font:"MS Mincho, serif" },
+  ur: { name:"اردو",     flag:"🇵🇰", dir:"rtl", font:"Arial, Tahoma, sans-serif" }
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  if (!TRANSLATIONS[lang]) return;
+  currentLang = lang;
+  const meta = LANG_META[lang];
+  const dict = TRANSLATIONS[lang];
+  const enDict = TRANSLATIONS['en'];
+
+  /* show indicator */
+  const ind = document.getElementById('trans-indicator');
+  ind.classList.add('show');
+  document.getElementById('trans-flag').textContent = meta.flag;
+  document.getElementById('trans-text').textContent = meta.name + '...';
+
+  /* Apply direction and font */
+  document.getElementById('html-root').setAttribute('dir', meta.dir);
+  document.getElementById('body-root').style.fontFamily = meta.font;
+  if (meta.dir === 'rtl') {
+    document.getElementById('body-root').classList.add('rtl');
+    document.getElementById('doc').classList.add('full');
+    document.getElementById('sidebar').style.left = 'auto';
+    document.getElementById('sidebar').style.right = '0';
+    document.getElementById('doc').style.marginLeft = '0';
+    document.getElementById('doc').style.marginRight = '250px';
+  } else {
+    document.getElementById('body-root').classList.remove('rtl');
+    document.getElementById('doc').classList.remove('full');
+    document.getElementById('sidebar').style.left = '0';
+    document.getElementById('sidebar').style.right = 'auto';
+    document.getElementById('doc').style.marginLeft = '250px';
+    document.getElementById('doc').style.marginRight = '0';
+  }
+
+  /* Translate all [data-i18n] elements */
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const text = dict[key] || enDict[key] || '';
+    if (text) el.textContent = text;
+  });
+
+  /* Update active language badge */
+  document.getElementById('active-lang-badge').textContent = lang.toUpperCase();
+
+  /* Update lang menu active state */
+  document.querySelectorAll('#lang-menu button').forEach(btn => {
+    btn.classList.remove('active-lang');
+    if (btn.textContent.includes(meta.name) || btn.onclick?.toString().includes(`'${lang}'`)) {
+      btn.classList.add('active-lang');
+    }
+  });
+
+  /* Close menu */
+  document.getElementById('lang-menu').classList.remove('open');
+
+  /* Hide indicator after 1.5s */
+  setTimeout(() => ind.classList.remove('show'), 1800);
+}
+
+function toggleLangMenu() {
+  document.getElementById('lang-menu').classList.toggle('open');
+}
+
+/* Close lang menu when clicking outside */
+document.addEventListener('click', (e) => {
+  if (!document.getElementById('lang-wrap').contains(e.target)) {
+    document.getElementById('lang-menu').classList.remove('open');
+  }
+});
+
+/* ===== SIDEBAR TOGGLE ===== */
+let sidebarVisible = true;
+function toggleSidebar() {
+  sidebarVisible = !sidebarVisible;
+  const sb = document.getElementById('sidebar');
+  const doc = document.getElementById('doc');
+  if (sidebarVisible) {
+    sb.classList.remove('hidden');
+    if (LANG_META[currentLang].dir === 'rtl') {
+      doc.style.marginRight = '250px';
+    } else {
+      doc.style.marginLeft = '250px';
+    }
+  } else {
+    sb.classList.add('hidden');
+    if (LANG_META[currentLang].dir === 'rtl') {
+      doc.style.marginRight = '0';
+    } else {
+      doc.style.marginLeft = '0';
+    }
+  }
+}
+
+/* ===== EDIT MODE ===== */
+const SECRET = "AntAhmed6388@";
+let editActive = false;
+
+function openEditModal() {
+  document.getElementById('editModal').classList.add('show');
+  document.getElementById('secretCode').value = '';
+  document.getElementById('codeError').textContent = '';
+}
+function closeEditModal() {
+  document.getElementById('editModal').classList.remove('show');
+}
+function checkCode() {
+  if (document.getElementById('secretCode').value === SECRET) {
+    closeEditModal();
+    toggleEditMode();
+  } else {
+    document.getElementById('codeError').textContent = '❌ Incorrect code.';
+  }
+}
+function toggleEditMode() {
+  editActive = !editActive;
+  document.getElementById('body-root').classList.toggle('edit-mode', editActive);
+  const btn = document.getElementById('editBtn');
+  btn.classList.toggle('active', editActive);
+  btn.innerHTML = editActive ? '✅ Editing' : '✏️ Edit';
+  document.querySelectorAll('.page p, .page h1, .page h2, .page h3, .page h4, .page li, .page td, .page blockquote').forEach(el => {
+    el.contentEditable = editActive ? 'true' : 'false';
+  });
+}
+
+/* ===== TOC ACTIVE HIGHLIGHT ===== */
+function updateTOC() {
+  let current = '';
+  document.querySelectorAll('.page').forEach(p => {
+    const r = p.getBoundingClientRect();
+    if (r.top <= 80 && r.bottom >= 80) current = p.id;
+  });
+  document.querySelectorAll('#sidebar a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateTOC, { passive: true });
+
+/* Smooth scroll for TOC */
+document.querySelectorAll('#sidebar a').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) t.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+/* Before/after p
