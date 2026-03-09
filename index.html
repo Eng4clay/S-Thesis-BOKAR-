@@ -92,7 +92,7 @@ try {
 /* ===== VARIABLES ===== */
 :root{
   --p:#2c1654; --a:#7b2d8b; --gold:#c9932a; --gold2:#e8aa40;
-  --lp:#d1c4e9; --lb:#b2ebf2; --lr:#ffcdd2; --ly:#fff9c4; --lg:#c8e6c9;
+  --lp:#d1c4e9; --lb:#b2ebf2; --lr:#ffcdd2; --ly:#fff9c4; --lg:#c8e6c9;.
   --text:#1a1a2e; --bg:#f0edf8; --white:#fff;
   --border:#e0d7f0; --shadow:0 6px 30px rgba(44,22,84,.14);
   --ff:'Cormorant Garamond','Georgia','Times New Roman',serif;
@@ -752,6 +752,16 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
   font-family:var(--fs);font-weight:700;
 }
 #comm-fab-badge.visible{display:flex}
+
+  .comment-reply {
+  background: rgba(255,255,255,0.03) !important;
+  border-left: 2px solid var(--gold2) !important;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.reply-container {
+  margin-bottom: 15px;
+}
 </style>
 </head>
 <body id="body-root">
@@ -2785,6 +2795,7 @@ window.addEventListener('scroll',()=>{
 
 /* ===== EDIT MODE — AUTO SAVE TO LOCALSTORAGE ===== */
 const SECRET="AntAhmed6388@";
+let isAuthor = false; // لتحديد ما إذا كان المستخدم الحالي هو المؤلف
 let editActive=false;
 const EDIT_STORAGE_KEY='booker-edits-v2';
 
@@ -3168,15 +3179,16 @@ async function submitComment(){
   if(!text||text.length<10){alert('Please write a comment of at least 10 characters.');return;}
   const btn=document.getElementById('comm-btn');
   btn.disabled=true;btn.textContent='⏳ Submitting...';
-  const comment={
-    ts:Date.now(),
-    name:name,
-    titleRole:document.getElementById('comm-title-sel').value,
-    affil:document.getElementById('comm-affil').value.trim(),
-    type:document.getElementById('comm-type-sel').value,
-    text:text,
-    liked:[],
-    isAuthorReply:false
+  const comment = {
+  ts: Date.now(),
+  name: name,
+  titleRole: document.getElementById('comm-title-sel').value,
+  affil: document.getElementById('comm-affil').value.trim(),
+  type: document.getElementById('comm-type-sel').value,
+  text: text,
+  liked: [],
+  isAuthorReply: false,
+  parentId: null  // <-- أضف هذا السطر
   };
   allComments.push(comment);
   try{
@@ -3241,7 +3253,150 @@ function sendEmailNotification(comment){
     }catch(e){}
   }
 }
+// ====== REPLY SYSTEM ======
+let replyingTo = null; // لتخزين timestamp التعليق الذي نرد عليه
 
+// عرض/إخفاء مربع الرد
+function toggleReplyBox(ts) {
+  const replyBox = document.getElementById(`reply-box-${ts}`);
+  if (replyBox) {
+    replyBox.style.display = replyBox.style.display === 'none' ? 'block' : 'none';
+  }
+}
+
+// إرسال رد
+async function submitReply(parentTs) {
+  const replyText = document.getElementById(`reply-text-${parentTs}`).value.trim();
+  if (!replyText || replyText.length < 2) {
+    alert('الرجاء كتابة رد بطول 2 أحرف على الأقل.');
+    return;
+  }
+
+  const name = document.getElementById('comm-name').value.trim() || 'زائر'; // يمكن استخدام اسم افتراضي أو جعله إجبارياً
+  if (!name) {
+    alert('الرجاء إدخال اسمك في حقل الاسم الرئيسي أولاً.');
+    return;
+  }
+
+  const comment = {
+    ts: Date.now(),
+    name: name,
+    titleRole: document.getElementById('comm-title-sel').value || 'متابع',
+    affil: document.getElementById('comm-affil').value.trim() || '',
+    type: 'Reply', // نوع خاص للردود
+    text: replyText,
+    liked: [],
+    isAuthorReply: false, // يمكن تمييز ردود المؤلف لاحقاً عبر البريد
+    parentId: parentTs  // ربط بالتعليق الأصلي
+  };
+
+  // إضافة التعليق إلى القائمة المؤقتة
+  allComments.push(comment);
+
+  try {
+    const saved = await window._bsStorage.set('booker-comments', allComments);
+    if (!saved) throw new Error('Storage failed');
+    
+    // إخفاء مربع الرد وتفريغه
+    document.getElementById(`reply-text-${parentTs}`).value = '';
+    document.getElementById(`reply-box-${parentTs}`).style.display = 'none';
+    
+    renderComments(); // إعادة عرض التعليقات
+    updateStats();
+    showToast('تم إرسال الرد بنجاح.');
+  } catch (e) {
+    alert('فشل في حفظ الرد. حاول مرة أخرى.');
+    allComments.pop(); // إزالة التعليق الفاشل
+  }
+}
+
+// تعديل دالة renderComments لعرض الردود تحت التعليقات الأصلية
+function renderComments() {
+  const list = document.getElementById('comm-list');
+  const empty = document.getElementById('comm-empty');
+  
+  // تصفية حسب التبويب الحالي (مع تجاهل الردود في التبويبات العادية)
+  let filtered = allComments;
+  if (currentFilter === 'reply') {
+    filtered = allComments.filter(c => c.parentId); // عرض الردود فقط
+  } else if (currentFilter !== 'all') {
+    filtered = allComments.filter(c => !c.parentId && c.type === currentFilter); // فقط التعليقات الأصلية حسب النوع
+  } else {
+    filtered = allComments.filter(c => !c.parentId); // الكل ما عدا الردود (لأن الردود ستظهر تحت كل تعليق)
+  }
+
+  // فرز التعليقات الأصلية من الأحدث إلى الأقدم
+  const sorted = [...filtered].sort((a, b) => b.ts - a.ts);
+
+  list.innerHTML = ''; // مسح القائمة
+
+  if (sorted.length === 0 && allComments.filter(c => !c.parentId).length === 0) {
+    empty.style.display = 'block';
+  } else {
+    empty.style.display = 'none';
+  }
+
+  // عرض كل تعليق أصلي مع ردوده
+  sorted.forEach(comment => {
+    const commentCard = createCommentElement(comment);
+    list.appendChild(commentCard);
+
+    // جلب الردود الخاصة بهذا التعليق
+    const replies = allComments.filter(c => c.parentId === comment.ts).sort((a, b) => a.ts - b.ts);
+    replies.forEach(reply => {
+      const replyCard = createCommentElement(reply, true); // true يعني أنها رد
+      replyCard.style.marginLeft = '30px'; // إزاحة بصرية للردود
+      list.appendChild(replyCard);
+    });
+
+    // إضافة زر الرد ومربع النص تحت التعليق (إذا كان المستخدم يريد الرد)
+    const replyContainer = document.createElement('div');
+    replyContainer.className = 'reply-container';
+    replyContainer.style.marginLeft = '30px';
+    replyContainer.style.marginTop = '8px';
+    replyContainer.innerHTML = `
+      <button class="cc-like" onclick="toggleReplyBox(${comment.ts})">💬 رد</button>
+      <div id="reply-box-${comment.ts}" style="display:none; margin-top:8px;">
+        <textarea id="reply-text-${comment.ts}" class="comm-field full" placeholder="اكتب ردك هنا..." rows="2"></textarea>
+        <button class="comm-submit" style="margin-top:5px;" onclick="submitReply(${comment.ts})">إرسال الرد</button>
+      </div>
+    `;
+    list.appendChild(replyContainer);
+  });
+}
+
+// دالة مساعدة لإنشاء عنصر التعليق (مع تعديل بسيط لعرض الردود)
+function createCommentElement(c, isReply = false) {
+  const card = document.createElement('div');
+  card.className = 'comment-card' + (c.isAuthorReply ? ' author-reply' : '');
+  if (isReply) card.classList.add('comment-reply'); // كلاس إضافي للردود
+
+  const avatarLetter = c.isAuthorReply ? 'أ' : (c.name ? c.name.charAt(0).toUpperCase() : '?');
+  const nameDisplay = c.isAuthorReply ? 'م. أحمد علي بوكر نسيب — Author' : (c.titleRole ? `<span style="color:var(--gold2);margin-right:4px">${c.titleRole}</span> ` : '') + (c.name || 'زائر');
+  const titleDisplay = c.isAuthorReply ? '✨ Author Response' : (c.affil ? c.affil + ' · ' : '') + (c.type || 'Discussion');
+
+  card.innerHTML = `
+    <div class="cc-header">
+      <div class="cc-avatar ${c.isAuthorReply ? 'gold-av' : ''}">${avatarLetter}</div>
+      <div>
+        <div class="cc-name">${nameDisplay}</div>
+        <div class="cc-title">${titleDisplay}</div>
+      </div>
+      <div class="cc-time">${formatTime(c.ts)}</div>
+    </div>
+    <div class="cc-body">${escHTML(c.text)}</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap">
+      <span class="cc-lang">${getLangLabel(c.text)}</span>
+      <button class="cc-like ${(c.liked || []).includes(getUserId()) ? 'liked' : ''}" onclick="toggleLike(${c.ts})">
+        👍 <span id="like-${c.ts}">${(c.liked || []).length}</span>
+      </button>
+    </div>
+  `;
+  return card;
+}
+
+// تعديل دالة updateStats لحساب الردود أيضاً (اختياري)
+// يمكن تركها كما هي أو تعديلها لتشمل الردود في الإحصائيات حسب الرغبة
 </script>
 </body>
 </html>
