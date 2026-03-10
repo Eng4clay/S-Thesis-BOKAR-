@@ -2074,7 +2074,191 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 </div>
 
 </div><!-- end #doc -->
+<!-- ========== §16 INTERACTIVE EXERCISE LAB ========== -->
+<div class="page algo-page" id="pg-interactive-lab" style="padding:0;overflow:hidden">
+  <div class="part-hdr" style="background:linear-gradient(135deg,#0a0618,#1a0a35);margin:0;border-radius:0">
+    <span>🧪</span>
+    <span>§16. Interactive Exercise Laboratory — Live Simulations</span>
+  </div>
+  <div style="padding:20px 22mm">
+    <p style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs);margin-bottom:18px">
+      Complete each exercise step-by-step to unlock its live visual simulation.
+    </p>
+    <div id="ilab-tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px">
+      <button class="ilab-tab active" onclick="ilabSelect(0)" style="padding:7px 14px;border-radius:20px;border:1.5px solid #c9932a;background:rgba(201,147,42,.15);color:#c9932a;cursor:pointer;font-size:8.5pt;font-family:var(--fs);font-weight:700">🔢 Ex.1 BS(n)</button>
+      <button class="ilab-tab" onclick="ilabSelect(1)" style="padding:7px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;font-size:8.5pt;font-family:var(--fs)">⊕ Ex.2 Trinity</button>
+      <button class="ilab-tab" onclick="ilabSelect(2)" style="padding:7px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;font-size:8.5pt;font-family:var(--fs)">⚛ Ex.3 CB</button>
+      <button class="ilab-tab" onclick="ilabSelect(3)" style="padding:7px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;font-size:8.5pt;font-family:var(--fs)">🔗 Ex.4 Entangle</button>
+      <button class="ilab-tab" onclick="ilabSelect(4)" style="padding:7px 14px;border-radius:20px;border:1.5px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);cursor:pointer;font-size:8.5pt;font-family:var(--fs)">🧠 Ex.5 Ψ</button>
+    </div>
+    <div id="ilab-card" style="background:rgba(255,255,255,.04);border-radius:14px;border:1.5px solid rgba(201,147,42,.25);overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,.4)">
+      <div id="ilab-header" style="padding:14px 18px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.25);display:flex;align-items:center;gap:12px">
+        <div id="ilab-icon" style="width:38px;height:38px;border-radius:10px;background:rgba(201,147,42,.15);border:1.5px solid #c9932a;display:flex;align-items:center;justify-content:center;font-size:1.2em;flex-shrink:0">🔢</div>
+        <div>
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px">
+            <span id="ilab-badge" style="background:rgba(201,147,42,.25);color:#c9932a;padding:2px 10px;border-radius:10px;font-size:8pt;font-family:var(--fs);font-weight:700">Number Theory</span>
+            <span id="ilab-diff" style="background:rgba(255,255,255,.06);color:#5dcc8b;padding:2px 10px;border-radius:10px;font-size:8pt;font-family:var(--fs)">Beginner</span>
+          </div>
+          <div id="ilab-title" style="font-size:11pt;color:#fff">Exercise 1: Computing BS(n) for n = 7, 11, 23</div>
+        </div>
+      </div>
+      <div id="ilab-problem" style="padding:12px 18px;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(201,147,42,.05);font-size:9pt;color:rgba(255,255,255,.75);font-family:var(--fs);line-height:1.65">
+        Using the BS formula for natural numbers, compute BS(7), BS(11), and BS(23).
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;min-height:340px">
+        <div style="padding:16px 18px;border-right:1px solid rgba(255,255,255,.06)">
+          <div style="font-size:7.5pt;color:rgba(255,255,255,.35);font-family:var(--fs);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px">
+            Solution Steps — <span id="ilab-progress">0</span>/<span id="ilab-total">5</span>
+          </div>
+          <div id="ilab-steps" style="display:flex;flex-direction:column;gap:6px"></div>
+          <div id="ilab-result-box" style="display:none;margin-top:10px;padding:10px 12px;background:rgba(201,147,42,.1);border:1px solid rgba(201,147,42,.3);border-radius:10px;text-align:center;font-size:8.5pt;font-family:var(--fs);color:#e8aa40;line-height:1.6"></div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button id="ilab-next-btn" onclick="ilabNext()" style="flex:1;padding:8px;border-radius:10px;background:linear-gradient(135deg,#c9932a,#e8aa40);border:none;color:#000;font-family:var(--fs);font-size:8.5pt;font-weight:700;cursor:pointer">▶ Start</button>
+            <button onclick="ilabReset()" style="padding:8px 14px;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.45);font-family:var(--fs);font-size:8pt;cursor:pointer">↺</button>
+          </div>
+        </div>
+        <div style="padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+          <div style="font-size:7.5pt;color:rgba(255,255,255,.35);font-family:var(--fs);letter-spacing:1px;text-transform:uppercase">Visual Simulation</div>
+          <div id="ilab-sim-wrap" style="flex:1;background:rgba(0,0,0,.3);border-radius:10px;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;min-height:220px;transition:filter .5s;filter:blur(3px);opacity:.3">
+            <div id="ilab-sim-locked" style="text-align:center;color:rgba(255,255,255,.2);font-size:9pt;font-family:var(--fs)">
+              <div style="font-size:2em;margin-bottom:6px">🔒</div>Complete steps to unlock
+            </div>
+            <div id="ilab-sim-content" style="display:none;width:100%;padding:10px"></div>
+          </div>
+          <div style="padding:8px 10px;background:rgba(255,255,255,.03);border-radius:8px;border:1px solid rgba(255,255,255,.06)">
+            <div style="font-size:7pt;color:rgba(255,255,255,.3);font-family:var(--fs);margin-bottom:3px">KEY FORMULA</div>
+            <div id="ilab-formula-text" style="font-size:8.5pt;color:#c9932a;font-family:var(--fm)">BS(n) = 2/(2n−3)  for n ≥ 5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="page-num">Lab-1</div>
+</div>
+  <!-- ========== §17 DYNAMIC SIMULATIONS ========== -->
+<div class="page algo-page" id="pg-dynamic-sim">
+  <div class="part-hdr" style="background:linear-gradient(135deg,#0a0618,#1a0a35)">
+    <span>🌀</span><span>§17. Dynamic Simulations — System S in Motion</span>
+  </div>
 
+  <h2 style="color:var(--gold)">17.1 BS Real-Time Explorer</h2>
+  <p style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">Drag the slider to explore Structural Stability across natural numbers.</p>
+  <div class="flow-container">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap">
+      <span style="color:rgba(255,255,255,.5);font-size:9pt;font-family:var(--fm)">n =</span>
+      <input type="range" id="bs-slider" min="1" max="40" value="7" oninput="updateBSExplorer(this.value)" style="flex:1;min-width:160px;accent-color:#c9932a;cursor:pointer">
+      <span id="bs-n-display" style="color:#e8aa40;font-size:11pt;font-family:var(--fm);font-weight:bold;min-width:30px">7</span>
+      <div style="background:rgba(201,147,42,.15);border:1px solid rgba(201,147,42,.4);border-radius:10px;padding:6px 16px;text-align:center">
+        <div style="font-size:8pt;color:rgba(255,255,255,.4);font-family:var(--fs)">BS(n)</div>
+        <div id="bs-val-display" style="font-size:14pt;color:#e8aa40;font-family:var(--fm);font-weight:bold">0.1818</div>
+      </div>
+      <div id="bs-trinity-label" style="font-size:8.5pt;color:rgba(255,255,255,.5);font-family:var(--fs);min-width:120px"></div>
+    </div>
+    <canvas id="bsExplorerCanvas" width="680" height="200" style="max-width:100%;border-radius:8px;display:block"></canvas>
+  </div>
+
+  <h2 style="color:var(--gold);margin-top:20px">17.2 Consciousness Ψ Simulator</h2>
+  <div class="flow-container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+      <div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:8.5pt;color:#c9932a;font-family:var(--fs)">BS_ID — Identity (α=0.47)</span>
+              <span id="psi-id-val" style="font-size:8.5pt;color:#e8aa40;font-family:var(--fm)">0.72</span>
+            </div>
+            <input type="range" id="psi-id" min="0" max="1" step="0.01" value="0.72" oninput="updatePsi()" style="width:100%;accent-color:#c9932a">
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:8.5pt;color:#7b2d8b;font-family:var(--fs)">BS_Pot — Potential (β=0.23)</span>
+              <span id="psi-pot-val" style="font-size:8.5pt;color:#e8aa40;font-family:var(--fm)">0.25</span>
+            </div>
+            <input type="range" id="psi-pot" min="0" max="1" step="0.01" value="0.25" oninput="updatePsi()" style="width:100%;accent-color:#7b2d8b">
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+              <span style="font-size:8.5pt;color:#4fc3d8;font-family:var(--fs)">BS_Rel — Relational (γ=0.30)</span>
+              <span id="psi-rel-val" style="font-size:8.5pt;color:#e8aa40;font-family:var(--fm)">0.65</span>
+            </div>
+            <input type="range" id="psi-rel" min="0" max="1" step="0.01" value="0.65" oninput="updatePsi()" style="width:100%;accent-color:#4fc3d8">
+          </div>
+        </div>
+        <div style="margin-top:18px;padding:16px;background:rgba(44,22,84,.4);border-radius:12px;border:1.5px solid rgba(201,147,42,.3);text-align:center">
+          <div style="font-size:9pt;color:rgba(255,255,255,.4);font-family:var(--fs);margin-bottom:4px">Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel</div>
+          <div id="psi-result" style="font-size:22pt;color:#e8aa40;font-family:var(--fm);font-weight:bold;line-height:1">0.5909</div>
+          <div id="psi-label" style="font-size:9pt;color:#5dcc8b;font-family:var(--fs);margin-top:4px">✨ Above Average</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:8pt;color:rgba(255,255,255,.35);font-family:var(--fs);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Consciousness Scale</div>
+        <canvas id="psiCanvas" width="280" height="220" style="max-width:100%;border-radius:8px;display:block"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <h2 style="color:var(--gold);margin-top:20px">17.3 Entanglement BS Explorer</h2>
+  <div class="flow-container">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+          <span style="font-size:9pt;color:rgba(255,255,255,.6);font-family:var(--fs)">Concurrence C =</span>
+          <input type="range" id="ent-slider" min="0" max="1" step="0.01" value="0.8" oninput="updateEntanglement(this.value)" style="flex:1;accent-color:#7b2d8b">
+          <span id="ent-c-val" style="color:#e8aa40;font-family:var(--fm);font-weight:bold;min-width:30px">0.80</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
+          <div style="padding:10px;background:rgba(79,195,216,.1);border-radius:10px;border:1px solid rgba(79,195,216,.3)">
+            <div style="font-size:9pt;color:#4fc3d8;font-family:var(--fm)">0p</div>
+            <div style="font-size:8.5pt;color:rgba(255,255,255,.4)">BS=1/3</div>
+            <div style="font-size:11pt;color:#4fc3d8;font-family:var(--fm);font-weight:bold">0.333</div>
+          </div>
+          <div style="padding:10px;background:rgba(201,147,42,.15);border-radius:10px;border:1.5px solid #c9932a">
+            <div style="font-size:9pt;color:#c9932a;font-family:var(--fm)">BS_ent</div>
+            <div style="font-size:8.5pt;color:rgba(255,255,255,.4)">(2/3)·C</div>
+            <div id="ent-bs-val" style="font-size:11pt;color:#e8aa40;font-family:var(--fm);font-weight:bold">0.5333</div>
+          </div>
+          <div style="padding:10px;background:rgba(123,45,139,.1);border-radius:10px;border:1px solid rgba(123,45,139,.3)">
+            <div style="font-size:9pt;color:#7b2d8b;font-family:var(--fm)">∞</div>
+            <div style="font-size:8.5pt;color:rgba(255,255,255,.4)">BS=2/3</div>
+            <div style="font-size:11pt;color:#7b2d8b;font-family:var(--fm);font-weight:bold">0.667</div>
+          </div>
+        </div>
+        <div id="ent-label" style="margin-top:10px;text-align:center;font-size:9pt;color:#e8aa40;font-family:var(--fs);padding:6px;background:rgba(201,147,42,.08);border-radius:8px">
+          State closer to: ∞ Relational Infinity
+        </div>
+      </div>
+      <canvas id="entCanvas" width="280" height="200" style="max-width:100%;border-radius:8px;display:block"></canvas>
+    </div>
+  </div>
+
+  <div class="page-num">Sim-1</div>
+</div>
+  <!-- ========== §18 VISUAL PATTERNS ========== -->
+<div class="page algo-page" id="pg-visual-patterns">
+  <div class="part-hdr" style="background:linear-gradient(135deg,#0a0618,#1a0a35)">
+    <span>✨</span><span>§18. Visual Patterns — System S Geometry</span>
+  </div>
+
+  <h2 style="color:var(--gold)">18.1 BS Decay — Primes vs Composites</h2>
+  <p style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">Primes (gold) consistently sit above composites (purple) — confirming their role as pure epiphanies.</p>
+  <div class="flow-container">
+    <canvas id="primePatternCanvas" width="680" height="240" style="max-width:100%;border-radius:8px;display:block"></canvas>
+  </div>
+
+  <h2 style="color:var(--gold);margin-top:20px">18.2 τ-Weight Evolution — α, β, γ</h2>
+  <p style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">The crossover near τ=3 corresponds to prime 23 and the Bouker Constant anchor point.</p>
+  <div class="flow-container">
+    <canvas id="tauPatternCanvas" width="680" height="220" style="max-width:100%;border-radius:8px;display:block"></canvas>
+  </div>
+
+  <h2 style="color:var(--gold);margin-top:20px">18.3 Trinity Number Line</h2>
+  <p style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">The three axioms occupy precise structural positions on the BS axis.</p>
+  <div class="flow-container">
+    <canvas id="numLineCanvas" width="680" height="160" style="max-width:100%;border-radius:8px;display:block"></canvas>
+  </div>
+
+  <div class="page-num">Pat-1</div>
+</div>
 <!-- ===== NOTIFICATION TOAST ===== -->
 <div id="comm-toast">✅ <span id="toast-msg">Comment submitted successfully!</span></div>
 
@@ -3243,7 +3427,333 @@ function sendEmailNotification(comment){
     }catch(e){}
   }
 }
+/* ============================================
+   §16 INTERACTIVE EXERCISE LAB
+   ============================================ */
+const ILAB_DATA=[
+  {icon:'🔢',badge:'Number Theory',diff:'Beginner',diffColor:'#5dcc8b',color:'#c9932a',
+   title:'Exercise 1: Computing BS(n) for n = 7, 11, 23',
+   problem:'Using BS(n)=2/(2n−3) for n≥5, compute BS(7), BS(11), BS(23). Verify BS(23)=2/43 matches the Bouker Constant numerator.',
+   formula:'BS(n) = 2/(2n−3)  for n ≥ 5',
+   steps:[
+     {label:'Formula',     content:'For n ≥ 5: BS(n) = 2/(2n−3)',gold:false},
+     {label:'BS(7)',       content:'BS(7) = 2/11 ≈ 0.1818',gold:true},
+     {label:'BS(11)',      content:'BS(11) = 2/19 ≈ 0.1053',gold:true},
+     {label:'BS(23)',      content:'BS(23) = 2/43 ≈ 0.0465',gold:true},
+     {label:'Verification',content:'CB uses 2/43 = BS(23). Prime 23 at τ₀=3 is the CB anchor.',gold:false}],
+   result:'✦ BS(7)=2/11 · BS(11)=2/19 · BS(23)=2/43=CB numerator ✦',simFn:'ilabSimBS'},
+  {icon:'⊕',badge:'Algebra',diff:'Intermediate',diffColor:'#c9932a',color:'#7b2d8b',
+   title:'Exercise 2: Central Equation ❶ ⊕ 0p = 1 = ∞',
+   problem:'Using matrix forms of ❶ and 0p, compute ❶⊕0p=❶·0p+0p·❶ and explain the ontological meaning.',
+   formula:'A ⊕ B = AB + BA   ·   η(❶) = 1 ∈ ℕ',
+   steps:[
+     {label:'Matrix forms', content:'❶=diag(1,0,0) · 0p=diag(0,0,0) · ∞=diag(0,1,1)',gold:false},
+     {label:'Definition',   content:'A⊕B = AB+BA (non-commutative)',gold:false},
+     {label:'❶·0p',        content:'diag(1,0,0)·diag(0,0,0) = zero',gold:false},
+     {label:'0p·❶',        content:'diag(0,0,0)·diag(1,0,0) = zero',gold:false},
+     {label:'Insight',      content:'❶⊕0p=0 algebraically. Epiphany η maps (❶,0p)→1∈ℕ. Equation is ontological.',gold:true}],
+   result:'✦ The equation is ontological — existence transcends algebra ✦',simFn:'ilabSimTrinity'},
+  {icon:'⚛',badge:'Physics',diff:'Advanced',diffColor:'#e06060',color:'#0f5c6b',
+   title:'Exercise 3: Computing the Bouker Constant CB',
+   problem:'Using α=1/137, ℏ=1.055×10⁻³⁴, G=6.674×10⁻¹¹, c=3×10⁸, compute CB=(2/43)·(α/137)·√(c³/ℏG).',
+   formula:'CB = (2/43)·(α/137)·√(c³/ℏG)',
+   steps:[
+     {label:'Factor 1',  content:'(2/43)=BS(23)≈0.046512',gold:false},
+     {label:'Factor 2',  content:'α/137=(1/137)/137=5.327×10⁻⁵',gold:false},
+     {label:'Radical',   content:'c³/ℏG=(3×10⁸)³/(1.055×10⁻³⁴×6.674×10⁻¹¹)=3.835×10⁶⁹',gold:false},
+     {label:'√ result',  content:'√(3.835×10⁶⁹)≈6.195×10³⁴',gold:false},
+     {label:'CB final',  content:'CB=0.046512×5.327×10⁻⁵×6.195×10³⁴≈6.184×10⁻⁴²',gold:true}],
+   result:'✦ CB = 6.184033×10⁻⁴² ✓ — Minimum manifestation threshold ✦',simFn:'ilabSimCB'},
+  {icon:'🔗',badge:'Quantum',diff:'Intermediate',diffColor:'#c9932a',color:'#1a7a3b',
+   title:'Exercise 4: Quantum BS — Concurrence C = 0.8',
+   problem:'A two-qubit system has C=0.8. (a) Compute BS. (b) Closer to ∞ or 0p? (c) What happens as C→1?',
+   formula:'BS_entangled = (2/3)·C   ·   C ∈ [0,1]',
+   steps:[
+     {label:'Formula',  content:'BS_ent=(2/3)·C',gold:false},
+     {label:'Part (a)', content:'BS=(2/3)×0.8=0.5333',gold:true},
+     {label:'Part (b)', content:'0.5333 closer to BS(∞)=0.667 than BS(0p)=0.333 → Relational Infinity',gold:true},
+     {label:'Part (c)', content:'C→1: BS→2/3=BS(∞). Bell states are perfect ∞-manifestations.',gold:false}],
+   result:'✦ Perfect entanglement (C=1) → BS=2/3=BS(∞) ✦',simFn:'ilabSimEnt'},
+  {icon:'🧠',badge:'Consciousness',diff:'Applied',diffColor:'#8b1a6b',color:'#8b1a6b',
+   title:'Exercise 5: Consciousness Ψ for Meditating Subject',
+   problem:'BS_ID=0.72, BS_Pot=0.25, BS_Rel=0.65. With α=0.47,β=0.23,γ=0.30 compute Ψ.',
+   formula:'Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel',
+   steps:[
+     {label:'Formula', content:'Ψ≈α·BS_ID+β·BS_Pot+γ·BS_Rel (η(τ)=1)',gold:false},
+     {label:'Term α',  content:'0.47×0.72=0.3384',gold:false},
+     {label:'Term β',  content:'0.23×0.25=0.0575',gold:false},
+     {label:'Term γ',  content:'0.30×0.65=0.1950',gold:false},
+     {label:'Ψ total', content:'Ψ=0.3384+0.0575+0.1950=0.5909 > avg(0.57). Elevated meditation state.',gold:true}],
+   result:'✦ Ψ≈0.59 — Elevated state, approaching flow ✦',simFn:'ilabSimPsi'}
+];
 
+let ilabActive=0,ilabStep=-1,ilabDone=false;
+function ilabSelect(i){ilabActive=i;ilabStep=-1;ilabDone=false;_ilabRender();}
+function ilabReset(){ilabStep=-1;ilabDone=false;_ilabRender();}
+function ilabNext(){
+  const ex=ILAB_DATA[ilabActive];
+  if(ilabStep<ex.steps.length-1){ilabStep++;_ilabRender();}
+  else if(!ilabDone){ilabDone=true;_ilabRender();_ilabRunSim();}
+}
+function _ilabRender(){
+  const ex=ILAB_DATA[ilabActive];
+  document.querySelectorAll('.ilab-tab').forEach((t,i)=>{
+    const a=i===ilabActive;
+    t.style.borderColor=a?ex.color:'rgba(255,255,255,.15)';
+    t.style.background=a?ex.color+'22':'rgba(255,255,255,.04)';
+    t.style.color=a?ex.color:'rgba(255,255,255,.5)';
+    t.style.fontWeight=a?'700':'normal';
+  });
+  document.getElementById('ilab-icon').textContent=ex.icon;
+  document.getElementById('ilab-icon').style.borderColor=ex.color;
+  document.getElementById('ilab-badge').textContent=ex.badge;
+  document.getElementById('ilab-badge').style.color=ex.color;
+  document.getElementById('ilab-badge').style.background=ex.color+'25';
+  document.getElementById('ilab-diff').textContent=ex.diff;
+  document.getElementById('ilab-diff').style.color=ex.diffColor;
+  document.getElementById('ilab-title').textContent=ex.title;
+  document.getElementById('ilab-problem').textContent=ex.problem;
+  document.getElementById('ilab-formula-text').textContent=ex.formula;
+  document.getElementById('ilab-formula-text').style.color=ex.color;
+  document.getElementById('ilab-card').style.borderColor=ex.color+'44';
+  document.getElementById('ilab-progress').textContent=Math.max(0,ilabStep+1);
+  document.getElementById('ilab-total').textContent=ex.steps.length;
+  const container=document.getElementById('ilab-steps');
+  container.innerHTML='';
+  ex.steps.forEach((s,i)=>{
+    const cur=i===ilabStep,done=i<ilabStep,vis=i<=ilabStep;
+    const div=document.createElement('div');
+    div.style.cssText=`padding:8px 10px;border-radius:8px;border:1px solid ${cur?ex.color:done?'rgba(255,255,255,.12)':'rgba(255,255,255,.05)'};background:${cur?ex.color+'18':done?'rgba(255,255,255,.04)':'transparent'};opacity:${i>ilabStep?'.3':'1'};box-shadow:${cur?'0 0 12px '+ex.color+'33':'none'};transition:all .3s`;
+    div.innerHTML=`<div style="display:flex;gap:6px;align-items:flex-start">
+      <div style="width:20px;height:20px;border-radius:50%;background:${i<=ilabStep?ex.color:'rgba(255,255,255,.1)'};display:flex;align-items:center;justify-content:center;font-size:.6rem;font-family:var(--fm);font-weight:bold;color:${i<=ilabStep?'#000':'rgba(255,255,255,.3)'};flex-shrink:0;margin-top:1px">${done?'✓':i+1}</div>
+      <div style="flex:1"><div style="font-size:7.5pt;color:${cur?ex.color:'rgba(255,255,255,.4)'};font-family:var(--fs);margin-bottom:2px">${s.label}</div>${vis?`<div style="font-size:8.5pt;color:${s.gold?'#e8aa40':'rgba(255,255,255,.8)'};font-family:var(--fm);line-height:1.5">${s.content}</div>`:''}</div>
+    </div>`;
+    container.appendChild(div);
+  });
+  const rb=document.getElementById('ilab-result-box');
+  rb.style.display=ilabDone?'block':'none';
+  rb.textContent=ilabDone?ex.result:'';
+  const btn=document.getElementById('ilab-next-btn');
+  if(ilabStep===-1){btn.textContent='▶ Start';btn.style.background='linear-gradient(135deg,#c9932a,#e8aa40)';}
+  else if(ilabStep<ex.steps.length-1){btn.textContent='→ Next Step';btn.style.background=`linear-gradient(135deg,${ex.color},${ex.color}88)`;}
+  else if(!ilabDone){btn.textContent='✦ Show Simulation';btn.style.background='linear-gradient(135deg,#1a7a3b,#2a9b4f)';}
+  else{btn.textContent='✓ Done';btn.style.background='rgba(255,255,255,.1)';}
+  const wrap=document.getElementById('ilab-sim-wrap');
+  const locked=document.getElementById('ilab-sim-locked');
+  const content=document.getElementById('ilab-sim-content');
+  if(ilabDone){wrap.style.filter='none';wrap.style.opacity='1';locked.style.display='none';content.style.display='block';}
+  else{wrap.style.filter='blur(3px)';wrap.style.opacity='.3';locked.style.display='block';content.style.display='none';content.innerHTML='';}
+}
+function _ilabRunSim(){
+  const ex=ILAB_DATA[ilabActive];
+  const c=document.getElementById('ilab-sim-content');
+  c.innerHTML='';
+  window[ex.simFn](c);
+}
+function ilabSimBS(ct){
+  const cv=document.createElement('canvas');cv.width=360;cv.height=190;cv.style.maxWidth='100%';cv.style.borderRadius='6px';ct.appendChild(cv);
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height,PAD=38,PB=26,PT=12,PR=12,CW=w-PAD-PR,CH=h-PB-PT;
+  ctx.fillStyle='rgba(8,4,20,.95)';ctx.fillRect(0,0,w,h);
+  const BSf=n=>{if(n===1)return.7;if(n===2)return 4/7;if(n===3)return 8/17;if(n===4)return 10/27;return 2/(2*n-3);};
+  const MN=25,xOf=n=>PAD+CW*((n-1)/(MN-1)),yOf=v=>PT+CH*(1-v);
+  [[1,'#c9932a','❶=1'],[2/3,'#e8aa40','∞=⅔'],[1/3,'#4fc3d8','0p=⅓']].forEach(([v,c,l])=>{
+    ctx.strokeStyle=c+'55';ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(PAD,yOf(v));ctx.lineTo(PAD+CW,yOf(v));ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=c;ctx.font='8px monospace';ctx.fillText(l,PAD+3,yOf(v)-3);
+  });
+  const g=ctx.createLinearGradient(PAD,0,PAD+CW,0);g.addColorStop(0,'#c9932a');g.addColorStop(.5,'#7b2d8b');g.addColorStop(1,'#2c6b80');ctx.strokeStyle=g;ctx.lineWidth=2;ctx.setLineDash([]);ctx.beginPath();
+  for(let n=1;n<=MN;n++){const x=xOf(n),y=yOf(BSf(n));n===1?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();
+  [7,11,23].forEach(n=>{
+    const x=xOf(n),y=yOf(BSf(n));ctx.beginPath();ctx.arc(x,y,6,0,Math.PI*2);ctx.fillStyle='#c9932a88';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 8px monospace';ctx.fillText('n='+n,x-10,y-9);ctx.fillStyle='#e8aa40';ctx.font='7px monospace';ctx.fillText(BSf(n).toFixed(4),x-12,y+17);
+  });
+  for(let n=1;n<=MN;n++){const x=xOf(n),y=yOf(BSf(n));ctx.beginPath();ctx.arc(x,y,2.5,0,Math.PI*2);ctx.fillStyle=[7,11,23].includes(n)?'#c9932a':'#7b2d8b88';ctx.fill();}
+  ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+function ilabSimTrinity(ct){
+  const wr=document.createElement('div');wr.style.cssText='display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px';ct.appendChild(wr);
+  let ph=0;const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('viewBox','0 0 100 100');svg.style.cssText='width:150px;height:150px';wr.appendChild(svg);
+  const lb=document.createElement('div');lb.style.cssText='font-size:8pt;color:rgba(255,255,255,.5);font-family:monospace;text-align:center';wr.appendChild(lb);
+  const nodes=[{x:50,y:20,t:'❶',s:'BS=1',c:'#c9932a'},{x:82,y:75,t:'0p',s:'BS=⅓',c:'#4fc3d8'},{x:18,y:75,t:'∞',s:'BS=⅔',c:'#7b2d8b'}];
+  const arrs=[{x1:55,y1:27,x2:78,y2:68,l:'ε'},{x1:76,y1:75,x2:24,y2:75,l:'δ'},{x1:20,y1:68,x2:47,y2:28,l:'η'}];
+  const defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+  const mk=document.createElementNS('http://www.w3.org/2000/svg','marker');mk.setAttribute('id','ilm2');mk.setAttribute('markerWidth','6');mk.setAttribute('markerHeight','6');mk.setAttribute('refX','5');mk.setAttribute('refY','3');mk.setAttribute('orient','auto');
+  const mp=document.createElementNS('http://www.w3.org/2000/svg','path');mp.setAttribute('d','M0,0 L0,6 L6,3 z');mp.setAttribute('fill','#c9932a');mk.appendChild(mp);defs.appendChild(mk);svg.appendChild(defs);
+  arrs.forEach(a=>{
+    const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',a.x1+'%');l.setAttribute('y1',a.y1+'%');l.setAttribute('x2',a.x2+'%');l.setAttribute('y2',a.y2+'%');l.setAttribute('stroke','rgba(201,147,42,.5)');l.setAttribute('stroke-width','0.8');l.setAttribute('stroke-dasharray','3,2');l.setAttribute('marker-end','url(#ilm2)');svg.appendChild(l);
+    const tx=document.createElementNS('http://www.w3.org/2000/svg','text');tx.setAttribute('x',((a.x1+a.x2)/2)+'%');tx.setAttribute('y',((a.y1+a.y2)/2)+'%');tx.setAttribute('fill','rgba(201,147,42,.8)');tx.setAttribute('font-size','5');tx.setAttribute('text-anchor','middle');tx.setAttribute('font-style','italic');tx.textContent=a.l;svg.appendChild(tx);
+  });
+  const circs=[];
+  nodes.forEach(n=>{
+    const ci=document.createElementNS('http://www.w3.org/2000/svg','circle');ci.setAttribute('cx',n.x+'%');ci.setAttribute('cy',n.y+'%');ci.setAttribute('r','9%');ci.setAttribute('fill',n.c+'33');ci.setAttribute('stroke',n.c);ci.setAttribute('stroke-width','0.8');svg.appendChild(ci);circs.push(ci);
+    const tx=document.createElementNS('http://www.w3.org/2000/svg','text');tx.setAttribute('x',n.x+'%');tx.setAttribute('y',(n.y+2)+'%');tx.setAttribute('text-anchor','middle');tx.setAttribute('fill','#fff');tx.setAttribute('font-size',n.t.length>1?'5':'7');tx.setAttribute('font-weight','bold');tx.textContent=n.t;svg.appendChild(tx);
+    const sb=document.createElementNS('http://www.w3.org/2000/svg','text');sb.setAttribute('x',n.x+'%');sb.setAttribute('y',(n.y+6.5)+'%');sb.setAttribute('text-anchor','middle');sb.setAttribute('fill',n.c);sb.setAttribute('font-size','3.5');sb.textContent=n.s;svg.appendChild(sb);
+  });
+  const eq=document.createElementNS('http://www.w3.org/2000/svg','text');eq.setAttribute('x','50%');eq.setAttribute('y','53%');eq.setAttribute('text-anchor','middle');eq.setAttribute('fill','rgba(201,147,42,.7)');eq.setAttribute('font-size','3.5');eq.setAttribute('font-weight','bold');eq.textContent='❶⊕0p=1=∞';svg.appendChild(eq);
+  function tick(){const nm=['❶ Absolute','0p Possibility','∞ Relational'];circs.forEach((c,i)=>{const a=i===ph;c.setAttribute('r',a?'11%':'8%');c.setAttribute('fill',nodes[i].c+(a?'55':'22'));c.setAttribute('stroke-width',a?'2':'0.8');});lb.textContent='Active: '+nm[ph];ph=(ph+1)%3;}
+  tick();setInterval(tick,1600);
+}
+function ilabSimCB(ct){
+  const d=document.createElement('div');d.style.cssText='padding:8px;display:flex;flex-direction:column;gap:9px';
+  d.innerHTML='<div style="text-align:center;font-size:12pt;color:#e8aa40;font-family:monospace;margin-bottom:4px">CB = 6.184 × 10⁻⁴²</div>';
+  [{l:'BS(23)',v:'2/43≈0.0465',p:47,c:'#c9932a'},{l:'α/137',v:'5.33×10⁻⁵',p:30,c:'#7b2d8b'},{l:'√(c³/ℏG)',v:'6.20×10³⁴',p:100,c:'#4fc3d8'}].forEach(f=>{
+    d.innerHTML+=`<div style="display:flex;align-items:center;gap:8px"><div style="width:68px;font-size:7.5pt;color:${f.c};font-family:monospace;text-align:right">${f.l}</div><div style="flex:1;background:rgba(255,255,255,.05);border-radius:4px;height:13px;overflow:hidden"><div style="width:${f.p}%;height:100%;background:linear-gradient(90deg,${f.c}66,${f.c});border-radius:4px"></div></div><div style="width:78px;font-size:7pt;color:rgba(255,255,255,.55);font-family:monospace">${f.v}</div></div>`;
+  });
+  d.innerHTML+='<div style="margin-top:4px;text-align:center;font-size:7.5pt;color:rgba(255,255,255,.3);font-family:monospace">Any BS &lt; CB → dissolves into 0p</div>';
+  ct.appendChild(d);
+}
+function ilabSimEnt(ct){
+  const d=document.createElement('div');d.style.cssText='padding:8px;display:flex;flex-direction:column;gap:9px';
+  d.innerHTML=`<div style="display:flex;align-items:center;gap:8px"><span style="font-size:8pt;color:rgba(255,255,255,.5);font-family:monospace;width:42px">C=<span id="ilc2">0.80</span></span><input type="range" min="0" max="1" step="0.01" value="0.8" id="ilent2" style="flex:1;accent-color:#c9932a"></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;text-align:center">
+    <div style="padding:7px;background:rgba(79,195,216,.1);border-radius:7px;border:1px solid rgba(79,195,216,.3)"><div style="font-size:8pt;color:#4fc3d8;font-family:monospace">0p</div><div style="font-size:9pt;color:#4fc3d8;font-family:monospace;font-weight:bold">0.333</div></div>
+    <div style="padding:7px;background:rgba(201,147,42,.15);border-radius:7px;border:1.5px solid #c9932a"><div style="font-size:8pt;color:#c9932a;font-family:monospace">BS</div><div id="ilev2" style="font-size:11pt;color:#e8aa40;font-family:monospace;font-weight:bold">0.5333</div></div>
+    <div style="padding:7px;background:rgba(123,45,139,.1);border-radius:7px;border:1px solid rgba(123,45,139,.3)"><div style="font-size:8pt;color:#7b2d8b;font-family:monospace">∞</div><div style="font-size:9pt;color:#7b2d8b;font-family:monospace;font-weight:bold">0.667</div></div>
+  </div>
+  <div id="ilel2" style="text-align:center;font-size:8pt;color:#e8aa40;font-family:monospace;padding:5px;background:rgba(201,147,42,.08);border-radius:7px">Closer to: ∞ Relational Infinity</div>`;
+  ct.appendChild(d);
+  document.getElementById('ilent2').oninput=function(){const C=parseFloat(this.value),bs=(2/3)*C;document.getElementById('ilc2').textContent=C.toFixed(2);document.getElementById('ilev2').textContent=bs.toFixed(4);document.getElementById('ilel2').textContent='Closer to: '+(Math.abs(bs-2/3)<Math.abs(bs-1/3)?'∞ Relational Infinity':'0p Pure Possibility');};
+}
+function ilabSimPsi(ct){
+  const d=document.createElement('div');d.style.cssText='padding:8px;display:flex;flex-direction:column;gap:8px';
+  d.innerHTML=`
+  <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:7.5pt;color:#c9932a;font-family:monospace">BS_ID (α=0.47)</span><span id="ilid2" style="font-size:7.5pt;color:#e8aa40;font-family:monospace">0.72</span></div><input type="range" id="ilids" min="0" max="1" step="0.01" value="0.72" style="width:100%;accent-color:#c9932a"></div>
+  <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:7.5pt;color:#7b2d8b;font-family:monospace">BS_Pot (β=0.23)</span><span id="ilpot2" style="font-size:7.5pt;color:#e8aa40;font-family:monospace">0.25</span></div><input type="range" id="ilpots" min="0" max="1" step="0.01" value="0.25" style="width:100%;accent-color:#7b2d8b"></div>
+  <div><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span style="font-size:7.5pt;color:#4fc3d8;font-family:monospace">BS_Rel (γ=0.30)</span><span id="ilrel2" style="font-size:7.5pt;color:#e8aa40;font-family:monospace">0.65</span></div><input type="range" id="ilrels" min="0" max="1" step="0.01" value="0.65" style="width:100%;accent-color:#4fc3d8"></div>
+  <div style="text-align:center;padding:10px;background:rgba(44,22,84,.4);border-radius:10px;border:1.5px solid rgba(201,147,42,.3)">
+    <div style="font-size:7pt;color:rgba(255,255,255,.35);font-family:monospace;margin-bottom:3px">Ψ = α·ID + β·Pot + γ·Rel</div>
+    <div id="ilpsi2" style="font-size:16pt;color:#e8aa40;font-family:monospace;font-weight:bold">0.5909</div>
+    <div id="ilpsl2" style="font-size:8pt;color:#5dcc8b;font-family:monospace;margin-top:2px">✨ Above Average</div>
+  </div>`;
+  ct.appendChild(d);
+  function rc(){const id=parseFloat(document.getElementById('ilids').value),pot=parseFloat(document.getElementById('ilpots').value),rel=parseFloat(document.getElementById('ilrels').value);document.getElementById('ilid2').textContent=id.toFixed(2);document.getElementById('ilpot2').textContent=pot.toFixed(2);document.getElementById('ilrel2').textContent=rel.toFixed(2);const p=0.47*id+0.23*pot+0.30*rel;document.getElementById('ilpsi2').textContent=p.toFixed(4);document.getElementById('ilpsl2').textContent=p>0.75?'🌟 Flow State':p>0.57?'✨ Above Average':p>0.5?'〰 Normal':'💤 Low';}
+  ['ilids','ilpots','ilrels'].forEach(id=>document.getElementById(id).oninput=rc);
+}
+if(document.readyState!=='loading')_ilabRender();
+else document.addEventListener('DOMContentLoaded',_ilabRender);
+
+/* ============================================
+   §17 DYNAMIC SIMULATIONS
+   ============================================ */
+function BSn(n){if(n===1)return.7;if(n===2)return 4/7;if(n===3)return 8/17;if(n===4)return 10/27;if(n>=5)return 2/(2*n-3);return 0;}
+function isPrm(n){if(n<2)return false;for(let i=2;i<=Math.sqrt(n);i++)if(n%i===0)return false;return true;}
+
+function updateBSExplorer(n){
+  n=parseInt(n);
+  document.getElementById('bs-n-display').textContent=n;
+  document.getElementById('bs-val-display').textContent=BSn(n).toFixed(4);
+  const v=BSn(n);let lb='';
+  if(Math.abs(v-1)<.02)lb='≈ ❶ Absolute One';
+  else if(Math.abs(v-2/3)<.05)lb='≈ ∞ Relational Infinity';
+  else if(Math.abs(v-1/3)<.05)lb='≈ 0p Pure Possibility';
+  else if(isPrm(n))lb='🟡 Prime — pure epiphany';
+  document.getElementById('bs-trinity-label').textContent=lb;
+  _drawBSExp(n);
+}
+function _drawBSExp(hl){
+  const cv=document.getElementById('bsExplorerCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height,PAD=44,PB=28,PT=14,PR=14,CW=w-PAD-PR,CH=h-PB-PT;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(8,4,20,.95)';ctx.fillRect(0,0,w,h);
+  const MN=40,xOf=n=>PAD+CW*((n-1)/(MN-1)),yOf=v=>PT+CH*(1-v);
+  ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){const y=PT+CH*(i/5);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
+  [[1,'#c9932a','❶=1'],[2/3,'#e8aa40','∞=⅔'],[1/3,'#4fc3d8','0p=⅓']].forEach(([v,c,l])=>{ctx.strokeStyle=c+'55';ctx.lineWidth=1;ctx.setLineDash([5,4]);ctx.beginPath();ctx.moveTo(PAD,yOf(v));ctx.lineTo(PAD+CW,yOf(v));ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=c;ctx.font='8px monospace';ctx.fillText(l,PAD+3,yOf(v)-3);});
+  const g=ctx.createLinearGradient(PAD,0,PAD+CW,0);g.addColorStop(0,'#c9932a');g.addColorStop(.5,'#7b2d8b');g.addColorStop(1,'#2c6b80');ctx.strokeStyle=g;ctx.lineWidth=2;ctx.setLineDash([]);ctx.beginPath();
+  for(let n=1;n<=MN;n++){const x=xOf(n),y=yOf(BSn(n));n===1?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();
+  for(let n=1;n<=MN;n++){
+    const x=xOf(n),y=yOf(BSn(n)),p=isPrm(n),h2=n===hl;
+    ctx.beginPath();ctx.arc(x,y,h2?7:p?4.5:3,0,Math.PI*2);ctx.fillStyle=h2?'#ffcc00':p?'#c9932a':'#7b2d8b88';ctx.fill();
+    if(h2||p){ctx.strokeStyle='#fff';ctx.lineWidth=h2?2:1;ctx.stroke();}
+    if(h2){ctx.fillStyle='#fff';ctx.font='bold 9px monospace';ctx.fillText('n='+n,x-10,y-11);ctx.fillStyle='#ffcc00';ctx.font='8px monospace';ctx.fillText(BSn(n).toFixed(4),x-14,y+20);}
+  }
+  ctx.strokeStyle='rgba(255,255,255,.3)';ctx.lineWidth=1.5;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='9px sans-serif';ctx.fillText('n →',PAD+CW-20,PT+CH+18);
+}
+function updatePsi(){
+  const id=parseFloat(document.getElementById('psi-id').value),pot=parseFloat(document.getElementById('psi-pot').value),rel=parseFloat(document.getElementById('psi-rel').value);
+  document.getElementById('psi-id-val').textContent=id.toFixed(2);document.getElementById('psi-pot-val').textContent=pot.toFixed(2);document.getElementById('psi-rel-val').textContent=rel.toFixed(2);
+  const p=0.47*id+0.23*pot+0.30*rel;
+  document.getElementById('psi-result').textContent=p.toFixed(4);
+  document.getElementById('psi-label').textContent=p>0.75?'🌟 Flow State':p>0.57?'✨ Above Average':p>0.5?'〰 Normal Waking':'💤 Low Activity';
+  _drawPsiCanvas(p);
+}
+function _drawPsiCanvas(psi){
+  const cv=document.getElementById('psiCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(8,4,20,.95)';ctx.fillRect(0,0,w,h);
+  const PAD=14,PR=80,PT=10,PB=20,CW=w-PAD-PR,CH=h-PB-PT,yOf=v=>PT+CH*(1-v);
+  const lvls=[{v:.35,l:'Deep Sleep',c:'#4fc3d8'},{v:.50,l:'REM',c:'#7b2d8b'},{v:.57,l:'Normal',c:'#c9932a'},{v:.75,l:'Flow',c:'#e8aa40'},{v:.85,l:'AGI',c:'#5dcc8b'}];
+  const bw=18,bx=PAD+8;
+  const bg=ctx.createLinearGradient(0,PT+CH,0,PT);bg.addColorStop(0,'#2c1654');bg.addColorStop(.5,'#7b2d8b');bg.addColorStop(1,'#c9932a');
+  ctx.fillStyle='rgba(255,255,255,.05)';ctx.fillRect(bx,PT,bw,CH);ctx.fillStyle=bg;ctx.fillRect(bx,yOf(psi),bw,PT+CH-yOf(psi));
+  lvls.forEach(lv=>{const y=yOf(lv.v);ctx.strokeStyle=lv.c+'66';ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle=lv.c;ctx.font='8px sans-serif';ctx.fillText(lv.l,bx+bw+6,y+3);ctx.fillText(lv.v.toFixed(2),w-36,y+3);});
+  const py=yOf(psi);ctx.beginPath();ctx.arc(bx+bw/2,py,5,0,Math.PI*2);ctx.fillStyle='#ffcc00';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.setLineDash([]);ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.stroke();
+}
+function updateEntanglement(c){
+  c=parseFloat(c);const bs=(2/3)*c;
+  document.getElementById('ent-c-val').textContent=c.toFixed(2);document.getElementById('ent-bs-val').textContent=bs.toFixed(4);
+  document.getElementById('ent-label').textContent='State closer to: '+(Math.abs(bs-2/3)<Math.abs(bs-1/3)?'∞ Relational Infinity':'0p Pure Possibility');
+  _drawEntCanvas(c,bs);
+}
+function _drawEntCanvas(C,bs){
+  const cv=document.getElementById('entCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(8,4,20,.95)';ctx.fillRect(0,0,w,h);
+  const bars=[{v:1/3,l:'0p',c:'#4fc3d8'},{v:bs,l:'BS',c:'#c9932a'},{v:2/3,l:'∞',c:'#7b2d8b'}];
+  const bw=50,gap=16,tot=bars.length*(bw+gap)-gap,sx=(w-tot)/2,PT=14,PB=28,CH=h-PT-PB;
+  bars.forEach((b,i)=>{
+    const x=sx+i*(bw+gap);ctx.fillStyle='rgba(255,255,255,.04)';ctx.fillRect(x,PT,bw,CH);
+    const g=ctx.createLinearGradient(0,PT+CH,0,PT);g.addColorStop(0,b.c+'33');g.addColorStop(1,b.c);
+    ctx.fillStyle=g;ctx.fillRect(x,PT+CH-CH*b.v,bw,CH*b.v);
+    ctx.strokeStyle=b.l==='BS'?'#fff':b.c+'66';ctx.lineWidth=b.l==='BS'?2:1;ctx.strokeRect(x,PT,bw,CH);
+    ctx.fillStyle=b.c;ctx.font='bold 9px monospace';ctx.textAlign='center';ctx.fillText(b.l,x+bw/2,h-14);
+    ctx.fillStyle='rgba(255,255,255,.7)';ctx.font='8px monospace';ctx.fillText(b.v.toFixed(3),x+bw/2,h-4);ctx.textAlign='left';
+  });
+}
+
+/* ============================================
+   §18 VISUAL PATTERNS
+   ============================================ */
+function _drawPrimePat(){
+  const cv=document.getElementById('primePatternCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(8,4,20,.95)';ctx.fillRect(0,0,w,h);
+  const PAD=40,PB=30,PT=14,PR=14,CW=w-PAD-PR,CH=h-PB-PT,MN=60;
+  const xOf=n=>PAD+CW*((n-1)/(MN-1)),yOf=v=>PT+CH*(1-v*2.5);
+  ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;for(let i=0;i<=5;i++){const y=PT+CH*(i/5);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
+  for(let n=1;n<=MN;n++){const x=xOf(n),y=yOf(BSn(n)),p=isPrm(n);ctx.beginPath();ctx.arc(x,y,p?5:3.5,0,Math.PI*2);ctx.fillStyle=p?'#c9932a':'rgba(123,45,139,.6)';ctx.fill();if(p&&n<=23){ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px sans-serif';ctx.fillText('p='+n,x-8,y-8);}}
+  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,200,100,.7)';ctx.font='8.5px sans-serif';ctx.fillText('🟡 Primes   🟣 Composites',PAD,12);
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='8px sans-serif';ctx.fillText('n (1 to 60) →',PAD+CW/2-30,h-4);
+}
+function _drawTauPat(){
+  const cv=document.getElementById('tauPatternCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(8,4,20,.95)';ctx.fillRect(0,0,w,h);
+  const PAD=40,PB=30,PT=14,PR=14,CW=w-PAD-PR,CH=h-PB-PT,MT=8;
+  const xOf=t=>PAD+CW*(t/MT),yOf=v=>PT+CH*(1-v);
+  const al=t=>0.7*Math.exp(-.3*t)+0.2*(1-Math.exp(-.3*t));
+  const be=t=>0.1+0.5/(1+Math.exp(-.5*(t-3)));
+  const ga=t=>0.4*Math.pow(Math.sin(2*Math.PI/5*t),2)+0.1;
+  ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;for(let i=0;i<=4;i++){const y=PT+CH*(i/4);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
+  ctx.strokeStyle='rgba(201,147,42,.35)';ctx.lineWidth=1;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(xOf(3),PT);ctx.lineTo(xOf(3),PT+CH);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='rgba(201,147,42,.7)';ctx.font='8px monospace';ctx.fillText('τ=3·CB',xOf(3)+4,PT+10);
+  [[al,'#c9932a','α(τ)'],[be,'#7b2d8b','β(τ)'],[ga,'#4fc3d8','γ(τ)']].forEach(([fn,c,l])=>{ctx.strokeStyle=c;ctx.lineWidth=2;ctx.setLineDash([]);ctx.beginPath();for(let i=0;i<=200;i++){const t=MT*i/200,x=xOf(t),y=yOf(fn(t));i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();ctx.fillStyle=c;ctx.font='8.5px monospace';ctx.fillText(l,xOf(MT-.3),yOf(fn(MT)));});
+  ctx.strokeStyle='rgba(255,255,255,.25)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='8px sans-serif';ctx.fillText('τ →',PAD+CW-16,h-4);
+}
+function _drawNumLine(){
+  const cv=document.getElementById('numLineCanvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(8,4,20,.95)';ctx.fillRect(0,0,w,h);
+  const PAD=40,PR=40,PT=55,PB=30,CW=w-PAD-PR,xOf=v=>PAD+CW*v;
+  const g=ctx.createLinearGradient(PAD,0,PAD+CW,0);g.addColorStop(0,'rgba(79,195,216,.5)');g.addColorStop(.5,'rgba(201,147,42,.5)');g.addColorStop(1,'rgba(201,147,42,.9)');
+  ctx.strokeStyle=g;ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD+CW,PT);ctx.stroke();
+  for(let v=0;v<=1;v+=.1){ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(xOf(v),PT-5);ctx.lineTo(xOf(v),PT+5);ctx.stroke();ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='7.5px monospace';ctx.textAlign='center';ctx.fillText(v.toFixed(1),xOf(v),PT+16);}
+  [[1/3,'0p','#4fc3d8','Pure Possibility'],[2/3,'∞','#7b2d8b','Relational Infinity'],[1,'❶','#c9932a','Absolute One']].forEach(([v,lb,c,nm])=>{
+    const x=xOf(v);ctx.beginPath();ctx.arc(x,PT,12,0,Math.PI*2);ctx.fillStyle=c+'44';ctx.fill();ctx.strokeStyle=c;ctx.lineWidth=2;ctx.stroke();ctx.fillStyle='#fff';ctx.font='bold 10px monospace';ctx.textAlign='center';ctx.fillText(lb,x,PT+4);ctx.fillStyle=c;ctx.font='8.5px sans-serif';ctx.fillText(nm,x,PT-20);ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='8px monospace';ctx.fillText('BS='+v.toFixed(3),x,PT-10);
+  });ctx.textAlign='left';
+}
+
+// Init all new drawings
+window.addEventListener('load',function(){
+  setTimeout(function(){
+    _drawBSExp(7);updatePsi();_drawEntCanvas(0.8,(2/3)*.8);
+    _drawPrimePat();_drawTauPat();_drawNumLine();_ilabRender();
+  },900);
+});
 </script>
 </body>
 </html>
