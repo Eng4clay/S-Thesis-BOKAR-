@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>اختبار بسيط</title>
+</head>
+<body>
+
+<div id="test-area">
+  <p id="para1">هذا نص قابل للتعديل - جرب تغييره</p>
+  <p id="para2">نص آخر للتعديل</p>
+</div>
+
+<button onclick="enableEditing()">🔓 تفعيل التعديل</button>
+<button onclick="saveEdits()">💾 حفظ</button>
+<button onclick="clearEdits()">🗑️ مسح</button>
+
+<script>
+// كود بسيط جداً - لا يوجد تعقيد
+function enableEditing() {
+  document.getElementById('para1').contentEditable = true;
+  document.getElementById('para2').contentEditable = true;
+  alert('الآن يمكنك تعديل النصوص');
+}
+
+function saveEdits() {
+  const edits = {
+    para1: document.getElementById('para1').innerHTML,
+    para2: document.getElementById('para2').innerHTML
+  };
+  localStorage.setItem('test-edits', JSON.stringify(edits));
+  alert('✅ تم الحفظ');
+}
+
+function loadEdits() {
+  const saved = localStorage.getItem('test-edits');
+  if (saved) {
+    const edits = JSON.parse(saved);
+    document.getElementById('para1').innerHTML = edits.para1;
+    document.getElementById('para2').innerHTML = edits.para2;
+    alert('✅ تم تحميل التعديلات');
+  }
+}
+
+// تحميل التعديلات عند فتح الصفحة
+window.onload = loadEdits;
+</script>
+
+</body>
+</html>
