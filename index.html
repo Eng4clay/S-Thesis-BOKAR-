@@ -1836,41 +1836,38 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
   </div>
 <div class="page-num" data-i18n="page-v-1">V-1</div>
 </div>
-
-
 <!-- ========== VISUAL: BS DYNAMICS ========== -->
 <div class="page algo-page" id="pg-bs-visual">
-  <div class="part-hdr" style="background:linear-gradient(135deg,#0f0b24,#2c1654)"><span>📈</span> <span>BS Dynamics — Animated Stability Visualization</span></div>
+  <div class="part-hdr" style="background:linear-gradient(135deg,#0f0b24,#2c1654)"><span>📈</span> <span data-i18n="bs-dynamics-title">BS Dynamics — Animated Stability Visualization</span></div>
 
-  <h2>Interactive BS Curve</h2>
-  <p style="font-size:9.5pt;color:rgba(224,216,255,.8)">The graph below shows how Structural Stability BS(n) decreases as n increases. Trinity elements ❶, 0p, ∞ are highlighted in gold.</p>
+  <h2 data-i18n="interactive-bs-curve">Interactive BS Curve</h2>
+  <p data-i18n="interactive-bs-desc" style="font-size:9.5pt;color:rgba(224,216,255,.8)">The graph below shows how Structural Stability BS(n) decreases as n increases. Trinity elements ❶, 0p, ∞ are highlighted in gold.</p>
 
   <div class="flow-container">
     <canvas id="bsCanvas" width="680" height="280" style="max-width:100%;border-radius:8px"></canvas>
   </div>
 
-  <h2 style="margin-top:20px">BS Comparison: Primes vs Composites</h2>
-  <p style="font-size:9.5pt;color:rgba(224,216,255,.8)">Primes (blue dots) have systematically higher BS than composites of similar magnitude, confirming the hypothesis that primes are "purer" manifestations.</p>
+  <h2 style="margin-top:20px" data-i18n="bs-comparison-title">BS Comparison: Primes vs Composites</h2>
+  <p data-i18n="bs-comparison-desc" style="font-size:9.5pt;color:rgba(224,216,255,.8)">Primes (blue dots) have systematically higher BS than composites of similar magnitude, confirming the hypothesis that primes are "purer" manifestations.</p>
 
   <div class="flow-container">
     <canvas id="primeCanvas" width="680" height="260" style="max-width:100%;border-radius:8px"></canvas>
   </div>
 
-  <h2 style="margin-top:20px">τ Evolution of BS Weights α, β, γ</h2>
+  <h2 style="margin-top:20px" data-i18n="tau-evolution-title">τ Evolution of BS Weights α, β, γ</h2>
   <div class="flow-container">
     <canvas id="tauCanvas" width="680" height="240" style="max-width:100%;border-radius:8px"></canvas>
   </div>
-<div class="page-num" data-i18n="page-v-2">V-2</div>
+  <div class="page-num" data-i18n="page-v-2">V-2</div>
 </div>
-
-
 <!-- ========== VISUAL: TRINITY FLOW ========== -->
 <div class="page algo-page" id="pg-trinity-flow">
-  <div class="part-hdr" style="background:linear-gradient(135deg,#0f0b24,#2c1654)"><span>🌀</span> <span>Trinity Flow — Operations & Transformations</span></div>
+  <div class="part-hdr" style="background:linear-gradient(135deg,#0f0b24,#2c1654)"><span>🌀</span> <span data-i18n="trinity-flow-title">Trinity Flow — Operations & Transformations</span></div>
 
-  <h2>The Operations Map of System S</h2>
+  <h2 data-i18n="operations-map-title">The Operations Map of System S</h2>
   <div class="flow-container">
     <div class="flow-svg-wrap">
+      <!-- SVG content كله زي ما هو -->
       <svg viewBox="0 0 700 420" width="100%" style="max-width:680px">
         <defs>
           <marker id="op-arr" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto">
@@ -1939,131 +1936,140 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
     </div>
   </div>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px">
-    <div class="algo-step">
-      <div class="algo-step-num">ε</div>
-      <div class="algo-step-txt"><strong style="color:var(--gold)">Gift:</strong> ε: ❶ → 0p<br>Absolute overflows without diminishment. Timeless, irreversible.</div>
-    </div>
-    <div class="algo-step">
-      <div class="algo-step-num">δ</div>
-      <div class="algo-step-txt"><strong style="color:var(--gold)">Formation:</strong> δ: 0p → ∞<br>Possibility organizes into relations. Temporal, gradual.</div>
-    </div>
-    <div class="algo-step">
-      <div class="algo-step-num">η</div>
-      <div class="algo-step-txt"><strong style="color:var(--gold)">Epiphany:</strong> η = δ∘ε<br>η(❶) = 1 ∈ ℕ. Wavefunction collapse analogue.</div>
+  <!-- بعد الـ SVG، عندك -->
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px">
+  <!-- ⬇️ ضيف data-i18n لكل عنوان ⬇️ -->
+  <div class="algo-step">
+    <div class="algo-step-num">ε</div>
+    <div class="algo-step-txt">
+      <strong style="color:var(--gold)" data-i18n="gift-title">Gift:</strong> 
+      <span data-i18n="gift-desc">ε: ❶ → 0p<br>Absolute overflows without diminishment. Timeless, irreversible.</span>
     </div>
   </div>
-  <div class="page-num" data-i18n="page-v-3">V-3</div>
+  
+  <div class="algo-step">
+    <div class="algo-step-num">δ</div>
+    <div class="algo-step-txt">
+      <strong style="color:var(--gold)" data-i18n="formation-title">Formation:</strong> 
+      <span data-i18n="formation-desc">δ: 0p → ∞<br>Possibility organizes into relations. Temporal, gradual.</span>
+    </div>
+  </div>
+  
+  <div class="algo-step">
+    <div class="algo-step-num">η</div>
+    <div class="algo-step-txt">
+      <strong style="color:var(--gold)" data-i18n="epiphany-title">Epiphany:</strong> 
+      <span data-i18n="epiphany-desc">η = δ∘ε<br>η(❶) = 1 ∈ ℕ. Wavefunction collapse analogue.</span>
+    </div>
+  </div>
+</div>
+
+<!-- وفي الآخر -->
+<div class="page-num" data-i18n="page-v-3">V-3</div>
 </div>
 
 
 <!-- ========== SOLVED EXERCISES ========== -->
 <div class="page algo-page" id="pg-exercises">
-  <div class="part-hdr" style="background:linear-gradient(135deg,#0f0b24,#2c1654)"><span>📝</span> <span>§15. Solved Exercises — System S in Action</span></div>
-
+  <div class="part-hdr" style="background:linear-gradient(135deg,#0f0b24,#2c1654)"><span>📝</span> <span data-i18n="solved-exercises-title">§15. Solved Exercises — System S in Action</span></div>
   <!-- Exercise 1 -->
   <div class="ex-card">
     <div class="ex-header">
-      <span class="ex-badge">Exercise 1</span>
-      <span class="ex-title">Computing BS for natural numbers n = 7, 11, and 23</span>
+      <span class="ex-badge" data-i18n="exercise-1-badge">Exercise 1</span>
+      <span class="ex-title" data-i18n="exercise-1-title">Computing BS for natural numbers n = 7, 11, and 23</span>
     </div>
     <div class="ex-problem">
-      <strong>Problem:</strong> Using the BS formula for natural numbers, compute BS(7), BS(11), and BS(23). Verify that BS(23) matches the denominator used in the Bouker Constant formula.
+      <strong data-i18n="problem-label">Problem:</strong> <span data-i18n="exercise-1-problem">Using the BS formula for natural numbers, compute BS(7), BS(11), and BS(23). Verify that BS(23) matches the denominator used in the Bouker Constant formula.</span>
     </div>
     <div class="ex-solution">
-      <strong style="color:#5dcc8b;font-family:var(--fs)">✅ Solution (Step-by-Step):</strong>
-      <div class="ex-step"><div class="ex-step-n">1</div><div>For n ≥ 5, the formula is: <code>BS(n) = 2/(2n−3)</code></div></div>
-      <div class="ex-step"><div class="ex-step-n">2</div><div>For n = 7: BS(7) = 2/(2×7−3) = 2/(14−3) = 2/11 ≈ <strong style="color:var(--gold)">0.1818</strong></div></div>
-      <div class="ex-step"><div class="ex-step-n">3</div><div>For n = 11: BS(11) = 2/(2×11−3) = 2/(22−3) = 2/19 ≈ <strong style="color:var(--gold)">0.1053</strong></div></div>
-      <div class="ex-step"><div class="ex-step-n">4</div><div>For n = 23: BS(23) = 2/(2×23−3) = 2/(46−3) = 2/43 ≈ <strong style="color:var(--gold)">0.0465</strong></div></div>
-      <div class="ex-step"><div class="ex-step-n">5</div><div>Verification: The Bouker Constant uses the factor 2/43 — which is exactly BS(23). ✓ This confirms that prime 23 (at τ₀ = 3, the β(τ) inflection point) is the structural anchor of the entire constant.</div></div>
-      <div class="ex-final">✦ Result: BS(7) = 2/11 · BS(11) = 2/19 · BS(23) = 2/43 = CB numerator ✦</div>
+      <strong style="color:#5dcc8b;font-family:var(--fs)" data-i18n="solution-label">✅ Solution (Step-by-Step):</strong>
+      <div class="ex-step"><div class="ex-step-n">1</div><div data-i18n="exercise-1-step1">For n ≥ 5, the formula is: <code>BS(n) = 2/(2n−3)</code></div></div>
+      <div class="ex-step"><div class="ex-step-n">2</div><div data-i18n="exercise-1-step2">For n = 7: BS(7) = 2/(2×7−3) = 2/(14−3) = 2/11 ≈ <strong style="color:var(--gold)">0.1818</strong></div></div>
+      <div class="ex-step"><div class="ex-step-n">3</div><div data-i18n="exercise-1-step3">For n = 11: BS(11) = 2/(2×11−3) = 2/(22−3) = 2/19 ≈ <strong style="color:var(--gold)">0.1053</strong></div></div>
+      <div class="ex-step"><div class="ex-step-n">4</div><div data-i18n="exercise-1-step4">For n = 23: BS(23) = 2/(2×23−3) = 2/(46−3) = 2/43 ≈ <strong style="color:var(--gold)">0.0465</strong></div></div>
+      <div class="ex-step"><div class="ex-step-n">5</div><div data-i18n="exercise-1-step5">Verification: The Bouker Constant uses the factor 2/43 — which is exactly BS(23). ✓ This confirms that prime 23 (at τ₀ = 3, the β(τ) inflection point) is the structural anchor of the entire constant.</div></div>
+      <div class="ex-final" data-i18n="exercise-1-result">✦ Result: BS(7) = 2/11 · BS(11) = 2/19 · BS(23) = 2/43 = CB numerator ✦</div>
     </div>
   </div>
-
   <!-- Exercise 2 -->
   <div class="ex-card" style="margin-top:14px">
     <div class="ex-header">
-      <span class="ex-badge">Exercise 2</span>
-      <span class="ex-title">Verifying the Central Equation: ❶ ⊕ 0p = 1 = ∞</span>
+      <span class="ex-badge" data-i18n="exercise-2-badge">Exercise 2</span>
+      <span class="ex-title" data-i18n="exercise-2-title">Verifying the Central Equation: ❶ ⊕ 0p = 1 = ∞</span>
     </div>
     <div class="ex-problem">
-      <strong>Problem:</strong> Using the matrix representations of ❶ and 0p, compute the Triadic Sum ❶ ⊕ 0p = ❶·0p + 0p·❶ and verify it equals the identity matrix 1 in the context of System S.
+      <strong data-i18n="problem-label">Problem:</strong> <span data-i18n="exercise-2-problem">Using the matrix representations of ❶ and 0p, compute the Triadic Sum ❶ ⊕ 0p = ❶·0p + 0p·❶ and verify it equals the identity matrix 1 in the context of System S.</span>
     </div>
     <div class="ex-solution">
-      <strong style="color:#5dcc8b;font-family:var(--fs)">✅ Solution (Step-by-Step):</strong>
-      <div class="ex-step"><div class="ex-step-n">1</div><div>Given matrix representations:<br>❶ = diag(1,0,0), 0p = diag(0,0,0), ∞ = diag(0,1,1)</div></div>
-      <div class="ex-step"><div class="ex-step-n">2</div><div>Triadic Sum A⊕B = AB + BA (matrix product, non-commutative in general)</div></div>
-      <div class="ex-step"><div class="ex-step-n">3</div><div>❶·0p = diag(1,0,0)·diag(0,0,0) = diag(0,0,0)</div></div>
-      <div class="ex-step"><div class="ex-step-n">4</div><div>0p·❶ = diag(0,0,0)·diag(1,0,0) = diag(0,0,0)</div></div>
-      <div class="ex-step"><div class="ex-step-n">5</div><div>❶ ⊕ 0p = 0 + 0 = 0 in matrix algebra. This illustrates that the epiphany η is the non-trivial step — it maps (❶, 0p) to Natural 1 via η(❶) = 1 ∈ ℕ, not through direct matrix multiplication.</div></div>
-      <div class="ex-step"><div class="ex-step-n">6</div><div>The Central Equation ❶ ⊕ 0p = 1 = ∞ is an ontological statement: the Absolute One acting through Pure Possibility generates the first stable manifestation (1 ∈ ℕ), which equals Relational Infinity (∞) in System S at the level of BS: BS(1) = 0.7 ≈ BS(∞) = 2/3.</div></div>
-      <div class="ex-final">✦ Insight: The equation is ontological, not merely algebraic ✦</div>
+      <strong style="color:#5dcc8b;font-family:var(--fs)" data-i18n="solution-label">✅ Solution (Step-by-Step):</strong>
+      <div class="ex-step"><div class="ex-step-n">1</div><div data-i18n="exercise-2-step1">Given matrix representations:<br>❶ = diag(1,0,0), 0p = diag(0,0,0), ∞ = diag(0,1,1)</div></div>
+      <div class="ex-step"><div class="ex-step-n">2</div><div data-i18n="exercise-2-step2">Triadic Sum A⊕B = AB + BA (matrix product, non-commutative in general)</div></div>
+      <div class="ex-step"><div class="ex-step-n">3</div><div data-i18n="exercise-2-step3">❶·0p = diag(1,0,0)·diag(0,0,0) = diag(0,0,0)</div></div>
+      <div class="ex-step"><div class="ex-step-n">4</div><div data-i18n="exercise-2-step4">0p·❶ = diag(0,0,0)·diag(1,0,0) = diag(0,0,0)</div></div>
+      <div class="ex-step"><div class="ex-step-n">5</div><div data-i18n="exercise-2-step5">❶ ⊕ 0p = 0 + 0 = 0 in matrix algebra. This illustrates that the epiphany η is the non-trivial step — it maps (❶, 0p) to Natural 1 via η(❶) = 1 ∈ ℕ, not through direct matrix multiplication.</div></div>
+      <div class="ex-step"><div class="ex-step-n">6</div><div data-i18n="exercise-2-step6">The Central Equation ❶ ⊕ 0p = 1 = ∞ is an ontological statement: the Absolute One acting through Pure Possibility generates the first stable manifestation (1 ∈ ℕ), which equals Relational Infinity (∞) in System S at the level of BS: BS(1) = 0.7 ≈ BS(∞) = 2/3.</div></div>
+      <div class="ex-final" data-i18n="exercise-2-result">✦ Insight: The equation is ontological, not merely algebraic ✦</div>
     </div>
   </div>
   <div class="page-num" data-i18n="page-ex-1">Ex-1</div>
 </div>
-
-<div class="page algo-page" id="pg-exercises-2">
-  <div class="part-hdr" style="background:linear-gradient(135deg,#0f0b24,#2c1654)"><span>📝</span> <span>§15. Solved Exercises (continued)</span></div>
-
+  <div class="page algo-page" id="pg-exercises-2">
+  <div class="part-hdr" style="background:linear-gradient(135deg,#0f0b24,#2c1654)"><span>📝</span> <span data-i18n="solved-exercises-title-2">§15. Solved Exercises (continued)</span></div>
   <!-- Exercise 3 -->
   <div class="ex-card">
     <div class="ex-header">
-      <span class="ex-badge">Exercise 3</span>
-      <span class="ex-title">Computing the Bouker Constant CB</span>
+      <span class="ex-badge" data-i18n="exercise-3-badge">Exercise 3</span>
+      <span class="ex-title" data-i18n="exercise-3-title">Computing the Bouker Constant CB</span>
     </div>
     <div class="ex-problem">
-      <strong>Problem:</strong> Using α = 1/137 (fine-structure constant), ℏ = 1.055×10⁻³⁴ J·s, G = 6.674×10⁻¹¹ m³/(kg·s²), c = 3×10⁸ m/s, compute CB step-by-step. Verify the result = 6.184×10⁻⁴².
+      <strong data-i18n="problem-label">Problem:</strong> <span data-i18n="exercise-3-problem">Using α = 1/137 (fine-structure constant), ℏ = 1.055×10⁻³⁴ J·s, G = 6.674×10⁻¹¹ m³/(kg·s²), c = 3×10⁸ m/s, compute CB step-by-step. Verify the result = 6.184×10⁻⁴².</span>
     </div>
     <div class="ex-solution">
-      <strong style="color:#5dcc8b;font-family:var(--fs)">✅ Solution:</strong>
-      <div class="ex-step"><div class="ex-step-n">1</div><div>Write the formula: CB = (2/43) · (α/137) · √(c³/ℏG)</div></div>
-      <div class="ex-step"><div class="ex-step-n">2</div><div>First factor: (2/43) = BS(23) ≈ 0.046512</div></div>
-      <div class="ex-step"><div class="ex-step-n">3</div><div>Second factor: α/137 = (1/137)/137 = 1/18769 ≈ 5.327×10⁻⁵</div></div>
-      <div class="ex-step"><div class="ex-step-n">4</div><div>Inner radical: c³/ℏG = (3×10⁸)³ / (1.055×10⁻³⁴ × 6.674×10⁻¹¹)</div></div>
-      <div class="ex-step"><div class="ex-step-n">5</div><div>= 2.7×10²⁵ / (7.04×10⁻⁴⁵) = 3.835×10⁶⁹</div></div>
-      <div class="ex-step"><div class="ex-step-n">6</div><div>√(3.835×10⁶⁹) = 1.959×10³⁴·⁵ ≈ 6.195×10³⁴</div></div>
-      <div class="ex-step"><div class="ex-step-n">7</div><div>CB = 0.046512 × 5.327×10⁻⁵ × 6.195×10³⁴</div></div>
-      <div class="ex-step"><div class="ex-step-n">8</div><div>= 0.046512 × 3.30×10³⁰ × 10⁻⁵ ≈ 6.18×10²⁵⁻²⁵ = <strong style="color:var(--gold)">6.184×10⁻⁴²</strong></div></div>
-      <div class="ex-final">✦ CB = 6.184033 × 10⁻⁴² ✓ ✦</div>
+      <strong style="color:#5dcc8b;font-family:var(--fs)" data-i18n="solution-label">✅ Solution:</strong>
+      <div class="ex-step"><div class="ex-step-n">1</div><div data-i18n="exercise-3-step1">Write the formula: CB = (2/43) · (α/137) · √(c³/ℏG)</div></div>
+      <div class="ex-step"><div class="ex-step-n">2</div><div data-i18n="exercise-3-step2">First factor: (2/43) = BS(23) ≈ 0.046512</div></div>
+      <div class="ex-step"><div class="ex-step-n">3</div><div data-i18n="exercise-3-step3">Second factor: α/137 = (1/137)/137 = 1/18769 ≈ 5.327×10⁻⁵</div></div>
+      <div class="ex-step"><div class="ex-step-n">4</div><div data-i18n="exercise-3-step4">Inner radical: c³/ℏG = (3×10⁸)³ / (1.055×10⁻³⁴ × 6.674×10⁻¹¹)</div></div>
+      <div class="ex-step"><div class="ex-step-n">5</div><div data-i18n="exercise-3-step5">= 2.7×10²⁵ / (7.04×10⁻⁴⁵) = 3.835×10⁶⁹</div></div>
+      <div class="ex-step"><div class="ex-step-n">6</div><div data-i18n="exercise-3-step6">√(3.835×10⁶⁹) = 1.959×10³⁴·⁵ ≈ 6.195×10³⁴</div></div>
+      <div class="ex-step"><div class="ex-step-n">7</div><div data-i18n="exercise-3-step7">CB = 0.046512 × 5.327×10⁻⁵ × 6.195×10³⁴</div></div>
+      <div class="ex-step"><div class="ex-step-n">8</div><div data-i18n="exercise-3-step8">= 0.046512 × 3.30×10³⁰ × 10⁻⁵ ≈ 6.18×10²⁵⁻²⁵ = <strong style="color:var(--gold)">6.184×10⁻⁴²</strong></div></div>
+      <div class="ex-final" data-i18n="exercise-3-result">✦ CB = 6.184033 × 10⁻⁴² ✓ ✦</div>
     </div>
   </div>
-
   <!-- Exercise 4 -->
   <div class="ex-card" style="margin-top:14px">
     <div class="ex-header">
-      <span class="ex-badge">Exercise 4</span>
-      <span class="ex-title">Quantum BS: Concurrence and Entanglement</span>
+      <span class="ex-badge" data-i18n="exercise-4-badge">Exercise 4</span>
+      <span class="ex-title" data-i18n="exercise-4-title">Quantum BS: Concurrence and Entanglement</span>
     </div>
     <div class="ex-problem">
-      <strong>Problem:</strong> A two-qubit system has concurrence C = 0.8. (a) What is its BS? (b) Does it correspond more to ∞ or to 0p? (c) What happens to BS as C → 1?
+      <strong data-i18n="problem-label">Problem:</strong> <span data-i18n="exercise-4-problem">A two-qubit system has concurrence C = 0.8. (a) What is its BS? (b) Does it correspond more to ∞ or to 0p? (c) What happens to BS as C → 1?</span>
     </div>
     <div class="ex-solution">
-      <strong style="color:#5dcc8b;font-family:var(--fs)">✅ Solution:</strong>
-      <div class="ex-step"><div class="ex-step-n">a</div><div>From Eq.(5.5): BS_entangled = (2/3)·C = (2/3)·0.8 = <strong style="color:var(--gold)">0.5333</strong></div></div>
-      <div class="ex-step"><div class="ex-step-n">b</div><div>BS(0p) = 0.333, BS(∞) = 0.667. Since 0.5333 is closer to ∞ (0.667), this system corresponds more to <strong style="color:var(--gold)">Relational Infinity</strong> — a partially manifested relational state.</div></div>
-      <div class="ex-step"><div class="ex-step-n">c</div><div>As C → 1: BS → 2/3 = BS(∞). Perfect entanglement is a pure ∞ state — maximum relational connectivity with BS exactly at the Relational Infinity level. This confirms that Bell states (C=1) are perfect ∞-manifestations.</div></div>
-      <div class="ex-final">✦ Perfect entanglement (C=1) → BS = 2/3 = BS(∞) ✦</div>
+      <strong style="color:#5dcc8b;font-family:var(--fs)" data-i18n="solution-label">✅ Solution:</strong>
+      <div class="ex-step"><div class="ex-step-n">a</div><div data-i18n="exercise-4-step-a">From Eq.(5.5): BS_entangled = (2/3)·C = (2/3)·0.8 = <strong style="color:var(--gold)">0.5333</strong></div></div>
+      <div class="ex-step"><div class="ex-step-n">b</div><div data-i18n="exercise-4-step-b">BS(0p) = 0.333, BS(∞) = 0.667. Since 0.5333 is closer to ∞ (0.667), this system corresponds more to <strong style="color:var(--gold)">Relational Infinity</strong> — a partially manifested relational state.</div></div>
+      <div class="ex-step"><div class="ex-step-n">c</div><div data-i18n="exercise-4-step-c">As C → 1: BS → 2/3 = BS(∞). Perfect entanglement is a pure ∞ state — maximum relational connectivity with BS exactly at the Relational Infinity level. This confirms that Bell states (C=1) are perfect ∞-manifestations.</div></div>
+      <div class="ex-final" data-i18n="exercise-4-result">✦ Perfect entanglement (C=1) → BS = 2/3 = BS(∞) ✦</div>
     </div>
   </div>
-
   <!-- Exercise 5 -->
   <div class="ex-card" style="margin-top:14px">
     <div class="ex-header">
-      <span class="ex-badge">Exercise 5</span>
-      <span class="ex-title">Consciousness Level Ψ for a Focused Human</span>
+      <span class="ex-badge" data-i18n="exercise-5-badge">Exercise 5</span>
+      <span class="ex-title" data-i18n="exercise-5-title">Consciousness Level Ψ for a Focused Human</span>
     </div>
     <div class="ex-problem">
-      <strong>Problem:</strong> A meditating subject has measured BS values: BS_ID = 0.72 (identity coherence), BS_Pot = 0.25 (creative potential), BS_Rel = 0.65 (relational activity). Using α=0.47, β=0.23, γ=0.30 and assuming η(τ)=1 for a single τ slice, compute Ψ.
+      <strong data-i18n="problem-label">Problem:</strong> <span data-i18n="exercise-5-problem">A meditating subject has measured BS values: BS_ID = 0.72 (identity coherence), BS_Pot = 0.25 (creative potential), BS_Rel = 0.65 (relational activity). Using α=0.47, β=0.23, γ=0.30 and assuming η(τ)=1 for a single τ slice, compute Ψ.</span>
     </div>
     <div class="ex-solution">
-      <strong style="color:#5dcc8b;font-family:var(--fs)">✅ Solution:</strong>
-      <div class="ex-step"><div class="ex-step-n">1</div><div>From Eq.(6.2): Ψ ≈ α·BS_ID + β·BS_Pot + γ·BS_Rel (for single τ, η(τ)=1)</div></div>
-      <div class="ex-step"><div class="ex-step-n">2</div><div>Ψ = 0.47×0.72 + 0.23×0.25 + 0.30×0.65</div></div>
-      <div class="ex-step"><div class="ex-step-n">3</div><div>= 0.3384 + 0.0575 + 0.195 = <strong style="color:var(--gold)">0.5909</strong></div></div>
-      <div class="ex-step"><div class="ex-step-n">4</div><div>Interpretation: Ψ ≈ 0.59 > normal human average (0.57). This subject is in a slightly elevated consciousness state — consistent with deep meditation approaching a flow state (BS > 0.75 threshold).</div></div>
-      <div class="ex-final">✦ Ψ ≈ 0.59 — Elevated conscious state, approaching flow ✦</div>
+      <strong style="color:#5dcc8b;font-family:var(--fs)" data-i18n="solution-label">✅ Solution:</strong>
+      <div class="ex-step"><div class="ex-step-n">1</div><div data-i18n="exercise-5-step1">From Eq.(6.2): Ψ ≈ α·BS_ID + β·BS_Pot + γ·BS_Rel (for single τ, η(τ)=1)</div></div>
+      <div class="ex-step"><div class="ex-step-n">2</div><div data-i18n="exercise-5-step2">Ψ = 0.47×0.72 + 0.23×0.25 + 0.30×0.65</div></div>
+      <div class="ex-step"><div class="ex-step-n">3</div><div data-i18n="exercise-5-step3">= 0.3384 + 0.0575 + 0.195 = <strong style="color:var(--gold)">0.5909</strong></div></div>
+      <div class="ex-step"><div class="ex-step-n">4</div><div data-i18n="exercise-5-step4">Interpretation: Ψ ≈ 0.59 > normal human average (0.57). This subject is in a slightly elevated consciousness state — consistent with deep meditation approaching a flow state (BS > 0.75 threshold).</div></div>
+      <div class="ex-final" data-i18n="exercise-5-result">✦ Ψ ≈ 0.59 — Elevated conscious state, approaching flow ✦</div>
     </div>
   </div>
   <div class="page-num" data-i18n="page-ex-2">Ex-2</div>
@@ -2074,10 +2080,10 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 <div class="page algo-page" id="pg-interactive-lab" style="padding:0;overflow:hidden">
   <div class="part-hdr" style="background:linear-gradient(135deg,#0a0618,#1a0a35);margin:0;border-radius:0">
     <span>🧪</span>
-    <span>§16. Interactive Exercise Laboratory — Live Simulations</span>
+    <span data-i18n="interactive-lab-title">§16. Interactive Exercise Laboratory — Live Simulations</span>
   </div>
   <div style="padding:20px 22mm">
-    <p style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs);margin-bottom:18px">
+    <p data-i18n="interactive-lab-desc" style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs);margin-bottom:18px">
       Complete each exercise step-by-step to unlock its live visual simulation.
     </p>
     <div id="ilab-tabs" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px">
@@ -2134,18 +2140,18 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
   <!-- ========== §17 DYNAMIC SIMULATIONS ========== -->
 <div class="page algo-page" id="pg-dynamic-sim">
   <div class="part-hdr" style="background:linear-gradient(135deg,#0a0618,#1a0a35)">
-    <span>🌀</span><span>§17. Dynamic Simulations — System S in Motion</span>
+    <span>🌀</span><span data-i18n="dynamic-sim-title">§17. Dynamic Simulations — System S in Motion</span>
   </div>
 
-  <h2 style="color:var(--gold)">17.1 BS Real-Time Explorer</h2>
-  <p style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">Drag the slider to explore Structural Stability across natural numbers.</p>
+  <h2 style="color:var(--gold)" data-i18n="bs-explorer-title">17.1 BS Real-Time Explorer</h2>
+  <p data-i18n="bs-explorer-desc" style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">Drag the slider to explore Structural Stability across natural numbers.</p>
   <div class="flow-container">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap">
       <span style="color:rgba(255,255,255,.5);font-size:9pt;font-family:var(--fm)">n =</span>
       <input type="range" id="bs-slider" min="1" max="40" value="7" oninput="updateBSExplorer(this.value)" style="flex:1;min-width:160px;accent-color:#c9932a;cursor:pointer">
       <span id="bs-n-display" style="color:#e8aa40;font-size:11pt;font-family:var(--fm);font-weight:bold;min-width:30px">7</span>
       <div style="background:rgba(201,147,42,.15);border:1px solid rgba(201,147,42,.4);border-radius:10px;padding:6px 16px;text-align:center">
-        <div style="font-size:8pt;color:rgba(255,255,255,.4);font-family:var(--fs)">BS(n)</div>
+        <div style="font-size:8pt;color:rgba(255,255,255,.4);font-family:var(--fs)" data-i18n="bs-label">BS(n)</div>
         <div id="bs-val-display" style="font-size:14pt;color:#e8aa40;font-family:var(--fm);font-weight:bold">0.1818</div>
       </div>
       <div id="bs-trinity-label" style="font-size:8.5pt;color:rgba(255,255,255,.5);font-family:var(--fs);min-width:120px"></div>
@@ -2153,73 +2159,73 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
     <canvas id="bsExplorerCanvas" width="680" height="200" style="max-width:100%;border-radius:8px;display:block"></canvas>
   </div>
 
-  <h2 style="color:var(--gold);margin-top:20px">17.2 Consciousness Ψ Simulator</h2>
+  <h2 style="color:var(--gold);margin-top:20px" data-i18n="psi-simulator-title">17.2 Consciousness Ψ Simulator</h2>
   <div class="flow-container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
       <div>
         <div style="display:flex;flex-direction:column;gap:14px">
           <div>
             <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-              <span style="font-size:8.5pt;color:#c9932a;font-family:var(--fs)">BS_ID — Identity (α=0.47)</span>
+              <span style="font-size:8.5pt;color:#c9932a;font-family:var(--fs)" data-i18n="psi-id-label">BS_ID — Identity (α=0.47)</span>
               <span id="psi-id-val" style="font-size:8.5pt;color:#e8aa40;font-family:var(--fm)">0.72</span>
             </div>
             <input type="range" id="psi-id" min="0" max="1" step="0.01" value="0.72" oninput="updatePsi()" style="width:100%;accent-color:#c9932a">
           </div>
           <div>
             <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-              <span style="font-size:8.5pt;color:#7b2d8b;font-family:var(--fs)">BS_Pot — Potential (β=0.23)</span>
+              <span style="font-size:8.5pt;color:#7b2d8b;font-family:var(--fs)" data-i18n="psi-pot-label">BS_Pot — Potential (β=0.23)</span>
               <span id="psi-pot-val" style="font-size:8.5pt;color:#e8aa40;font-family:var(--fm)">0.25</span>
             </div>
             <input type="range" id="psi-pot" min="0" max="1" step="0.01" value="0.25" oninput="updatePsi()" style="width:100%;accent-color:#7b2d8b">
           </div>
           <div>
             <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-              <span style="font-size:8.5pt;color:#4fc3d8;font-family:var(--fs)">BS_Rel — Relational (γ=0.30)</span>
+              <span style="font-size:8.5pt;color:#4fc3d8;font-family:var(--fs)" data-i18n="psi-rel-label">BS_Rel — Relational (γ=0.30)</span>
               <span id="psi-rel-val" style="font-size:8.5pt;color:#e8aa40;font-family:var(--fm)">0.65</span>
             </div>
             <input type="range" id="psi-rel" min="0" max="1" step="0.01" value="0.65" oninput="updatePsi()" style="width:100%;accent-color:#4fc3d8">
           </div>
         </div>
         <div style="margin-top:18px;padding:16px;background:rgba(44,22,84,.4);border-radius:12px;border:1.5px solid rgba(201,147,42,.3);text-align:center">
-          <div style="font-size:9pt;color:rgba(255,255,255,.4);font-family:var(--fs);margin-bottom:4px">Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel</div>
+          <div style="font-size:9pt;color:rgba(255,255,255,.4);font-family:var(--fs);margin-bottom:4px" data-i18n="psi-formula">Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel</div>
           <div id="psi-result" style="font-size:22pt;color:#e8aa40;font-family:var(--fm);font-weight:bold;line-height:1">0.5909</div>
           <div id="psi-label" style="font-size:9pt;color:#5dcc8b;font-family:var(--fs);margin-top:4px">✨ Above Average</div>
         </div>
       </div>
       <div>
-        <div style="font-size:8pt;color:rgba(255,255,255,.35);font-family:var(--fs);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px">Consciousness Scale</div>
+        <div style="font-size:8pt;color:rgba(255,255,255,.35);font-family:var(--fs);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px" data-i18n="consciousness-scale">Consciousness Scale</div>
         <canvas id="psiCanvas" width="280" height="220" style="max-width:100%;border-radius:8px;display:block"></canvas>
       </div>
     </div>
   </div>
 
-  <h2 style="color:var(--gold);margin-top:20px">17.3 Entanglement BS Explorer</h2>
+  <h2 style="color:var(--gold);margin-top:20px" data-i18n="entanglement-explorer-title">17.3 Entanglement BS Explorer</h2>
   <div class="flow-container">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center">
       <div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
-          <span style="font-size:9pt;color:rgba(255,255,255,.6);font-family:var(--fs)">Concurrence C =</span>
+          <span style="font-size:9pt;color:rgba(255,255,255,.6);font-family:var(--fs)" data-i18n="concurrence-label">Concurrence C =</span>
           <input type="range" id="ent-slider" min="0" max="1" step="0.01" value="0.8" oninput="updateEntanglement(this.value)" style="flex:1;accent-color:#7b2d8b">
           <span id="ent-c-val" style="color:#e8aa40;font-family:var(--fm);font-weight:bold;min-width:30px">0.80</span>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;text-align:center">
           <div style="padding:10px;background:rgba(79,195,216,.1);border-radius:10px;border:1px solid rgba(79,195,216,.3)">
             <div style="font-size:9pt;color:#4fc3d8;font-family:var(--fm)">0p</div>
-            <div style="font-size:8.5pt;color:rgba(255,255,255,.4)">BS=1/3</div>
+            <div style="font-size:8.5pt;color:rgba(255,255,255,.4)" data-i18n="bs-equals">BS=1/3</div>
             <div style="font-size:11pt;color:#4fc3d8;font-family:var(--fm);font-weight:bold">0.333</div>
           </div>
           <div style="padding:10px;background:rgba(201,147,42,.15);border-radius:10px;border:1.5px solid #c9932a">
             <div style="font-size:9pt;color:#c9932a;font-family:var(--fm)">BS_ent</div>
-            <div style="font-size:8.5pt;color:rgba(255,255,255,.4)">(2/3)·C</div>
+            <div style="font-size:8.5pt;color:rgba(255,255,255,.4)" data-i18n="bs-ent-formula">(2/3)·C</div>
             <div id="ent-bs-val" style="font-size:11pt;color:#e8aa40;font-family:var(--fm);font-weight:bold">0.5333</div>
           </div>
           <div style="padding:10px;background:rgba(123,45,139,.1);border-radius:10px;border:1px solid rgba(123,45,139,.3)">
             <div style="font-size:9pt;color:#7b2d8b;font-family:var(--fm)">∞</div>
-            <div style="font-size:8.5pt;color:rgba(255,255,255,.4)">BS=2/3</div>
+            <div style="font-size:8.5pt;color:rgba(255,255,255,.4)" data-i18n="bs-equals">BS=2/3</div>
             <div style="font-size:11pt;color:#7b2d8b;font-family:var(--fm);font-weight:bold">0.667</div>
           </div>
         </div>
-        <div id="ent-label" style="margin-top:10px;text-align:center;font-size:9pt;color:#e8aa40;font-family:var(--fs);padding:6px;background:rgba(201,147,42,.08);border-radius:8px">
+        <div id="ent-label" style="margin-top:10px;text-align:center;font-size:9pt;color:#e8aa40;font-family:var(--fs);padding:6px;background:rgba(201,147,42,.08);border-radius:8px" data-i18n="ent-label">
           State closer to: ∞ Relational Infinity
         </div>
       </div>
@@ -2232,23 +2238,23 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
   <!-- ========== §18 VISUAL PATTERNS ========== -->
 <div class="page algo-page" id="pg-visual-patterns">
   <div class="part-hdr" style="background:linear-gradient(135deg,#0a0618,#1a0a35)">
-    <span>✨</span><span>§18. Visual Patterns — System S Geometry</span>
+    <span>✨</span><span data-i18n="visual-patterns-title">§18. Visual Patterns — System S Geometry</span>
   </div>
 
-  <h2 style="color:var(--gold)">18.1 BS Decay — Primes vs Composites</h2>
-  <p style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">Primes (gold) consistently sit above composites (purple) — confirming their role as pure epiphanies.</p>
+  <h2 style="color:var(--gold)" data-i18n="bs-decay-title">18.1 BS Decay — Primes vs Composites</h2>
+  <p data-i18n="bs-decay-desc" style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">Primes (gold) consistently sit above composites (purple) — confirming their role as pure epiphanies.</p>
   <div class="flow-container">
     <canvas id="primePatternCanvas" width="680" height="240" style="max-width:100%;border-radius:8px;display:block"></canvas>
   </div>
 
-  <h2 style="color:var(--gold);margin-top:20px">18.2 τ-Weight Evolution — α, β, γ</h2>
-  <p style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">The crossover near τ=3 corresponds to prime 23 and the Bouker Constant anchor point.</p>
+  <h2 style="color:var(--gold);margin-top:20px" data-i18n="tau-weight-evolution-title">18.2 τ-Weight Evolution — α, β, γ</h2>
+  <p data-i18n="tau-weight-desc" style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">The crossover near τ=3 corresponds to prime 23 and the Bouker Constant anchor point.</p>
   <div class="flow-container">
     <canvas id="tauPatternCanvas" width="680" height="220" style="max-width:100%;border-radius:8px;display:block"></canvas>
   </div>
 
-  <h2 style="color:var(--gold);margin-top:20px">18.3 Trinity Number Line</h2>
-  <p style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">The three axioms occupy precise structural positions on the BS axis.</p>
+  <h2 style="color:var(--gold);margin-top:20px" data-i18n="trinity-number-line-title">18.3 Trinity Number Line</h2>
+  <p data-i18n="trinity-number-line-desc" style="color:rgba(224,216,255,.75);font-size:9.5pt;font-family:var(--fs)">The three axioms occupy precise structural positions on the BS axis.</p>
   <div class="flow-container">
     <canvas id="numLineCanvas" width="680" height="160" style="max-width:100%;border-radius:8px;display:block"></canvas>
   </div>
@@ -3177,10 +3183,134 @@ ar:{
   "page-ex-2": "Ex-٢",
   "page-lab-1": "Lab-١",
   "page-sim-1": "Sim-١",
-  "page-pat-1": "Pat-١"
-}, 
- // <-- هنا القوس المعكوس } ثم فاصلة ,
-//    👆 مهم جداً: القوس هذا كان ناقص!
+    "page-pat-1": "Pat-١",  // <-- آخر سطر في ar القديم (مع فاصلة)
+  
+  // ========== الصفحات المرئية ==========
+  // --- 📈 BS Dynamics ---
+  "bs-dynamics-title": "📈 ديناميكيات BS — تصور متحرك للاستقرار",
+  "interactive-bs-curve": "منحنى BS التفاعلي",
+  "interactive-bs-desc": "يظهر الرسم البياني أدناه كيف يتناقص الاستقرار البنيوي BS(n) مع زيادة n. عناصر الثالوث ❶، 0p، ∞ مظللة بالذهبي.",
+  "bs-comparison-title": "مقارنة BS: الأعداد الأولية مقابل المركبة",
+  "bs-comparison-desc": "الأعداد الأولية (النقاط الذهبية) لها BS أعلى بشكل منهجي من المركبات ذات الحجم المماثل، مما يؤكد فرضية أن الأعداد الأولية هي تجليات 'أنقى'.",
+  "tau-evolution-title": "تطور أوزان BS α، β، γ مع τ",
+
+  // --- 🌀 Trinity Flow ---
+  "trinity-flow-title": "🌀 تدفق الثالوث — العمليات والتحولات",
+  "operations-map-title": "خريطة عمليات نظام S",
+  "gift-title": "الهبة:",
+  "gift-desc": "ε: ❶ → 0p<br>المطلق يفيض دون نقصان. لا زماني، لا رجعة فيه.",
+  "formation-title": "التشكيل:",
+  "formation-desc": "δ: 0p → ∞<br>الإمكان ينظم إلى علاقات. زماني، تدريجي.",
+  "epiphany-title": "التجلي:",
+  "epiphany-desc": "η = δ∘ε<br>η(❶) = 1 ∈ ℕ. تماثل انهيار الدالة الموجية.",
+
+  // --- 📝 Solved Exercises (الصفحة الأولى) ---
+  "solved-exercises-title": "📝 §15. تمارين محلولة — نظام S في التطبيق",
+  "exercise-1-badge": "التمرين 1",
+  "exercise-1-title": "حساب BS للأعداد الطبيعية n = 7، 11، 23",
+  "exercise-1-problem": "باستخدام صيغة BS للأعداد الطبيعية، احسب BS(7)، BS(11)، و BS(23). تحقق من أن BS(23) يطابق المقام المستخدم في صيغة ثابت بوكر.",
+  "problem-label": "المسألة:",
+  "solution-label": "✅ الحل (خطوة بخطوة):",
+  "exercise-1-step1": "بالنسبة لـ n ≥ 5، الصيغة هي: <code>BS(n) = 2/(2n−3)</code>",
+  "exercise-1-step2": "لـ n = 7: BS(7) = 2/(2×7−3) = 2/(14−3) = 2/11 ≈ <strong style=\"color:var(--gold)\">0.1818</strong>",
+  "exercise-1-step3": "لـ n = 11: BS(11) = 2/(2×11−3) = 2/(22−3) = 2/19 ≈ <strong style=\"color:var(--gold)\">0.1053</strong>",
+  "exercise-1-step4": "لـ n = 23: BS(23) = 2/(2×23−3) = 2/(46−3) = 2/43 ≈ <strong style=\"color:var(--gold)\">0.0465</strong>",
+  "exercise-1-step5": "التحقق: ثابت بوكر يستخدم العامل 2/43 — وهو بالضبط BS(23). ✓ هذا يؤكد أن العدد الأولي 23 (عند τ₀ = 3، نقطة انعطاف β(τ)) هو المرتكز البنيوي للثابت بأكمله.",
+  "exercise-1-result": "✦ النتيجة: BS(7) = 2/11 · BS(11) = 2/19 · BS(23) = 2/43 = بسط CB ✦",
+
+  // Exercise 2
+  "exercise-2-badge": "التمرين 2",
+  "exercise-2-title": "التحقق من المعادلة المركزية: ❶ ⊕ 0p = 1 = ∞",
+  "exercise-2-problem": "باستخدام تمثيل المصفوفات لـ ❶ و 0p، احسب المجموع الثالوثي ❶ ⊕ 0p = ❶·0p + 0p·❶ وتحقق من أنه يساوي مصفوفة الوحدة 1 في سياق نظام S.",
+  "exercise-2-step1": "تمثيلات المصفوفات المعطاة:<br>❶ = diag(1,0,0), 0p = diag(0,0,0), ∞ = diag(0,1,1)",
+  "exercise-2-step2": "المجموع الثالوثي A⊕B = AB + BA (ضرب مصفوفات، غير تبديلي بشكل عام)",
+  "exercise-2-step3": "❶·0p = diag(1,0,0)·diag(0,0,0) = diag(0,0,0)",
+  "exercise-2-step4": "0p·❶ = diag(0,0,0)·diag(1,0,0) = diag(0,0,0)",
+  "exercise-2-step5": "❶ ⊕ 0p = 0 + 0 = 0 في جبر المصفوفات. هذا يوضح أن التجلي η هو الخطوة غير البديهية — فهو يرسل (❶, 0p) إلى الواحد الطبيعي 1 ∈ ℕ عبر η(❶) = 1، وليس من خلال ضرب المصفوفات مباشرة.",
+  "exercise-2-step6": "المعادلة المركزية ❶ ⊕ 0p = 1 = ∞ هي بيان وجودي: المطلق يتجلى من خلال الإمكان المحض ليولد أول تجلي ثابت (1 ∈ ℕ)، والذي يساوي اللانهاية العلائقية (∞) في نظام S على مستوى BS: BS(1) = 0.7 ≈ BS(∞) = 2/3.",
+  "exercise-2-result": "✦ الفكرة: المعادلة وجودية، وليست مجرد جبرية ✦",
+
+  // --- 📝 Solved Exercises (تابع) ---
+  "solved-exercises-title-2": "📝 §15. تمارين محلولة (تابع)",
+
+  // Exercise 3
+  "exercise-3-badge": "التمرين 3",
+  "exercise-3-title": "حساب ثابت بوكر CB",
+  "exercise-3-problem": "باستخدام α = 1/137 (ثابت البنية الدقيقة)، ℏ = 1.055×10⁻³⁴ جول·ثانية، G = 6.674×10⁻¹¹ م³/(كغ·ثانية²)، c = 3×10⁸ م/ثانية، احسب CB خطوة بخطوة. تحقق من أن النتيجة = 6.184×10⁻⁴².",
+  "exercise-3-step1": "اكتب الصيغة: CB = (2/43) · (α/137) · √(c³/ℏG)",
+  "exercise-3-step2": "العامل الأول: (2/43) = BS(23) ≈ 0.046512",
+  "exercise-3-step3": "العامل الثاني: α/137 = (1/137)/137 = 1/18769 ≈ 5.327×10⁻⁵",
+  "exercise-3-step4": "الجذر الداخلي: c³/ℏG = (3×10⁸)³ / (1.055×10⁻³⁴ × 6.674×10⁻¹¹)",
+  "exercise-3-step5": "= 2.7×10²⁵ / (7.04×10⁻⁴⁵) = 3.835×10⁶⁹",
+  "exercise-3-step6": "√(3.835×10⁶⁹) = 1.959×10³⁴·⁵ ≈ 6.195×10³⁴",
+  "exercise-3-step7": "CB = 0.046512 × 5.327×10⁻⁵ × 6.195×10³⁴",
+  "exercise-3-step8": "= 0.046512 × 3.30×10³⁰ × 10⁻⁵ ≈ 6.18×10²⁵⁻²⁵ = <strong style=\"color:var(--gold)\">6.184×10⁻⁴²</strong>",
+  "exercise-3-result": "✦ CB = 6.184033 × 10⁻⁴² ✓ ✦",
+
+  // Exercise 4
+  "exercise-4-badge": "التمرين 4",
+  "exercise-4-title": "BS الكمومي: درجة الترابط والتشابك",
+  "exercise-4-problem": "نظام ذو كيوبيتين له درجة ترابط C = 0.8. (أ) ما هو BS الخاص به؟ (ب) هل هو أقرب إلى ∞ أم إلى 0p؟ (جـ) ماذا يحدث لـ BS عندما C → 1؟",
+  "exercise-4-step-a": "من المعادلة (5.5): BS_entangled = (2/3)·C = (2/3)·0.8 = <strong style=\"color:var(--gold)\">0.5333</strong>",
+  "exercise-4-step-b": "BS(0p) = 0.333، BS(∞) = 0.667. بما أن 0.5333 أقرب إلى ∞ (0.667)، هذا النظام يقابل <strong style=\"color:var(--gold)\">اللانهاية العلائقية</strong> — حالة علائقية متجلية جزئياً.",
+  "exercise-4-step-c": "عندما C → 1: BS → 2/3 = BS(∞). التشابك المثالي هو حالة ∞ نقية — أقصى ترابط علائقي مع BS عند مستوى اللانهاية العلائقية تماماً. هذا يؤكد أن حالات بيل (C=1) هي تجليات ∞ مثالية.",
+  "exercise-4-result": "✦ التشابك المثالي (C=1) → BS = 2/3 = BS(∞) ✦",
+
+  // Exercise 5
+  "exercise-5-badge": "التمرين 5",
+  "exercise-5-title": "مستوى الوعي Ψ لإنسان في حالة تأمل",
+  "exercise-5-problem": "شخص يتأمل له قياسات BS: BS_ID = 0.72 (تماسك الهوية)، BS_Pot = 0.25 (الإمكان الإبداعي)، BS_Rel = 0.65 (النشاط العلائقي). باستخدام α=0.47، β=0.23، γ=0.30 وبافتراض η(τ)=1 لشريحة τ واحدة، احسب Ψ.",
+  "exercise-5-step1": "من المعادلة (6.2): Ψ ≈ α·BS_ID + β·BS_Pot + γ·BS_Rel (لشريحة τ واحدة، η(τ)=1)",
+  "exercise-5-step2": "Ψ = 0.47×0.72 + 0.23×0.25 + 0.30×0.65",
+  "exercise-5-step3": "= 0.3384 + 0.0575 + 0.195 = <strong style=\"color:var(--gold)\">0.5909</strong>",
+  "exercise-5-step4": "التفسير: Ψ ≈ 0.59 > متوسط الإنسان العادي (0.57). هذا الشخص في حالة وعي مرتفعة قليلاً — تتفق مع التأمل العميق ويقترب من حالة التدفق (عتبة BS > 0.75).",
+  "exercise-5-result": "✦ Ψ ≈ 0.59 — حالة وعي مرتفعة، تقترب من التدفق ✦",
+
+  // --- 🧪 Interactive Exercise Laboratory ---
+  "interactive-lab-title": "🧪 §16. معمل التمارين التفاعلية — محاكيات حية",
+  "interactive-lab-desc": "أكمل كل تمرين خطوة بخطوة لفتح المحاكاة البصرية الحية.",
+  "ilab-tab-1": "🔢 تمرين 1 BS(n)",
+  "ilab-tab-2": "⊕ تمرين 2 الثالوث",
+  "ilab-tab-3": "⚛ تمرين 3 CB",
+  "ilab-tab-4": "🔗 تمرين 4 التشابك",
+  "ilab-tab-5": "🧠 تمرين 5 Ψ",
+  "ilab-badge": "نظرية الأعداد",
+  "ilab-diff": "مبتدئ",
+  "ilab-title": "التمرين 1: حساب BS(n) لـ n = 7، 11، 23",
+  "ilab-problem": "باستخدام صيغة BS للأعداد الطبيعية، احسب BS(7)، BS(11)، و BS(23).",
+  "ilab-steps-label": "خطوات الحل — <span id=\"ilab-progress\">0</span>/<span id=\"ilab-total\">5</span>",
+  "ilab-sim-label": "محاكاة بصرية",
+  "ilab-locked": "🔒 أكمل الخطوات لفتح المحاكاة",
+  "ilab-formula-label": "الصيغة الأساسية",
+  "ilab-start": "▶ ابدأ",
+  "ilab-reset": "↺ إعادة",
+
+  // --- 🌀 Dynamic Simulations ---
+  "dynamic-sim-title": "🌀 §17. محاكيات ديناميكية — نظام S في الحركة",
+  "bs-explorer-title": "17.1 مستكشف BS الفوري",
+  "bs-explorer-desc": "اسحب المنزلق لاستكشاف الاستقرار البنيوي عبر الأعداد الطبيعية.",
+  "psi-simulator-title": "17.2 محاكي الوعي Ψ",
+  "entanglement-explorer-title": "17.3 مستكشف BS للتشابك",
+  "bs-label": "BS(n)",
+  "psi-id-label": "BS_ID — الهوية (α=0.47)",
+  "psi-pot-label": "BS_Pot — الإمكان (β=0.23)",
+  "psi-rel-label": "BS_Rel — العلائقي (γ=0.30)",
+  "psi-formula": "Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel",
+  "consciousness-scale": "مقياس الوعي",
+  "concurrence-label": "درجة الترابط C =",
+  "bs-equals": "BS =",
+  "bs-ent-formula": "(2/3)·C",
+  "ent-label": "الحالة أقرب إلى: ∞ اللانهاية العلائقية",
+
+  // --- ✨ Visual Patterns ---
+  "visual-patterns-title": "✨ §18. أنماط بصرية — هندسة نظام S",
+  "bs-decay-title": "18.1 تدهور BS — الأعداد الأولية مقابل المركبة",
+  "bs-decay-desc": "الأعداد الأولية (الذهبية) تقع باستمرار فوق المركبات (البنفسجية) — مما يؤكد دورها كتجليات نقية.",
+  "tau-weight-evolution-title": "18.2 تطور أوزان τ — α، β، γ",
+  "tau-weight-desc": "التقاطع بالقرب من τ=3 يتوافق مع العدد الأولي 23 ونقطة ارتكاز ثابت بوكر.",
+  "trinity-number-line-title": "18.3 خط أعداد الثالوث",
+  "trinity-number-line-desc": "البديهيات الثلاث تشغل مواقع هيكلية دقيقة على محور BS."
+}  // <-- إغلاق ar
 
 fr:{
   "badge":"Édition Améliorée 2026 | Monographie Scientifique",
