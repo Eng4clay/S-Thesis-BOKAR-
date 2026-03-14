@@ -3384,30 +3384,58 @@ const EDIT_STORAGE_KEY='booker-edits-v2';
 // تحميل التعديلات المحفوظة عند فتح الصفحة
 function loadSavedEdits(){
   try{
-    const saved=localStorage.getItem(EDIT_STORAGE_KEY);
-    if(!saved)return;
-    const edits=JSON.parse(saved);
-    Object.entries(edits).forEach(([id,html])=>{
-      const el=document.getElementById(id);
-      if(el)el.innerHTML=html;
+    const saved = localStorage.getItem(EDIT_STORAGE_KEY);
+    if(!saved) return;
+    
+    const edits = JSON.parse(saved);
+    
+    // تطبيق التعديلات على العناصر
+    Object.entries(edits).forEach(([id, html]) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.innerHTML = html;
+        
+        // إذا كان العنصر قابلاً للتحرير، تأكد من بقاء الخاصية
+        if (editActive) {
+          el.contentEditable = 'true';
+        }
+      }
     });
+    
     // إعادة تصيير MathJax بعد تحميل المحتوى المحفوظ
-    if(window.MathJax&&MathJax.typesetPromise){
+    if(window.MathJax && MathJax.typesetPromise){
       MathJax.typesetPromise().catch(()=>{});
     }
-  }catch(e){}
+    
+    console.log('✅ تم تحميل التعديلات المحفوظة');
+  } catch(e) {
+    console.warn('خطأ في تحميل التعديلات:', e);
+  }
 }
 
 // حفظ جميع التعديلات في localStorage
 function saveAllEdits(){
   try{
-    const edits={};
-    document.querySelectorAll('.page p,.page h1,.page h2,.page h3,.page h4,.page li,.page td,.page blockquote').forEach((el,i)=>{
-      if(!el.id||el.id.indexOf('edit-')<0)el.id='edit-'+i;
-      edits[el.id]=el.innerHTML;
+    const edits = {};
+    
+    // جمع كل العناصر القابلة للتعديل
+    document.querySelectorAll('.page p, .page h1, .page h2, .page h3, .page h4, .page li, .page td, .page blockquote, .page div[contenteditable="true"]').forEach((el, i) => {
+      if(!el.id || el.id.indexOf('edit-') < 0) {
+        el.id = 'edit-' + i;
+      }
+      edits[el.id] = el.innerHTML;
     });
-    localStorage.setItem(EDIT_STORAGE_KEY,JSON.stringify(edits));
-  }catch(e){}
+    
+    localStorage.setItem(EDIT_STORAGE_KEY, JSON.stringify(edits));
+    console.log('✅ تم حفظ التعديلات');
+    
+    // إظهار زر Reset
+    const rb = document.getElementById('resetEditsBtn');
+    if (rb) rb.style.display = 'inline-flex';
+    
+  } catch(e) {
+    console.warn('خطأ في حفظ التعديلات:', e);
+  }
 }
 
 // مسح جميع التعديلات (للاستخدام إذا أراد المؤلف إعادة الضبط)
@@ -3633,14 +3661,29 @@ function drawTauCurve(){
 }
 
 window.addEventListener('load',()=>{
-  loadSavedEdits(); // تحميل التعديلات المحفوظة أولاً
+  // تحميل التعديلات المحفوظة أولاً
+  loadSavedEdits();
+  
   // إظهار زر إعادة الضبط إذا وُجدت تعديلات محفوظة
   if(localStorage.getItem(EDIT_STORAGE_KEY)){
     const rb=document.getElementById('resetEditsBtn');
-    if(rb)rb.style.display='inline-flex';
+    if(rb) rb.style.display='inline-flex';
   }
-  setTimeout(()=>{drawBSCurve();drawPrimeCurve();drawTauCurve();},600);
+  
+  // رسم المنحنيات
+  setTimeout(()=>{
+    drawBSCurve();
+    drawPrimeCurve();
+    drawTauCurve();
+  }, 600);
+  
+  // تحميل التعليقات
   loadComments();
+  
+  // تأكد من تفعيل وضع التحرير إذا كان نشطاً من قبل
+  if (editActive) {
+    toggleEditMode();
+  }
 });
 
 /* ===== COMMUNITY SYSTEM ===== */
