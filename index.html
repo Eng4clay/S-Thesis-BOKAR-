@@ -920,6 +920,8 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
     </div>
   </div>
   <button class="tbtn" id="editBtn" onclick="openEditModal()">✏️ Edit</button>
+  <!-- الزر الجديد: حفظ يدوي -->
+  <button class="tbtn" id="manualSaveBtn" onclick="saveAllEdits(); showToast('💾 تم الحفظ يدوياً!', 1500);" title="حفظ التعديلات يدوياً الآن" style="background:rgba(100,200,100,.2);border-color:rgba(100,255,100,.5)">💾 حفظ يدوي</button>
   <button class="tbtn" id="resetEditsBtn" onclick="clearAllEdits()" title="مسح جميع التعديلات المحفوظة" style="display:none;background:rgba(200,60,60,.3);border-color:rgba(255,100,100,.5)">🗑️ Reset</button>
   <button class="tbtn poem" onclick="window.open('https://eng4clay.github.io/Repository-The-Poem-of-Existence-/','_blank')" title="قصيدة الوجود — Poem of Existence">📜 قصيدة الوجود</button>
   <button class="tbtn" onclick="openCommunity()" title="Community Discussions &amp; Comments" style="background:rgba(201,147,42,.18);border-color:rgba(201,147,42,.5)">💬 Community</button>
@@ -3521,60 +3523,76 @@ const SECRET="AntAhmed6388@";
 let editActive=false;
 const EDIT_STORAGE_KEY='booker-edits-v2';
 
-// تحميل التعديلات المحفوظة عند فتح الصفحة
-function loadSavedEdits(){
-  try{
+// تحميل التعديلات المحفوظة عند فتح الصفحة (نسخة محسنة)
+function loadSavedEdits() {
+  try {
     const saved = localStorage.getItem(EDIT_STORAGE_KEY);
-    if(!saved) return;
-    
-    const edits = JSON.parse(saved);
-    
-    // تطبيق التعديلات على العناصر
-    Object.entries(edits).forEach(([id, html]) => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.innerHTML = html;
-        
-        // إذا كان العنصر قابلاً للتحرير، تأكد من بقاء الخاصية
-        if (editActive) {
-          el.contentEditable = 'true';
-        }
-      }
-    });
-    
-    // إعادة تصيير MathJax بعد تحميل المحتوى المحفوظ
-    if(window.MathJax && MathJax.typesetPromise){
-      MathJax.typesetPromise().catch(()=>{});
+    if (!saved) {
+      const rb = document.getElementById('resetEditsBtn');
+      if (rb) rb.style.display = 'none';
+      return;
     }
-    
-    console.log('✅ تم تحميل التعديلات المحفوظة');
-  } catch(e) {
-    console.warn('خطأ في تحميل التعديلات:', e);
+
+    const edits = JSON.parse(saved);
+    let restoredCount = 0;
+
+    // نستخدم setTimeout لتأخير التطبيق قليلاً، لضمان أن MathJax قد قام بعمله
+    // وأن جميع عناصر DOM جاهزة تماماً
+    setTimeout(() => {
+      Object.entries(edits).forEach(([id, html]) => {
+        const el = document.getElementById(id);
+        if (el) {
+          // نتأكد من أن المحتوى الجديد مختلف عن القديم قبل التغيير
+          if (el.innerHTML !== html) {
+            el.innerHTML = html;
+            restoredCount++;
+          }
+        }
+      });
+
+      // إعادة تصيير MathJax بعد تحميل المحتوى المحفوظ
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise().catch(() => {});
+      }
+
+      if (restoredCount > 0) {
+        const rb = document.getElementById('resetEditsBtn');
+        if (rb) rb.style.display = 'inline-flex';
+        console.log(`✅ تم استعادة ${restoredCount} تعديل`);
+        
+        // 💡 إضافة مؤشر للمستخدم بأنه يتم عرض نسخة معدلة
+        showToast('🔄 تم تحميل النسخة المعدلة المحفوظة', 3000);
+      }
+    }, 300); // تأخير 300 ملي ثانية
+
+  } catch (e) {
+    console.warn('فشل تحميل التعديلات:', e);
   }
 }
 
-// حفظ جميع التعديلات في localStorage
-function saveAllEdits(){
-  try{
+// حفظ جميع التعديلات في localStorage (نسخة محسنة)
+function saveAllEdits() {
+  try {
     const edits = {};
+    // نختار العناصر التي من المحتمل أن نعدلها
+    const editableEls = document.querySelectorAll('.page p, .page h1, .page h2, .page h3, .page h4, .page li, .page td, .page blockquote, .page div[contenteditable="true"]');
     
-    // جمع كل العناصر القابلة للتعديل
-    document.querySelectorAll('.page p, .page h1, .page h2, .page h3, .page h4, .page li, .page td, .page blockquote, .page div[contenteditable="true"]').forEach((el, i) => {
-      if(!el.id || el.id.indexOf('edit-') < 0) {
-        el.id = 'edit-' + i;
+    editableEls.forEach((el, i) => {
+      // إذا لم يكن للعنصر id، نقوم بإنشاء واحد له
+      if (!el.id) {
+        el.id = 'edit-' + Date.now() + '-' + i + '-' + Math.random().toString(36).substr(2, 5);
       }
       edits[el.id] = el.innerHTML;
     });
     
     localStorage.setItem(EDIT_STORAGE_KEY, JSON.stringify(edits));
-    console.log('✅ تم حفظ التعديلات');
     
-    // إظهار زر Reset
     const rb = document.getElementById('resetEditsBtn');
     if (rb) rb.style.display = 'inline-flex';
     
-  } catch(e) {
-    console.warn('خطأ في حفظ التعديلات:', e);
+    console.log('✅ تم حفظ التعديلات بنجاح');
+  } catch (e) {
+    console.warn('فشل حفظ التعديلات:', e);
   }
 }
 
@@ -3624,10 +3642,17 @@ function toggleEditMode(){
   }
 }
 
-let _saveTimer=null;
-function autoSaveHandler(){
+let _saveTimer = null;
+function autoSaveHandler() {
   clearTimeout(_saveTimer);
-  _saveTimer=setTimeout(saveAllEdits,800); // حفظ بعد 800ms من التوقف عن الكتابة
+  // إظهار رسالة "جاري الحفظ..." (اختياري)
+  // يمكنك إضافة هذا السطر إذا أردت مؤشراً مرئياً.
+  // showToast('💾 جاري الحفظ...', 500);
+  _saveTimer = setTimeout(() => {
+    saveAllEdits();
+    // إظهار رسالة "تم الحفظ" بشكل خفي وسريع (اختياري)
+    // showToast('✓ تم الحفظ', 800);
+  }, 800);
 }
 
 document.querySelectorAll('#sidebar a').forEach(a=>{
