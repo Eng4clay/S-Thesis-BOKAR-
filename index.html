@@ -3377,51 +3377,88 @@ window.addEventListener('scroll',()=>{
     a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
   });
 },{passive:true});
-/* ===== EDIT MODE - نسخة بسيطة ومضمونة ===== */
+/* ===== EDIT MODE — AUTO SAVE TO LOCALSTORAGE ===== */
 const SECRET = "AntAhmed6388@";
 let editActive = false;
 const EDIT_STORAGE_KEY = 'booker-edits-v2';
 
+// دالة مساعدة لعرض رسائل toast
 function showToast(msg, duration = 3000) {
   const toast = document.getElementById('comm-toast');
   if (!toast) return;
-  document.getElementById('toast-msg').textContent = msg;
+  const msgSpan = document.getElementById('toast-msg');
+  if (msgSpan) msgSpan.textContent = msg;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), duration);
 }
 
-// تحميل التعديلات
+// تحميل التعديلات المحفوظة عند فتح الصفحة
 function loadSavedEdits() {
   try {
     const saved = localStorage.getItem(EDIT_STORAGE_KEY);
-    if (!saved) return false;
+    if (!saved) {
+      const rb = document.getElementById('resetEditsBtn');
+      if (rb) rb.style.display = 'none';
+      return;
+    }
     
     const edits = JSON.parse(saved);
+    let restoredCount = 0;
+    
+    // تطبيق التعديلات فوراً - بدون تأخير
     Object.entries(edits).forEach(([id, html]) => {
       const el = document.getElementById(id);
-      if (el) el.innerHTML = html;
+      if (el && el.innerHTML !== html) {
+        el.innerHTML = html;
+        restoredCount++;
+      }
     });
     
-    if (window.MathJax) MathJax.typesetPromise?.();
-    return true;
-  } catch(e) { return false; }
+    if (restoredCount > 0) {
+      const rb = document.getElementById('resetEditsBtn');
+      if (rb) rb.style.display = 'inline-flex';
+      console.log(`✅ تم استعادة ${restoredCount} تعديل`);
+      
+      // إعادة تصيير MathJax
+      if (window.MathJax && MathJax.typesetPromise) {
+        MathJax.typesetPromise().catch(() => {});
+      }
+    }
+  } catch (e) {
+    console.warn('خطأ في تحميل التعديلات:', e);
+  }
 }
 
-// حفظ التعديلات
+// حفظ جميع التعديلات في localStorage
 function saveAllEdits() {
   try {
     const edits = {};
-    document.querySelectorAll('[contenteditable="true"]').forEach((el, i) => {
-      if (!el.id) el.id = 'edit-' + Date.now() + '-' + i;
+    const editableEls = document.querySelectorAll(
+      '.page p, .page h1, .page h2, .page h3, .page h4, ' +
+      '.page li, .page td, .page blockquote, .page .author-box p'
+    );
+    
+    editableEls.forEach((el, i) => {
+      if (!el.id) {
+        el.id = 'edit-' + Date.now() + '-' + i;
+      }
       edits[el.id] = el.innerHTML;
     });
+    
     localStorage.setItem(EDIT_STORAGE_KEY, JSON.stringify(edits));
-    return true;
-  } catch(e) { return false; }
+    
+    const rb = document.getElementById('resetEditsBtn');
+    if (rb) rb.style.display = 'inline-flex';
+    
+    console.log(`✅ تم حفظ ${Object.keys(edits).length} تعديل`);
+  } catch (e) {
+    console.warn('فشل حفظ التعديلات:', e);
+  }
 }
 
+// مسح جميع التعديلات
 function clearAllEdits() {
-  if (confirm('مسح كل التعديلات؟')) {
+  if (confirm('هل تريد مسح كل التعديلات والعودة للنص الأصلي؟')) {
     localStorage.removeItem(EDIT_STORAGE_KEY);
     location.reload();
   }
@@ -3429,6 +3466,8 @@ function clearAllEdits() {
 
 function openEditModal() {
   document.getElementById('editModal').classList.add('show');
+  document.getElementById('secretCode').value = '';
+  document.getElementById('codeError').textContent = '';
 }
 
 function closeEditModal() {
@@ -3447,21 +3486,62 @@ function checkCode() {
 
 function toggleEditMode() {
   editActive = !editActive;
-  const btn = document.getElementById('editBtn');
-  btn.innerHTML = editActive ? '🔴 وضع التحرير' : '✏️ تحرير';
   
-  document.querySelectorAll('.page p, .page h1, .page h2, .page h3, .page h4, .page li, .page td, .page blockquote').forEach(el => {
-    el.contentEditable = editActive;
-  });
+  const btn = document.getElementById('editBtn');
+  btn.classList.toggle('active', editActive);
+  btn.innerHTML = editActive ? '🔴 وضع التحرير نشط' : '✏️ تحرير';
+
+  const editableEls = document.querySelectorAll(
+    '.page p, .page h1, .page h2, .page h3, .page h4, ' +
+    '.page li, .page td, .page blockquote, .page .author-box p'
+  );
+
+  if (editActive) {
+    editableEls.forEach((el, i) => {
+      if (!el.id) {
+        el.id = 'edit-' + Date.now() + '-' + i;
+      }
+      el.contentEditable = 'true';
+      el.style.outline = '1px dashed #c9932a';
+    });
+    document.addEventListener('input', autoSaveHandler);
+    showToast('✅ وضع التحرير نشط');
+  } else {
+    editableEls.forEach(el => {
+      el.contentEditable = 'false';
+      el.style.outline = '';
+    });
+    document.removeEventListener('input', autoSaveHandler);
+    saveAllEdits();
+    showToast('💾 تم الحفظ');
+  }
 }
 
-// تحميل التعديلات عند فتح الصفحة
-document.addEventListener('DOMContentLoaded', () => {
-  if (loadSavedEdits()) {
-    showToast('✅ تم تحميل التعديلات');
+let _saveTimer = null;
+function autoSaveHandler() {
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(saveAllEdits, 1000);
+}
+
+// ===== الأهم هنا - ضمان تحميل التعديلات عند فتح الصفحة =====
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('🔄 جاري تحميل الصفحة...');
+  
+  // تحميل التعديلات فوراً
+  loadSavedEdits();
+  
+  // إظهار زر إعادة الضبط إذا وجدت تعديلات
+  if (localStorage.getItem(EDIT_STORAGE_KEY)) {
+    const rb = document.getElementById('resetEditsBtn');
+    if (rb) rb.style.display = 'inline-flex';
   }
 });
-      
+
+// أيضاً تأمين تحميل إضافي
+window.addEventListener('load', function() {
+  // تحميل إضافي للتأكد
+  loadSavedEdits();
+});      
 /* ===== ALGO INFO BOX ===== */
 function showAlgoInfo(node){
   const info={
