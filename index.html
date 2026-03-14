@@ -3377,100 +3377,51 @@ window.addEventListener('scroll',()=>{
     a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
   });
 },{passive:true});
-/* ===== EDIT MODE — AUTO SAVE TO LOCALSTORAGE ===== */
+/* ===== EDIT MODE - نسخة بسيطة ومضمونة ===== */
 const SECRET = "AntAhmed6388@";
 let editActive = false;
 const EDIT_STORAGE_KEY = 'booker-edits-v2';
 
-// دالة مساعدة لعرض رسائل toast
 function showToast(msg, duration = 3000) {
   const toast = document.getElementById('comm-toast');
   if (!toast) return;
-  const msgSpan = document.getElementById('toast-msg');
-  if (msgSpan) msgSpan.textContent = msg;
+  document.getElementById('toast-msg').textContent = msg;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), duration);
 }
 
-// تحميل التعديلات المحفوظة - نسخة محسنة جداً
+// تحميل التعديلات
 function loadSavedEdits() {
   try {
     const saved = localStorage.getItem(EDIT_STORAGE_KEY);
-    if (!saved) {
-      const rb = document.getElementById('resetEditsBtn');
-      if (rb) rb.style.display = 'none';
-      return false;
-    }
+    if (!saved) return false;
     
     const edits = JSON.parse(saved);
-    let restoredCount = 0;
-    
-    // تطبيق التعديلات فوراً
     Object.entries(edits).forEach(([id, html]) => {
       const el = document.getElementById(id);
-      if (el && el.innerHTML !== html) {
-        el.innerHTML = html;
-        restoredCount++;
-      }
+      if (el) el.innerHTML = html;
     });
     
-    if (restoredCount > 0) {
-      const rb = document.getElementById('resetEditsBtn');
-      if (rb) rb.style.display = 'inline-flex';
-      console.log(`✅ تم استعادة ${restoredCount} تعديل`);
-      
-      // إعادة تشغيل MathJax
-      if (window.MathJax && MathJax.typesetPromise) {
-        MathJax.typesetPromise().catch(() => {});
-      }
-      
-      return true;
-    }
-  } catch (e) {
-    console.warn('خطأ في تحميل التعديلات:', e);
-  }
-  return false;
+    if (window.MathJax) MathJax.typesetPromise?.();
+    return true;
+  } catch(e) { return false; }
 }
 
-// حفظ جميع التعديلات - نسخة قوية جداً
+// حفظ التعديلات
 function saveAllEdits() {
   try {
     const edits = {};
-    
-    // البحث عن كل العناصر القابلة للتعديل - موسع أكثر
-    const editableEls = document.querySelectorAll(
-      '.page p, .page h1, .page h2, .page h3, .page h4, ' +
-      '.page li, .page td, .page blockquote, .page div, ' +
-      '.page span, .page .author-box p, .page .cover p, ' +
-      '.page .ib p, .page .eq-lbl, [contenteditable="true"]'
-    );
-    
-    console.log(`🔍 وجدت ${editableEls.length} عنصر قابل للتعديل`);
-    
-    editableEls.forEach((el, i) => {
-      // التأكد من وجود ID فريد لكل عنصر
-      if (!el.id) {
-        el.id = 'edit-' + Date.now() + '-' + i + '-' + Math.random().toString(36).substr(2, 5);
-      }
+    document.querySelectorAll('[contenteditable="true"]').forEach((el, i) => {
+      if (!el.id) el.id = 'edit-' + Date.now() + '-' + i;
       edits[el.id] = el.innerHTML;
     });
-    
     localStorage.setItem(EDIT_STORAGE_KEY, JSON.stringify(edits));
-    
-    const rb = document.getElementById('resetEditsBtn');
-    if (rb) rb.style.display = 'inline-flex';
-    
-    console.log(`✅ تم حفظ ${Object.keys(edits).length} تعديل`);
     return true;
-  } catch (e) {
-    console.warn('فشل حفظ التعديلات:', e);
-    return false;
-  }
+  } catch(e) { return false; }
 }
 
-// مسح جميع التعديلات
 function clearAllEdits() {
-  if (confirm('هل تريد مسح كل التعديلات والعودة للنص الأصلي؟')) {
+  if (confirm('مسح كل التعديلات؟')) {
     localStorage.removeItem(EDIT_STORAGE_KEY);
     location.reload();
   }
@@ -3478,8 +3429,6 @@ function clearAllEdits() {
 
 function openEditModal() {
   document.getElementById('editModal').classList.add('show');
-  document.getElementById('secretCode').value = '';
-  document.getElementById('codeError').textContent = '';
 }
 
 function closeEditModal() {
@@ -3498,78 +3447,21 @@ function checkCode() {
 
 function toggleEditMode() {
   editActive = !editActive;
-  document.getElementById('body-root').classList.toggle('edit-mode', editActive);
-  
   const btn = document.getElementById('editBtn');
-  btn.classList.toggle('active', editActive);
-  btn.innerHTML = editActive ? '🔴 وضع التحرير نشط' : '✏️ تحرير';
-
-  // كل العناصر القابلة للتعديل - نفس المجموعة الموسعة
-  const editableEls = document.querySelectorAll(
-    '.page p, .page h1, .page h2, .page h3, .page h4, ' +
-    '.page li, .page td, .page blockquote, .page div, ' +
-    '.page span, .page .author-box p, .page .cover p, ' +
-    '.page .ib p, .page .eq-lbl'
-  );
-
-  if (editActive) {
-    // تفعيل التعديل
-    editableEls.forEach((el, i) => {
-      if (!el.id) {
-        el.id = 'edit-' + Date.now() + '-' + i;
-      }
-      el.contentEditable = 'true';
-      // إضافة مؤشر مرئي
-      el.style.outline = '1px dashed #c9932a';
-      el.style.backgroundColor = 'rgba(201,147,42,0.05)';
-    });
-    
-    // مراقبة التغييرات
-    document.addEventListener('input', autoSaveHandler);
-    showToast('✅ وضع التحرير نشط - أي تغيير يتم حفظه تلقائياً');
-  } else {
-    // إيقاف التعديل
-    editableEls.forEach(el => {
-      el.contentEditable = 'false';
-      el.style.outline = '';
-      el.style.backgroundColor = '';
-    });
-    
-    document.removeEventListener('input', autoSaveHandler);
-    saveAllEdits();
-    showToast('💾 تم حفظ جميع التعديلات');
-  }
+  btn.innerHTML = editActive ? '🔴 وضع التحرير' : '✏️ تحرير';
+  
+  document.querySelectorAll('.page p, .page h1, .page h2, .page h3, .page h4, .page li, .page td, .page blockquote').forEach(el => {
+    el.contentEditable = editActive;
+  });
 }
 
-let _saveTimer = null;
-function autoSaveHandler() {
-  clearTimeout(_saveTimer);
-  _saveTimer = setTimeout(() => {
-    if (saveAllEdits()) {
-      console.log('تم الحفظ التلقائي');
-      // رسالة خفيفة (اختياري)
-      // showToast('✓ تم الحفظ', 1000);
-    }
-  }, 1000); // زيادة الوقت لثانية كاملة
-}
-
-// تحميل الصفحة
-document.addEventListener('DOMContentLoaded', function() {
-  console.log('🔄 جاري تحميل الصفحة...');
-  
-  // تحميل التعديلات المحفوظة
-  const hasEdits = loadSavedEdits();
-  
-  if (hasEdits) {
-    showToast('🔄 تم تحميل التعديلات المحفوظة', 2500);
-  }
-  
-  // إظهار زر إعادة الضبط إذا وجدت تعديلات
-  if (localStorage.getItem(EDIT_STORAGE_KEY)) {
-    const rb = document.getElementById('resetEditsBtn');
-    if (rb) rb.style.display = 'inline-flex';
+// تحميل التعديلات عند فتح الصفحة
+document.addEventListener('DOMContentLoaded', () => {
+  if (loadSavedEdits()) {
+    showToast('✅ تم تحميل التعديلات');
   }
 });
+      
 /* ===== ALGO INFO BOX ===== */
 function showAlgoInfo(node){
   const info={
