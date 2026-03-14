@@ -1,4 +1,4 @@
-<!DOCTYPE htm>
+<!DOCTYPE html>
 <html lang="en" dir="ltr" id="html-root">
 <head>
 <meta charset="UTF-8">
@@ -4240,94 +4240,6 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
-<!-- ===== GRAPH MODAL (للعرض المنبثق للرسومات) ===== -->
-<div id="graphModal" class="modal">
-  <div class="modal-card" style="max-width: 90%; width: auto; background: #1a1040; border: 2px solid var(--gold);">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-      <h3 style="color: var(--gold); margin: 0;">🔍 عرض الرسمة</h3>
-      <button class="comm-close" onclick="closeGraphModal()" style="background: none; border: none; color: #fff; font-size: 18pt; cursor: pointer;">✕</button>
-    </div>
-    <div style="text-align: center; overflow: auto; max-height: 80vh;">
-      <img id="graphModalImg" src="" alt="رسم بياني" style="max-width: 100%; border-radius: 8px; border: 2px solid var(--gold2);">
-    </div>
-    <p style="color: rgba(255,255,255,0.6); font-size: 9pt; text-align: center; margin-top: 8px;">اضغط خارج النافذة للإغلاق</p>
-  </div>
-</div>
-
-<script>
-(function() {
-  // إنشاء المودال إذا لم يكن موجوداً
-  if (!document.getElementById('graphModal')) {
-    const modalHTML = `
-      <div id="graphModal" class="modal">
-        <div class="modal-card" style="max-width: 90%; width: auto; background: #1a1040; border: 2px solid var(--gold);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-            <h3 style="color: var(--gold); margin: 0;">🔍 عرض الرسمة</h3>
-            <button class="comm-close" onclick="closeGraphModal()" style="background: none; border: none; color: #fff; font-size: 18pt; cursor: pointer;">✕</button>
-          </div>
-          <div style="text-align: center; overflow: auto; max-height: 80vh;">
-            <img id="graphModalImg" src="" alt="رسم بياني" style="max-width: 100%; border-radius: 8px; border: 2px solid var(--gold2);">
-          </div>
-          <p style="color: rgba(255,255,255,0.6); font-size: 9pt; text-align: center; margin-top: 8px;">اضغط خارج النافذة للإغلاق</p>
-        </div>
-      </div>
-    `;
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
-  }
-
-  // دالة فتح المودال بالرسمة
-  window.showGraphModal = function(canvas) {
-    const modal = document.getElementById('graphModal');
-    const img = document.getElementById('graphModalImg');
-    if (!canvas || !modal || !img) return;
-    
-    // تحويل محتوى اللوحة إلى صورة
-    try {
-      const dataURL = canvas.toDataURL('image/png');
-      img.src = dataURL;
-      modal.classList.add('show');
-    } catch (e) {
-      console.warn('تعذر تحويل اللوحة إلى صورة', e);
-    }
-  };
-
-  // دالة إغلاق المودال
-  window.closeGraphModal = function() {
-    const modal = document.getElementById('graphModal');
-    if (modal) modal.classList.remove('show');
-  };
-
-  // ربط حدث النقر بكل اللوحات الموجودة حالياً والمستقبلية
-  function bindClickToCanvases() {
-    document.querySelectorAll('canvas').forEach(canvas => {
-      if (canvas.hasAttribute('data-graph-bound')) return;
-      canvas.setAttribute('data-graph-bound', 'true');
-      canvas.style.cursor = 'pointer';
-      canvas.addEventListener('click', (e) => {
-        e.stopPropagation();
-        showGraphModal(canvas);
-      });
-    });
-  }
-
-  // تنفيذ الربط الأولي
-  bindClickToCanvases();
-
-  // مراقبة إضافة لوحات جديدة (مثل تلك التي تُنشأ ديناميكياً في التمارين)
-  const observer = new MutationObserver(() => {
-    bindClickToCanvases();
-  });
-  observer.observe(document.body, { childList: true, subtree: true });
-
-  // إغلاق المودال عند النقر على الخلفية
-  document.addEventListener('click', (e) => {
-    const modal = document.getElementById('graphModal');
-    if (modal && modal.classList.contains('show') && !e.target.closest('.modal-card')) {
-      closeGraphModal();
-    }
-  });
-})();
-
 </script>
 </body>
 </html>
