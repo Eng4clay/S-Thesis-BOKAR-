@@ -4164,16 +4164,26 @@ window.addEventListener('load',function(){
   // ===== AUTHOR CONTROL FOR COMMENTS (HIDE/SHOW) =====
 
 // تعديل دالة renderComments لإضافة أزرار التحكم وتصفية التعليقات المخفية
-const originalRenderComments = renderComments;
-renderComments = function() {
+// نحتفظ بالدالة الأصلية إذا كانت موجودة، وإلا ننشئ دالة افتراضية
+if (typeof window.originalRenderComments === 'undefined') {
+  window.originalRenderComments = window.renderComments || function() {};
+}
+
+// إعادة تعريف renderComments مع ميزات التحكم
+window.renderComments = function() {
   const isAuthor = editActive; // استخدام نفس وضع التحرير لتحديد صلاحية المؤلف
   const list = document.getElementById('comm-list');
   const loading = document.getElementById('comm-loading');
   const empty = document.getElementById('comm-empty');
+  
   // إزالة البطاقات القديمة
-  list.querySelectorAll('.comment-card').forEach(el => el.remove());
+  if (list) {
+    list.querySelectorAll('.comment-card').forEach(el => el.remove());
+  } else {
+    return;
+  }
 
-  let filtered = allComments;
+  let filtered = allComments || [];
   if (currentFilter === 'reply') filtered = allComments.filter(c => c.isAuthorReply);
   else if (currentFilter !== 'all') filtered = allComments.filter(c => c.type === currentFilter);
 
@@ -4182,13 +4192,17 @@ renderComments = function() {
     filtered = filtered.filter(c => !c.hidden);
   }
 
-  if (filtered.length === 0) { empty.style.display = 'block'; return; }
-  empty.style.display = 'none';
+  if (filtered.length === 0) { 
+    if (empty) empty.style.display = 'block'; 
+    return; 
+  }
+  if (empty) empty.style.display = 'none';
 
   const sorted = [...filtered].sort((a,b) => b.ts - a.ts);
   sorted.forEach(c => {
     const card = document.createElement('div');
     card.className = 'comment-card' + (c.isAuthorReply ? ' author-reply' : '') + (c.hidden ? ' hidden-comment' : '');
+    
     // إضافة أزرار التحكم للمؤلف
     let authorControls = '';
     if (isAuthor) {
@@ -4198,18 +4212,19 @@ renderComments = function() {
         </button>
       `;
     }
+    
     card.innerHTML = `
       <div class="cc-header">
-        <div class="cc-avatar ${c.isAuthorReply ? 'gold-av' : ''}">${c.isAuthorReply ? 'أ' : c.name.charAt(0).toUpperCase()}</div>
+        <div class="cc-avatar ${c.isAuthorReply ? 'gold-av' : ''}">${c.isAuthorReply ? 'أ' : (c.name ? c.name.charAt(0).toUpperCase() : '?')}</div>
         <div>
-          <div class="cc-name">${c.isAuthorReply ? 'م. أحمد علي بوكر نسيب — Author' : ''}${!c.isAuthorReply ? (c.titleRole ? '<span style="color:var(--gold2);margin-right:4px">' + c.titleRole + '</span>' : '') + c.name : ''}</div>
+          <div class="cc-name">${c.isAuthorReply ? 'م. أحمد علي بوكر نسيب — Author' : ''}${!c.isAuthorReply ? (c.titleRole ? '<span style="color:var(--gold2);margin-right:4px">' + c.titleRole + '</span>' : '') + (c.name || '') : ''}</div>
           <div class="cc-title">${c.isAuthorReply ? '✨ Author Response' : (c.affil || '') + ' · ' + (c.type || 'Discussion')}</div>
         </div>
         <div class="cc-time">${formatTime(c.ts)}</div>
       </div>
-      <div class="cc-body">${escHTML(c.text)}</div>
+      <div class="cc-body">${escHTML(c.text || '')}</div>
       <div style="display:flex;align-items:center;gap:8px;margin-top:8px;flex-wrap:wrap">
-        <span class="cc-lang">${getLangLabel(c.text)}</span>
+        <span class="cc-lang">${getLangLabel(c.text || '')}</span>
         <button class="cc-like ${(c.liked || []).includes(getUserId()) ? 'liked' : ''}" onclick="toggleLike(${c.ts})">
           👍 <span id="like-${c.ts}">${(c.liked || []).length || 0}</span>
         </button>
@@ -4221,7 +4236,7 @@ renderComments = function() {
 };
 
 // دالة تبديل حالة الإخفاء/الإظهار
-async function toggleHideComment(ts) {
+window.toggleHideComment = async function(ts) {
   const idx = allComments.findIndex(c => c.ts === ts);
   if (idx === -1) return;
   allComments[idx].hidden = !allComments[idx].hidden;
@@ -4233,97 +4248,128 @@ async function toggleHideComment(ts) {
     alert('فشل في تحديث التعليق');
     allComments[idx].hidden = !allComments[idx].hidden; // استرجاع القيمة
   }
-}
+};
 
 // تعديل دالة submitComment لإضافة حقل hidden افتراضي
-const originalSubmitComment = submitComment;
-submitComment = async function() {
-  const name = document.getElementById('comm-name').value.trim();
-  const text = document.getElementById('comm-text').value.trim();
+const originalSubmitComment = window.submitComment || function() {};
+window.submitComment = async function() {
+  const name = document.getElementById('comm-name')?.value.trim();
+  const text = document.getElementById('comm-text')?.value.trim();
   if (!name) { alert('Please enter your name.'); return; }
   if (!text || text.length < 10) { alert('Please write a comment of at least 10 characters.'); return; }
   const btn = document.getElementById('comm-btn');
-  btn.disabled = true; btn.textContent = '⏳ Submitting...';
+  if (btn) {
+    btn.disabled = true; 
+    btn.textContent = '⏳ Submitting...';
+  }
+  
   const comment = {
     ts: Date.now(),
     name: name,
-    titleRole: document.getElementById('comm-title-sel').value,
-    affil: document.getElementById('comm-affil').value.trim(),
-    type: document.getElementById('comm-type-sel').value,
+    titleRole: document.getElementById('comm-title-sel')?.value || '',
+    affil: document.getElementById('comm-affil')?.value.trim() || '',
+    type: document.getElementById('comm-type-sel')?.value || 'Discussion',
     text: text,
     liked: [],
     isAuthorReply: false,
     hidden: false // إضافة الحقل
   };
+  
+  if (!allComments) allComments = [];
   allComments.push(comment);
+  
   try {
     const saved = await window._bsStorage.set('booker-comments', allComments);
     if (!saved) throw new Error('Storage failed');
     // Reset form
-    document.getElementById('comm-name').value = '';
-    document.getElementById('comm-text').value = '';
-    document.getElementById('comm-affil').value = '';
-    document.getElementById('comm-title-sel').selectedIndex = 0;
-    document.getElementById('comm-type-sel').selectedIndex = 0;
-    document.getElementById('comm-ok').style.display = 'block';
-    setTimeout(() => document.getElementById('comm-ok').style.display = 'none', 5000);
-    renderComments(); updateStats();
+    const nameInput = document.getElementById('comm-name');
+    const textInput = document.getElementById('comm-text');
+    const affilInput = document.getElementById('comm-affil');
+    const titleSel = document.getElementById('comm-title-sel');
+    const typeSel = document.getElementById('comm-type-sel');
+    const okMsg = document.getElementById('comm-ok');
+    
+    if (nameInput) nameInput.value = '';
+    if (textInput) textInput.value = '';
+    if (affilInput) affilInput.value = '';
+    if (titleSel) titleSel.selectedIndex = 0;
+    if (typeSel) typeSel.selectedIndex = 0;
+    if (okMsg) {
+      okMsg.style.display = 'block';
+      setTimeout(() => okMsg.style.display = 'none', 5000);
+    }
+    
+    renderComments(); 
+    updateStats();
     showToast('Comment posted successfully! Author will be notified.');
     sendEmailNotification(comment);
   } catch (e) {
     alert('Failed to save comment. Please try again.');
     allComments.pop();
   }
-  btn.disabled = false; btn.textContent = '📤 Submit';
+  if (btn) {
+    btn.disabled = false; 
+    btn.textContent = '📤 Submit';
+  }
 };
 
 // تعديل دالة loadComments لضمان وجود خاصية hidden
-const originalLoadComments = loadComments;
-loadComments = async function() {
-  document.getElementById('comm-loading').style.display = 'block';
-  document.getElementById('comm-empty').style.display = 'none';
+const originalLoadComments = window.loadComments || function() {};
+window.loadComments = async function() {
+  const loading = document.getElementById('comm-loading');
+  const empty = document.getElementById('comm-empty');
+  
+  if (loading) loading.style.display = 'block';
+  if (empty) empty.style.display = 'none';
+  
   try {
     const data = await window._bsStorage.get('booker-comments');
     allComments = Array.isArray(data) ? data : [];
     // إضافة خاصية hidden إذا لم تكن موجودة
     allComments = allComments.map(c => ({ ...c, hidden: c.hidden === undefined ? false : c.hidden }));
-  } catch (e) { allComments = []; }
-  document.getElementById('comm-loading').style.display = 'none';
+  } catch (e) { 
+    allComments = []; 
+  }
+  
+  if (loading) loading.style.display = 'none';
   renderComments();
   updateStats();
 };
 
-// إضافة أنماط CSS لعرض التعليقات المخفية
-const style = document.createElement('style');
-style.textContent = `
-  .comment-card.hidden-comment {
-    opacity: 0.5;
-    background: rgba(100, 100, 100, 0.2);
-  }
-  .comment-card.hidden-comment .cc-body {
-    text-decoration: line-through 1px rgba(255,255,255,0.3);
-  }
-  .cc-hide {
-    background: rgba(255,100,100,0.2);
-    border: 1px solid rgba(255,100,100,0.4);
-    color: rgba(255,150,150,0.9);
-    padding: 4px 12px;
-    border-radius: 14px;
-    font-size: 8pt;
-    cursor: pointer;
-    transition: 0.2s;
-    font-family: var(--fs);
-    display: flex;
-    align-items: center;
-    gap: 5px;
-  }
-  .cc-hide:hover {
-    background: rgba(255,100,100,0.3);
-    border-color: rgba(255,100,100,0.8);
-    color: #fff;
-  }
-`;
-document.head.appendChild(style);
+// إضافة أنماط CSS لعرض التعليقات المخفية (إذا لم تكن موجودة)
+if (!document.getElementById('comment-styles')) {
+  const style = document.createElement('style');
+  style.id = 'comment-styles';
+  style.textContent = `
+    .comment-card.hidden-comment {
+      opacity: 0.5;
+      background: rgba(100, 100, 100, 0.2);
+    }
+    .comment-card.hidden-comment .cc-body {
+      text-decoration: line-through 1px rgba(255,255,255,0.3);
+    }
+    .cc-hide {
+      background: rgba(255,100,100,0.2);
+      border: 1px solid rgba(255,100,100,0.4);
+      color: rgba(255,150,150,0.9);
+      padding: 4px 12px;
+      border-radius: 14px;
+      font-size: 8pt;
+      cursor: pointer;
+      transition: 0.2s;
+      font-family: var(--fs);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .cc-hide:hover {
+      background: rgba(255,100,100,0.3);
+      border-color: rgba(255,100,100,0.8);
+      color: #fff;
+    }
+  `;
+  document.head.appendChild(style);
+}
 </script>
 </body>
 </html>
