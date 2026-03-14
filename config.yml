@@ -1,0 +1,11 @@
+include:
+  - "*.html"
+  - "*.js"
+  - "*.css"
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: null
+      sitemap: false
