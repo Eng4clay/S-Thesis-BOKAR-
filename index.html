@@ -2494,7 +2494,63 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 
   <div class="page-num" data-i18n="page-lab-f">Lab‑F</div>
 </div>
+<!-- ========== §22. Trinity Space 3D Interactive Lab ========== -->
+<div class="page algo-page" id="pg-trinity-3d" style="padding:0; overflow:hidden;">
+  <div class="part-hdr" style="background:linear-gradient(135deg,#0a0618,#1a0a35); margin:0; border-radius:0;">
+    <span>🧊</span>
+    <span data-i18n="trinity-3d-title">§22. Trinity Space 3D — Interactive Visualization</span>
+  </div>
 
+  <div style="padding:15px 20px;">
+    <p data-i18n="trinity-3d-desc" style="color:rgba(224,216,255,.75); font-size:9.5pt; font-family:var(--fs); margin-bottom:10px;">
+      Explore the three axioms of System S in a 3D space. Rotate, zoom, and see how the Absolute (❶), Pure Possibility (0p), and Relational Infinity (∞) relate.
+    </p>
+    <div style="display:flex; gap:10px; align-items:center; margin-bottom:10px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:5px;">
+        <span style="width:20px; height:20px; background:#c9932a; border-radius:50%;"></span>
+        <span style="color:rgba(255,255,255,.7); font-size:9pt;" data-i18n="trinity-3d-abs">❶ Absolute One</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:5px;">
+        <span style="width:20px; height:20px; background:#4fc3d8; border-radius:50%;"></span>
+        <span style="color:rgba(255,255,255,.7); font-size:9pt;" data-i18n="trinity-3d-pos">0p Pure Possibility</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:5px;">
+        <span style="width:20px; height:20px; background:#7b2d8b; border-radius:50%;"></span>
+        <span style="color:rgba(255,255,255,.7); font-size:9pt;" data-i18n="trinity-3d-rel">∞ Relational Infinity</span>
+      </div>
+      <div style="margin-left:auto;">
+        <button onclick="resetTrinity3D()" style="padding:4px 12px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); border-radius:6px; color:#fff; cursor:pointer; font-size:8.5pt;">↻ <span data-i18n="trinity-3d-reset">Reset View</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- حاوية الرسم ثلاثي الأبعاد -->
+  <div id="trinity-3d-container" style="width:100%; height:550px; background:rgba(0,0,0,.3); position:relative;">
+    <!-- سيتم إنشاء الـ Canvas هنا بواسطة Three.js -->
+  </div>
+
+  <div style="padding:15px 20px; border-top:1px solid rgba(255,255,255,.05);">
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:15px; margin-bottom:10px;">
+      <div style="background:rgba(44,22,84,.3); border-radius:8px; padding:8px; text-align:center;">
+        <div style="font-size:8pt; color:rgba(255,255,255,.4);" data-i18n="trinity-3d-bs-abs">BS(❶)</div>
+        <div style="font-size:14pt; color:#c9932a; font-family:var(--fm);" id="trinity-bs-abs">1.000</div>
+      </div>
+      <div style="background:rgba(44,22,84,.3); border-radius:8px; padding:8px; text-align:center;">
+        <div style="font-size:8pt; color:rgba(255,255,255,.4);" data-i18n="trinity-3d-bs-pos">BS(0p)</div>
+        <div style="font-size:14pt; color:#4fc3d8; font-family:var(--fm);" id="trinity-bs-pos">0.333</div>
+      </div>
+      <div style="background:rgba(44,22,84,.3); border-radius:8px; padding:8px; text-align:center;">
+        <div style="font-size:8pt; color:rgba(255,255,255,.4);" data-i18n="trinity-3d-bs-rel">BS(∞)</div>
+        <div style="font-size:14pt; color:#7b2d8b; font-family:var(--fm);" id="trinity-bs-rel">0.667</div>
+      </div>
+    </div>
+    <p style="color:rgba(255,255,255,.3); font-size:7.5pt; text-align:center; margin:0; font-family:var(--fm);">
+      ⬤ ❶ (1,0,0) &nbsp;&nbsp; ⬤ 0p (0,1,0) &nbsp;&nbsp; ⬤ ∞ (0,0,1) &nbsp;&nbsp; | &nbsp;&nbsp; η: ❶ → 0p → ∞ → 1
+    </p>
+  </div>
+
+  <div class="page-num" data-i18n="page-3d">3D-1</div>
+</div>
 </div><!-- end #doc -->
 <!-- ===== NOTIFICATION TOAST ===== -->
 <div id="comm-toast">✅ <span id="toast-msg">Comment submitted successfully!</span></div>
@@ -3436,7 +3492,18 @@ ar:{
 }, 
  // <-- هنا القوس المعكوس } ثم فاصلة ,
 //    👆 مهم جداً: القوس هذا كان ناقص!
-  
+  // --- Trinity Space 3D Lab ---
+"trinity-3d-title": "§22. الفضاء الثالوثي ثلاثي الأبعاد — تصور تفاعلي",
+"trinity-3d-desc": "استكشف البديهيات الثلاث لنظام S في فضاء ثلاثي الأبعاد. قم بالتدوير والتكبير لرؤية كيف يرتبط المطلق (❶)، الإمكان المحض (0p)، واللانهاية العلائقية (∞).",
+"trinity-3d-abs": "❶ الواحد المطلق",
+"trinity-3d-pos": "0p الإمكان المحض",
+"trinity-3d-rel": "∞ اللانهاية العلائقية",
+"trinity-3d-reset": "إعادة تعيين العرض",
+"trinity-3d-bs-abs": "BS(❶)",
+"trinity-3d-bs-pos": "BS(0p)",
+"trinity-3d-bs-rel": "BS(∞)",
+"page-3d": "3D-١"
+  }, 
 fr:{
   "badge":"Édition Améliorée 2026 | Monographie Scientifique",
   "main-title":"L'Énoncé Bouker","subtitle":"Trinité Mathématique Unifiée — Système S",
@@ -5209,6 +5276,256 @@ window.addEventListener('load', function() {
   // نتأكد من وجود عناصر المعمل قبل التهيئة
   if (document.getElementById('lab-number')) {
     resetLab();
+  }
+});
+  // ============================================
+// Trinity Space 3D Lab – Three.js Visualization
+// ============================================
+
+let scene, camera, renderer, controls;
+let pointLight, ambientLight;
+let objects = [];
+
+function initTrinity3D() {
+  // التأكد من وجود الحاوية
+  const container = document.getElementById('trinity-3d-container');
+  if (!container) return;
+
+  // تحميل Three.js إذا لم يكن محملاً
+  if (typeof THREE === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+    script.onload = () => {
+      // بعد تحميل Three.js، نبدأ بتحميل OrbitControls
+      loadOrbitControls();
+    };
+    document.head.appendChild(script);
+  } else {
+    // إذا كان محملاً مسبقاً، نبدأ مباشرة
+    startTrinityScene();
+  }
+}
+
+function loadOrbitControls() {
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js';
+  script.onload = startTrinityScene;
+  document.head.appendChild(script);
+}
+
+function startTrinityScene() {
+  const container = document.getElementById('trinity-3d-container');
+  if (!container) return;
+
+  // إزالة أي محتوى سابق
+  while (container.firstChild) container.removeChild(container.firstChild);
+
+  // إنشاء المشهد
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0c0820);
+
+  // إنشاء الكاميرا
+  camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+  camera.position.set(3, 2, 5);
+  camera.lookAt(0, 0, 0);
+
+  // إنشاء المُصَيِّر (renderer)
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+  container.appendChild(renderer.domElement);
+
+  // إضافة أدوات التحكم (OrbitControls)
+  controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true;
+  controls.dampingFactor = 0.05;
+  controls.autoRotate = true;
+  controls.autoRotateSpeed = 1.0;
+  controls.enableZoom = true;
+  controls.maxPolarAngle = Math.PI / 2; // منع الدوران تحت الأرض
+
+  // إضاءة
+  ambientLight = new THREE.AmbientLight(0x404060);
+  scene.add(ambientLight);
+
+  pointLight = new THREE.PointLight(0xffffff, 1);
+  pointLight.position.set(5, 5, 5);
+  scene.add(pointLight);
+
+  const light2 = new THREE.PointLight(0xffaa88, 0.5);
+  light2.position.set(-5, 2, 3);
+  scene.add(light2);
+
+  // إضافة شبكة أرضية (Grid Helper) للإحساس بالفضاء
+  const gridHelper = new THREE.GridHelper(10, 20, 0x7b2d8b, 0x2c1654);
+  gridHelper.position.y = -0.5;
+  scene.add(gridHelper);
+
+  // إضافة محاور بسيطة (Axes Helper)
+  const axesHelper = new THREE.AxesHelper(5);
+  scene.add(axesHelper);
+
+  // إضافة كرات تمثل العناصر الثالوثية
+  createTrinitySpheres();
+
+  // إضافة نجمة صغيرة في المركز
+  const centerGlow = new THREE.Mesh(
+    new THREE.SphereGeometry(0.15, 16, 16),
+    new THREE.MeshStandardMaterial({ color: 0xe8aa40, emissive: 0x442200 })
+  );
+  centerGlow.position.set(0, 0, 0);
+  scene.add(centerGlow);
+
+  // إضافة نقاط صغيرة عشوائية حول المركز (تمثل الإمكانات)
+  addRandomPoints(200);
+
+  // بدء حلقة الرسم
+  animate();
+}
+
+function createTrinitySpheres() {
+  // ❶ - Absolute One (المحور X)
+  const sphere1 = new THREE.Mesh(
+    new THREE.SphereGeometry(0.5, 32, 32),
+    new THREE.MeshStandardMaterial({ color: 0xc9932a, emissive: 0x331d00 })
+  );
+  sphere1.position.set(2, 0, 0);
+  scene.add(sphere1);
+  
+  // إضافة حلقة حول الكرة (أو تاج)
+  const ring1 = new THREE.Mesh(
+    new THREE.TorusGeometry(0.7, 0.05, 16, 32, Math.PI),
+    new THREE.MeshStandardMaterial({ color: 0xc9932a, emissive: 0x221100 })
+  );
+  ring1.position.set(2, 0, 0);
+  ring1.rotation.x = Math.PI / 2;
+  ring1.rotation.z = Math.PI / 4;
+  scene.add(ring1);
+
+  // 0p - Pure Possibility (المحور Y)
+  const sphere2 = new THREE.Mesh(
+    new THREE.SphereGeometry(0.5, 32, 32),
+    new THREE.MeshStandardMaterial({ color: 0x4fc3d8, emissive: 0x113238, transparent: true, opacity: 0.9 })
+  );
+  sphere2.position.set(0, 2, 0);
+  scene.add(sphere2);
+
+  // ∞ - Relational Infinity (المحور Z)
+  const sphere3 = new THREE.Mesh(
+    new THREE.SphereGeometry(0.5, 32, 32),
+    new THREE.MeshStandardMaterial({ color: 0x7b2d8b, emissive: 0x2d1033 })
+  );
+  sphere3.position.set(0, 0, 2);
+  scene.add(sphere3);
+
+  // إضافة حلقات متصلة بين الكرات (تمثل العلاقات)
+  const materialLine = new THREE.LineBasicMaterial({ color: 0x5dcc8b });
+
+  // خط بين ❶ و 0p
+  const points1 = [new THREE.Vector3(2, 0, 0), new THREE.Vector3(0, 2, 0)];
+  const geometry1 = new THREE.BufferGeometry().setFromPoints(points1);
+  const line1 = new THREE.Line(geometry1, materialLine);
+  scene.add(line1);
+
+  // خط بين 0p و ∞
+  const points2 = [new THREE.Vector3(0, 2, 0), new THREE.Vector3(0, 0, 2)];
+  const geometry2 = new THREE.BufferGeometry().setFromPoints(points2);
+  const line2 = new THREE.Line(geometry2, materialLine);
+  scene.add(line2);
+
+  // خط بين ∞ و ❶
+  const points3 = [new THREE.Vector3(0, 0, 2), new THREE.Vector3(2, 0, 0)];
+  const geometry3 = new THREE.BufferGeometry().setFromPoints(points3);
+  const line3 = new THREE.Line(geometry3, materialLine);
+  scene.add(line3);
+
+  // إضافة خطوط منقطة للدلالة على الأبعاد
+  const dashMaterial = new THREE.LineDashedMaterial({ color: 0x888888, dashSize: 0.2, gapSize: 0.1 });
+  const axisPoints = [
+    [new THREE.Vector3(-3, 0, 0), new THREE.Vector3(3, 0, 0)],
+    [new THREE.Vector3(0, -3, 0), new THREE.Vector3(0, 3, 0)],
+    [new THREE.Vector3(0, 0, -3), new THREE.Vector3(0, 0, 3)]
+  ];
+  axisPoints.forEach(pts => {
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    const line = new THREE.Line(geo, dashMaterial);
+    line.computeLineDistances();
+    scene.add(line);
+  });
+}
+
+function addRandomPoints(count) {
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(count * 3);
+  const colors = new Float32Array(count * 3);
+
+  for (let i = 0; i < count; i++) {
+    // توزيع عشوائي داخل كرة
+    const r = 2.5 + Math.random() * 2; // نصف القطر بين 2.5 و 4.5
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(2 * Math.random() - 1);
+
+    const x = r * Math.sin(phi) * Math.cos(theta);
+    const y = r * Math.sin(phi) * Math.sin(theta);
+    const z = r * Math.cos(phi);
+
+    positions[i*3] = x;
+    positions[i*3+1] = y;
+    positions[i*3+2] = z;
+
+    // لون عشوائي بين الذهبي والفضي
+    colors[i*3] = 0.8 + 0.2 * Math.random();   // R
+    colors[i*3+1] = 0.6 + 0.4 * Math.random(); // G
+    colors[i*3+2] = 0.2 + 0.2 * Math.random(); // B
+  }
+
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+  const material = new THREE.PointsMaterial({ size: 0.05, vertexColors: true, transparent: true, opacity: 0.6 });
+  const points = new THREE.Points(geometry, material);
+  scene.add(points);
+}
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  if (controls) controls.update(); // لتحديث autoRotate
+
+  if (renderer && scene && camera) {
+    renderer.render(scene, camera);
+  }
+}
+
+function resetTrinity3D() {
+  if (camera && controls) {
+    camera.position.set(3, 2, 5);
+    controls.target.set(0, 0, 0);
+    controls.update();
+  }
+}
+
+// التعامل مع تغيير حجم النافذة
+window.addEventListener('resize', () => {
+  const container = document.getElementById('trinity-3d-container');
+  if (!container || !camera || !renderer) return;
+  
+  camera.aspect = container.clientWidth / container.clientHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(container.clientWidth, container.clientHeight);
+});
+
+// تهيئة المشهد عند تحميل الصفحة
+window.addEventListener('load', () => {
+  // تأخير بسيط للتأكد من وجود الحاوية
+  setTimeout(initTrinity3D, 500);
+});
+
+// إضافة دالة للتأكد من إعادة التهيئة إذا تم فتح الصفحة لاحقاً
+document.addEventListener('visibilitychange', () => {
+  if (!document.hidden && document.getElementById('pg-trinity-3d')) {
+    // إذا أصبحت الصفحة مرئية وأحد عناصرها موجود، نعيد التهيئة
+    setTimeout(initTrinity3D, 200);
   }
 });
 </script>
