@@ -2517,17 +2517,37 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
     <div>
       <label style="color:var(--gold); font-size:8.5pt; display:block; margin-bottom:5px;" data-i18n="trinity-3d-examples">📚 Examples</label>
       <select id="example-select" style="width:100%; padding:8px; background:rgba(0,0,0,.5); border:2px solid var(--gold); border-radius:6px; color:#fff; font-family:var(--fs); font-size:9pt; margin-bottom:8px;">
-        <option value="x^2 + y^2">Paraboloid (x² + y²)</option>
-        <option value="x^2 - y^2">Hyperbolic Paraboloid (x² - y²)</option>
-        <option value="sin(x) * cos(y)">Wave (sin x · cos y)</option>
-        <option value="x * y">Saddle (x·y)</option>
-        <option value="sqrt(x^2 + y^2)">Cone (√(x²+y²))</option>
-        <option value="exp(-x^2 - y^2)">Gaussian Bell</option>
-        <option value="x^3 - 3*x*y^2">Monkey Saddle (x³ - 3xy²)</option>
-        <option value="1/(1 + x^2 + y^2)">RBF Peak</option>
-        <option value="abs(x) + abs(y)">Diamond (|x|+|y|)</option>
-        <option value="x^2 + y^2 - 4">Sphere (x²+y²-4) [implicit]</option>
-      </select>
+  <!-- المعادلات الأساسية الموجودة -->
+  <option value="x^2 + y^2">Paraboloid (x² + y²)</option>
+  <option value="x^2 - y^2">Hyperbolic Paraboloid (x² - y²)</option>
+  <option value="sin(x) * cos(y)">Wave (sin x · cos y)</option>
+  <option value="x * y">Saddle (x·y)</option>
+  <option value="sqrt(x^2 + y^2)">Cone (√(x²+y²))</option>
+  <option value="exp(-x^2 - y^2)">Gaussian Bell</option>
+  <option value="x^3 - 3*x*y^2">Monkey Saddle (x³ - 3xy²)</option>
+  <option value="1/(1 + x^2 + y^2)">RBF Peak</option>
+  <option value="abs(x) + abs(y)">Diamond (|x|+|y|)</option>
+  <option value="x^2 + y^2 - 4">Sphere (x²+y²-4) [implicit]</option>
+  
+  <!-- إضافات من نظام S -->
+  <option value="" disabled style="background:#2c1654; color:#c9932a;">——— System S Equations ———</option>
+  <option value="x^2 + y^2 + 0.5*sin(5*x)*sin(5*y)">Superposition (0p) – pure possibility field</option>
+  <option value="exp(-10*(x^2 + y^2))">Measurement (η) – collapse / epiphany</option>
+  <option value="x*y">Entanglement (∞) – relational saddle</option>
+  <option value="0.7*exp(-0.3*x) + 0.2*(1-exp(-0.3*x)) + 0.4*sin(2*Math.PI/5*x)**2 + 0.1">BS(τ) – structural stability (1D slice)</option>
+  <option value="sqrt(abs(x)) + sqrt(abs(y))">Uncertainty principle – modified</option>
+  <option value="(x^2 + y^2) * sin(5*atan2(y,x))">Central equation (❶ ⊕ 0p = ∞) – symbolic</option>
+  <option value="sin(5*x)*cos(5*y) + 0.3*sin(10*x)*sin(10*y)">Trinity flow – operations map</option>
+  
+  <!-- المعادلات الإضافية التي طلبتها -->
+  <option value="" disabled style="background:#2c1654; color:#c9932a;">——— More System S Equations ———</option>
+  <option value="0.7 + 0.3*sin(2*pi*x)">BS(n) structural stability (simplified)</option>
+  <option value="0.333">0p · Pure Possibility (BS=1/3) – constant plane</option>
+  <option value="0.667">∞ · Relational Infinity (BS=2/3) – constant plane</option>
+  <option value="x^2 + y^2 + 1">❶ ⊕ 0p = 1 = ∞ (Central Equation visual)</option>
+  <option value="1./(1 + 10*(x^2 + y^2))">Modified Uncertainty (ΔxΔp ≥ ħ/2·1/BS)</option>
+  <option value="x^2 + y^2 + x*y">Trinity Flow (❶ ⊕ 0p = ∞)</option>
+</select>
       
       <!-- منزلقات المعاملات -->
       <div style="display:flex; gap:8px; margin-top:5px;">
@@ -5529,15 +5549,35 @@ function updateSurface() {
 // تقدير BS (مقياس استقرار سطحي – تقديري)
 function estimateBS() {
   const expr = currentEquation;
+  
+  // المعادلات الإضافية الجديدة
+  if (expr.includes('0.7 + 0.3*sin(2*pi*x)')) return 0.55;          // BS simplified
+  if (expr.includes('0.333')) return 0.333;                         // 0p constant
+  if (expr.includes('0.667')) return 0.667;                         // ∞ constant
+  if (expr.includes('x^2 + y^2 + 1')) return 0.78;                  // central eq visual
+  if (expr.includes('1./(1 + 10*')) return 0.45;                    // modified uncertainty
+  if (expr.includes('x^2 + y^2 + x*y')) return 0.62;                 // trinity flow
+
+  // معادلات نظام S (السابقة)
+  if (expr.includes('Superposition') || expr.includes('x^2 + y^2 + 0.5*sin')) return 0.38;
+  if (expr.includes('Measurement') || expr.includes('exp(-10*')) return 0.72;
+  if (expr.includes('Entanglement') || expr.includes('x*y')) return 0.58;
+  if (expr.includes('BS(τ)') || expr.includes('0.7*exp')) return 0.65;
+  if (expr.includes('Uncertainty') || expr.includes('sqrt(abs')) return 0.42;
+  if (expr.includes('Central') || expr.includes('(x^2 + y^2) * sin')) return 0.81;
+  if (expr.includes('Trinity flow') || expr.includes('sin(5*x)*cos(5*y)')) return 0.53;
+
+  // المعادلات الأساسية
   if (expr.includes('sin') || expr.includes('cos')) return 0.45;
-  if (expr.includes('x^2 + y^2')) return 0.72;
+  if (expr.includes('x^2 + y^2') && !expr.includes('-')) return 0.72;
   if (expr.includes('x^2 - y^2')) return 0.58;
   if (expr.includes('x*y')) return 0.50;
   if (expr.includes('sqrt')) return 0.63;
   if (expr.includes('exp')) return 0.68;
   if (expr.includes('abs')) return 0.40;
   if (expr.includes('x^3')) return 0.35;
-  return 0.55;
+  
+  return 0.55; // قيمة افتراضية
 }
 
 // تحديث لوحة المعلومات
