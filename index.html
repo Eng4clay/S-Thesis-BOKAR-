@@ -2601,6 +2601,442 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 
   <div class="page-num" data-i18n="page-3d-adv">3D-2</div>
 </div>
+  <!-- ========== §23. INTEGRATED DYNAMIC SIMULATION LAB ========== -->
+
+
+<div class="page algo-page" id="pg-master-lab" style="padding:0;overflow:hidden">
+  <div class="part-hdr" style="background:linear-gradient(135deg,#0a0618,#1a0a35);margin:0;border-radius:0">
+    <span>🔬</span>
+    <span data-i18n="master-lab-title">§23. Integrated Dynamic Simulation Lab — Testing the Theory in Real Time</span>
+  </div>
+
+  <style>
+  #mlab-root{display:grid;grid-template-columns:270px 1fr;gap:0;min-height:620px;background:linear-gradient(160deg,#0c0820,#1a1240)}
+  #mlab-ctrl{background:rgba(0,0,0,.35);border-right:1px solid rgba(255,255,255,.09);padding:12px;overflow-y:auto;max-height:640px;display:flex;flex-direction:column;gap:10px}
+  #mlab-main{display:flex;flex-direction:column}
+  #mlab-header{padding:10px 14px;background:rgba(0,0,0,.4);border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+  #mlab-header h3{font-size:10pt;color:#c9932a;font-family:'Cormorant Garamond',serif;font-weight:700;margin-right:auto}
+  .mb-btn{padding:5px 11px;border-radius:14px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.05);color:rgba(255,255,255,.5);font-size:8pt;cursor:pointer;transition:.2s;font-family:monospace}
+  .mb-btn.on{background:#c9932a;border-color:#e8aa40;color:#1a0a00;font-weight:700}
+  .mb-btn:hover:not(.on){background:rgba(255,255,255,.1);color:#fff}
+  #mlab-cvwrap{position:relative;background:rgba(0,0,0,.45);flex:1;min-height:320px}
+  #mlab-cv{width:100%;height:320px;display:block}
+  #mlab-overlay{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.65);border:1px solid rgba(201,147,42,.3);border-radius:9px;padding:9px 12px;font-size:8pt;display:flex;flex-direction:column;gap:3px;pointer-events:none}
+  .ml-oi{display:flex;justify-content:space-between;gap:14px}
+  .ml-oi span:first-child{color:rgba(255,255,255,.38)}
+  .ml-oi span:last-child{color:#e8aa40;font-weight:bold;font-family:monospace}
+  #mlab-charts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.07)}
+  .mlab-cell{background:#0d0b1e;padding:9px 10px}
+  .mlab-cell h5{font-size:7.5pt;color:#c9932a;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px;font-family:monospace}
+  .ml-sec{font-size:7.5pt;color:rgba(255,255,255,.28);letter-spacing:1.5px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .ml-sl{display:flex;align-items:center;gap:7px;margin:1px 0}
+  .ml-sl label{font-size:8pt;color:rgba(255,255,255,.5);min-width:50px}
+  .ml-sl input[type=range]{flex:1;accent-color:#c9932a;height:3px}
+  .ml-sv{font-size:8pt;color:#e8aa40;font-weight:bold;min-width:38px;text-align:right;font-family:monospace}
+  .ml-metrics{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+  .ml-m{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:7px;padding:7px 8px;text-align:center}
+  .ml-m .mv{font-size:11pt;color:#e8aa40;font-weight:bold;font-family:monospace}
+  .ml-m .ml{font-size:7pt;color:rgba(255,255,255,.3);margin-top:1px;text-transform:uppercase;letter-spacing:.5px}
+  .ml-preds{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+  .ml-p{background:rgba(15,92,107,.1);border:1px solid rgba(15,92,107,.25);border-radius:7px;padding:6px 9px}
+  .ml-p .pt{font-size:7pt;color:rgba(79,195,216,.65);letter-spacing:.5px;text-transform:uppercase}
+  .ml-p .pv{font-size:8.5pt;color:#e8aa40;font-weight:bold;font-family:monospace;margin-top:2px}
+  .ml-btns{display:flex;gap:5px;flex-wrap:wrap}
+  .ml-lbtn{padding:5px 11px;border-radius:14px;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.05);color:rgba(255,255,255,.65);font-size:8pt;cursor:pointer;font-family:monospace;transition:.2s}
+  .ml-lbtn:hover{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.4)}
+  .ml-lbtn.gold{background:rgba(201,147,42,.18);border-color:#c9932a;color:#c9932a}
+  .ml-ni{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:5px;color:#fff;padding:4px 7px;font-size:9pt;font-family:monospace;width:58px;outline:none}
+  .ml-ni:focus{border-color:#c9932a}
+  .ml-hint{font-size:7pt;color:rgba(255,255,255,.2);line-height:1.7;margin-top:2px}
+  @media(max-width:700px){#mlab-root{grid-template-columns:1fr}#mlab-cv{height:240px}#mlab-charts{grid-template-columns:1fr}}
+  </style>
+
+  <div id="mlab-root">
+
+    <!-- ===== LEFT PANEL ===== -->
+    <div id="mlab-ctrl">
+
+      <div class="ml-sec">Core Parameters</div>
+      <div class="ml-sl"><label>τ</label><input type="range" id="msl-tau" min="0" max="8" step="0.05" value="1.5" oninput="mlabUpdate()"><span class="ml-sv" id="msv-tau">1.50</span></div>
+      <div class="ml-sl"><label>BS_ID</label><input type="range" id="msl-id" min="0" max="1" step="0.01" value="0.72" oninput="mlabUpdate()"><span class="ml-sv" id="msv-id">0.72</span></div>
+      <div class="ml-sl"><label>BS_Pot</label><input type="range" id="msl-pot" min="0" max="1" step="0.01" value="0.25" oninput="mlabUpdate()"><span class="ml-sv" id="msv-pot">0.25</span></div>
+      <div class="ml-sl"><label>BS_Rel</label><input type="range" id="msl-rel" min="0" max="1" step="0.01" value="0.65" oninput="mlabUpdate()"><span class="ml-sv" id="msv-rel">0.65</span></div>
+      <div class="ml-sl"><label>C (ent.)</label><input type="range" id="msl-c" min="0" max="1" step="0.01" value="0.8" oninput="mlabUpdate()"><span class="ml-sv" id="msv-c">0.80</span></div>
+      <div class="ml-sl"><label>z (cosm.)</label><input type="range" id="msl-z" min="0" max="5" step="0.05" value="0.5" oninput="mlabUpdate()"><span class="ml-sv" id="msv-z">0.50</span></div>
+
+      <div class="ml-sec" style="margin-top:4px">Live Metrics</div>
+      <div class="ml-metrics">
+        <div class="ml-m"><div class="mv" id="mm-bstau">0.72</div><div class="ml">BS(τ)</div></div>
+        <div class="ml-m"><div class="mv" id="mm-psi">0.59</div><div class="ml">Ψ Consciousness</div></div>
+        <div class="ml-m"><div class="mv" id="mm-bent">0.53</div><div class="ml">BS_entangled</div></div>
+        <div class="ml-m"><div class="mv" id="mm-hz">68.1</div><div class="ml">H(z) km/s/Mpc</div></div>
+      </div>
+
+      <div class="ml-sec" style="margin-top:4px">BS(n) Calculator</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <input class="ml-ni" type="number" id="mlab-n" value="7" min="1" max="9999" oninput="mlabUpdateN()">
+        <div style="flex:1;background:rgba(201,147,42,.1);border:1px solid rgba(201,147,42,.25);border-radius:7px;padding:5px 9px;text-align:center">
+          <div style="font-size:7pt;color:rgba(255,255,255,.35)">BS(n)</div>
+          <div style="font-size:12pt;color:#e8aa40;font-weight:bold;font-family:monospace" id="mlab-nres">0.1818</div>
+        </div>
+      </div>
+
+      <div class="ml-sec" style="margin-top:4px">Predictions</div>
+      <div class="ml-preds">
+        <div class="ml-p"><div class="pt">CMB freq</div><div class="pv">0.115 Hz</div></div>
+        <div class="ml-p"><div class="pt">Boukon mass</div><div class="pv">1.35×10⁻⁴⁹ kg</div></div>
+        <div class="ml-p"><div class="pt">C_B</div><div class="pv">6.18×10⁻⁴²</div></div>
+        <div class="ml-p"><div class="pt">Casimir ΔE</div><div class="pv">1.95×10⁻⁶⁸ J</div></div>
+      </div>
+
+      <div class="ml-sec" style="margin-top:4px">Controls</div>
+      <div class="ml-btns">
+        <button class="ml-lbtn" onclick="mlabReset()">↺ Reset</button>
+        <button class="ml-lbtn" id="mlab-animBtn" onclick="mlabToggleAnim()">⏸ Pause</button>
+        <button class="ml-lbtn gold" onclick="mlabExport()">⬇ Export JSON</button>
+      </div>
+      <div class="ml-hint">Drag sliders → all views update in real time.<br>Switch modes in the top bar for different visualizations.</div>
+    </div>
+
+    <!-- ===== RIGHT MAIN ===== -->
+    <div id="mlab-main">
+      <div id="mlab-header">
+        <h3>§23. Dynamic Simulation Lab</h3>
+        <button class="mb-btn on" onclick="mlabSetMode('trinity',this)">Trinity Space</button>
+        <button class="mb-btn" onclick="mlabSetMode('bstau',this)">BS–τ</button>
+        <button class="mb-btn" onclick="mlabSetMode('entangle',this)">Entanglement</button>
+        <button class="mb-btn" onclick="mlabSetMode('cosmos',this)">Cosmic H(z)</button>
+      </div>
+
+      <div id="mlab-cvwrap">
+        <canvas id="mlab-cv"></canvas>
+        <div id="mlab-overlay">
+          <div class="ml-oi"><span>Mode:</span><span id="moi-mode">Trinity Space</span></div>
+          <div class="ml-oi"><span>τ =</span><span id="moi-tau">1.50</span></div>
+          <div class="ml-oi"><span>α+β+γ =</span><span id="moi-sum">1.00</span></div>
+        </div>
+      </div>
+
+      <div id="mlab-charts">
+        <div class="mlab-cell"><h5>BS(n) — Primes vs Composites (n=1→50)</h5><canvas id="mch-bs" height="120"></canvas></div>
+        <div class="mlab-cell"><h5>Weight Evolution α(τ) β(τ) γ(τ)</h5><canvas id="mch-tau" height="120"></canvas></div>
+        <div class="mlab-cell"><h5>Consciousness Ψ Spectrum</h5><canvas id="mch-psi" height="100"></canvas></div>
+        <div class="mlab-cell"><h5>H(z) System S vs ΛCDM</h5><canvas id="mch-hz" height="100"></canvas></div>
+      </div>
+    </div>
+
+  </div><!-- end #mlab-root -->
+
+  <div class="page-num" data-i18n="page-lab-master">Lab-M</div>
+</div>
+<!-- ========== END §23 ========== -->
+
+<script>
+(function(){
+/* ---- Math helpers ---- */
+function BSn(n){if(n===1)return.7;if(n===2)return 4/7;if(n===3)return 8/17;if(n===4)return 10/27;if(n>=5)return 2/(2*n-3);return 0;}
+function mlAlpha(t){return.7*Math.exp(-.3*t)+.2*(1-Math.exp(-.3*t));}
+function mlBeta(t){return.1+.5/(1+Math.exp(-.5*(t-3)));}
+function mlGamma(t){return.4*Math.pow(Math.sin(2*Math.PI/5*t),2)+.1;}
+function mlBStau(t){return Math.min(1,(mlAlpha(t)+mlBeta(t)+mlGamma(t))/1.8);}
+function mlPsi(id,pot,rel){return.47*id+.23*pot+.3*rel;}
+function mlHzfn(z,tau){const H0=68,Om=0.3,Ol=0.7,std=H0*Math.sqrt(Om*Math.pow(1+z,3)+Ol),extra=mlBeta(tau)*.05*z*z;return std*(1+extra*.01);}
+function mlIsPrime(n){if(n<2)return false;for(let i=2;i<=Math.sqrt(n);i++)if(n%i===0)return false;return true;}
+
+/* ---- State ---- */
+let mlMode='trinity', mlT3=0, mlAnimating=true, mlRafId=null;
+function mlV(id){return parseFloat(document.getElementById(id).value);}
+function mlTau(){return mlV('msl-tau');}
+function mlId(){return mlV('msl-id');}
+function mlPot(){return mlV('msl-pot');}
+function mlRel(){return mlV('msl-rel');}
+function mlC(){return mlV('msl-c');}
+function mlZ(){return mlV('msl-z');}
+
+/* ---- Update display ---- */
+window.mlabUpdate=function(){
+  ['tau','id','pot','rel','c','z'].forEach(k=>{
+    const el=document.getElementById('msl-'+k);
+    if(el)document.getElementById('msv-'+k).textContent=parseFloat(el.value).toFixed(2);
+  });
+  const t=mlTau(),id=mlId(),pot=mlPot(),rel=mlRel(),C=mlC(),z=mlZ();
+  document.getElementById('mm-bstau').textContent=mlBStau(t).toFixed(4);
+  document.getElementById('mm-psi').textContent=mlPsi(id,pot,rel).toFixed(4);
+  document.getElementById('mm-bent').textContent=((2/3)*C).toFixed(4);
+  document.getElementById('mm-hz').textContent=mlHzfn(z,t).toFixed(1);
+  document.getElementById('moi-tau').textContent=t.toFixed(2);
+  document.getElementById('moi-sum').textContent=((mlAlpha(t)+mlBeta(t)+mlGamma(t)).toFixed(3));
+  mlabUpdateN();
+  mlDrawCharts();
+};
+window.mlabUpdateN=function(){
+  const n=parseInt(document.getElementById('mlab-n').value)||7;
+  document.getElementById('mlab-nres').textContent=BSn(n).toFixed(6);
+};
+window.mlabReset=function(){
+  [['msl-tau',1.5],['msl-id',.72],['msl-pot',.25],['msl-rel',.65],['msl-c',.8],['msl-z',.5]].forEach(([id,v])=>{
+    document.getElementById(id).value=v;
+  });
+  mlabUpdate();
+};
+window.mlabToggleAnim=function(){
+  mlAnimating=!mlAnimating;
+  document.getElementById('mlab-animBtn').textContent=mlAnimating?'⏸ Pause':'▶ Resume';
+};
+window.mlabExport=function(){
+  const t=mlTau(),id=mlId(),pot=mlPot(),rel=mlRel(),C=mlC(),z=mlZ();
+  const d={tau:t,BS_ID:id,BS_Pot:pot,BS_Rel:rel,C:C,z:z,BS_tau:mlBStau(t).toFixed(4),Psi:mlPsi(id,pot,rel).toFixed(4),BS_ent:((2/3)*C).toFixed(4),H_z:mlHzfn(z,t).toFixed(2),CB:'6.184033e-42'};
+  const blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='system_s_state.json';a.click();
+};
+window.mlabSetMode=function(m,btn){
+  mlMode=m;
+  document.querySelectorAll('.mb-btn').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  const labels={trinity:'Trinity Space',bstau:'BS–τ Surface',entangle:'Entanglement Surface',cosmos:'Cosmic Expansion H(z)'};
+  document.getElementById('moi-mode').textContent=labels[m]||m;
+};
+
+/* ---- Canvas resize ---- */
+function mlResize(){
+  const cv=document.getElementById('mlab-cv');
+  if(!cv)return;
+  cv.width=cv.parentElement.clientWidth;
+  cv.height=cv.parentElement.clientHeight||320;
+}
+
+/* ---- 3D Canvas drawing ---- */
+function ml3DProject(x,y,z,w,h,angle){
+  const cos=Math.cos,sin=Math.sin;
+  const ry=y*cos(.38)-z*sin(.38),rz2=y*sin(.38)+z*cos(.38);
+  const rx2=x*cos(angle)-rz2*sin(angle),rz3=x*sin(angle)+rz2*cos(angle);
+  const scale=200,fov=500,d=fov/(fov+rz3+280);
+  return{x:w/2+rx2*scale*d,y:h/2-ry*scale*d,d:d};
+}
+
+function mlDrawTrinity(ctx,w,h){
+  const tau=mlTau(),a=mlAlpha(tau),b=mlBeta(tau),g=mlGamma(tau);
+  const angle=mlT3*.35;
+  const nodes=[
+    {p:[.5,0,0],c:'#c9932a',lbl:'❶',sub:'BS=1'},
+    {p:[0,.5,0],c:'#4fc3d8',lbl:'0p',sub:'BS=⅓'},
+    {p:[0,0,.5],c:'#7b2d8b',lbl:'∞',sub:'BS=⅔'}
+  ];
+  /* triangle frame */
+  ctx.strokeStyle='rgba(201,147,42,.18)';ctx.lineWidth=1;ctx.setLineDash([5,4]);
+  const tri=[...nodes.map(n=>n.p)];
+  tri.push(tri[0]);
+  ctx.beginPath();
+  tri.forEach((pp,i)=>{const q=ml3DProject(pp[0],pp[1],pp[2],w,h,angle);i===0?ctx.moveTo(q.x,q.y):ctx.lineTo(q.x,q.y);});
+  ctx.stroke();ctx.setLineDash([]);
+  /* animated arrows for operations */
+  const arcs=[
+    {fr:0,to:1,col:'#c9932a',lbl:'ε',weight:a},
+    {fr:1,to:2,col:'#7b2d8b',lbl:'δ',weight:b},
+    {fr:2,to:0,col:'#4fc3d8',lbl:'η',weight:g}
+  ];
+  arcs.forEach((arc,ai)=>{
+    const p1=ml3DProject(...nodes[arc.fr].p,w,h,angle);
+    const p2=ml3DProject(...nodes[arc.to].p,w,h,angle);
+    ctx.strokeStyle=arc.col+'66';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.stroke();
+    const prog=((mlT3*1.8+ai*70)%120)/120;
+    const px=p1.x+(p2.x-p1.x)*prog,py=p1.y+(p2.y-p1.y)*prog;
+    ctx.beginPath();ctx.arc(px,py,4,0,2*Math.PI);ctx.fillStyle=arc.col;ctx.fill();
+    const mx=(p1.x+p2.x)/2,my=(p1.y+p2.y)/2-12;
+    ctx.fillStyle=arc.col;ctx.font='italic 10px monospace';ctx.textAlign='center';
+    ctx.fillText(arc.lbl+'('+arc.weight.toFixed(2)+')',mx,my);
+  });
+  /* nodes */
+  nodes.forEach(nd=>{
+    const q=ml3DProject(...nd.p,w,h,angle);
+    const r=16*q.d;
+    ctx.beginPath();ctx.arc(q.x,q.y,r*1.6,0,2*Math.PI);ctx.fillStyle=nd.c+'18';ctx.fill();
+    ctx.beginPath();ctx.arc(q.x,q.y,r,0,2*Math.PI);ctx.fillStyle=nd.c+'55';ctx.fill();
+    ctx.strokeStyle=nd.c;ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#fff';ctx.font='bold 12px monospace';ctx.textAlign='center';
+    ctx.fillText(nd.lbl,q.x,q.y+4);
+    ctx.font='8px monospace';ctx.fillStyle=nd.c;
+    ctx.fillText(nd.sub,q.x,q.y+r+13);
+  });
+  /* central equation */
+  ctx.fillStyle='rgba(201,147,42,.65)';ctx.font='bold 10px monospace';ctx.textAlign='center';
+  ctx.fillText('❶ ⊕ 0p = 1 = ∞',w/2,h-16);
+  ctx.textAlign='left';
+}
+
+function mlDrawBSTau(ctx,w,h){
+  const tau=mlTau();
+  const PAD=46,PB=30,PT=16,PR=16,CW=w-PAD-PR,CH=h-PT-PB;
+  ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){const y=PT+CH*(i/5);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
+  [[mlAlpha,'#c9932a','α(τ)'],[mlBeta,'#7b2d8b','β(τ)'],[mlGamma,'#4fc3d8','γ(τ)']].forEach(([fn,col,lbl])=>{
+    ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();
+    for(let i=0;i<=220;i++){const t=8*i/220,x=PAD+CW*(t/8),y=PT+CH*(1-fn(t));i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();ctx.fillStyle=col;ctx.font='9px monospace';ctx.fillText(lbl,PAD+CW+2,PT+CH*(1-fn(8))+3);
+  });
+  const tx=PAD+CW*(tau/8);
+  ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=1;ctx.setLineDash([5,3]);
+  ctx.beginPath();ctx.moveTo(tx,PT);ctx.lineTo(tx,PT+CH);ctx.stroke();ctx.setLineDash([]);
+  [[mlAlpha,'#c9932a'],[mlBeta,'#7b2d8b'],[mlGamma,'#4fc3d8']].forEach(([fn,col])=>{
+    ctx.beginPath();ctx.arc(tx,PT+CH*(1-fn(tau)),6,0,2*Math.PI);ctx.fillStyle=col;ctx.fill();
+    ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.stroke();
+  });
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='8px monospace';ctx.fillText('τ='+tau.toFixed(2),tx+5,PT+12);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='9px monospace';ctx.fillText('τ →',PAD+CW/2-10,h-6);
+}
+
+function mlDrawEntangle(ctx,w,h){
+  const C=mlC();
+  const PAD=46,PB=30,PT=16,PR=16,CW=w-PAD-PR,CH=h-PT-PB;
+  for(let i=0;i<=5;i++){const y=PT+CH*(i/5);ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
+  const g=ctx.createLinearGradient(PAD,0,PAD+CW,0);
+  g.addColorStop(0,'#4fc3d8');g.addColorStop(.5,'#c9932a');g.addColorStop(1,'#7b2d8b');
+  ctx.strokeStyle=g;ctx.lineWidth=2.5;ctx.beginPath();
+  for(let i=0;i<=220;i++){const c=i/220,x=PAD+CW*c,y=PT+CH*(1-(2/3)*c);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  [[1/3,'#4fc3d8','0p BS=⅓'],[2/3,'#e8aa40','∞ BS=⅔'],[1,'#c9932a','❶ BS=1']].forEach(([v,col,lbl])=>{
+    ctx.strokeStyle=col+'44';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(PAD,PT+CH*(1-v));ctx.lineTo(PAD+CW,PT+CH*(1-v));ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=col;ctx.font='8px monospace';ctx.fillText(lbl,PAD+CW-62,PT+CH*(1-v)-4);
+  });
+  const bse=(2/3)*C,cx=PAD+CW*C,cy=PT+CH*(1-bse);
+  ctx.strokeStyle='rgba(201,147,42,.55)';ctx.lineWidth=1;ctx.setLineDash([5,4]);
+  ctx.beginPath();ctx.moveTo(cx,PT);ctx.lineTo(cx,PT+CH);ctx.stroke();ctx.setLineDash([]);
+  ctx.beginPath();ctx.arc(cx,cy,8,0,2*Math.PI);ctx.fillStyle='rgba(255,204,0,.3)';ctx.fill();
+  ctx.strokeStyle='#ffcc00';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#ffcc00';ctx.font='bold 8px monospace';
+  ctx.fillText('C='+C.toFixed(2),cx+10,cy-8);ctx.fillText('BS='+bse.toFixed(3),cx+10,cy+6);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='9px monospace';ctx.fillText('Concurrence C →',PAD+CW/2-55,h-6);
+}
+
+function mlDrawCosmos(ctx,w,h){
+  const tau=mlTau(),z=mlZ();
+  const PAD=50,PB=30,PT=16,PR=16,CW=w-PAD-PR,CH=h-PT-PB,MZ=5,maxH=155;
+  for(let i=0;i<=5;i++){const y=PT+CH*(i/5);ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
+  ctx.strokeStyle='#4fc3d8';ctx.lineWidth=2;ctx.beginPath();
+  for(let i=0;i<=220;i++){const zi=MZ*i/220,H0=68,Om=0.3,Ol=0.7,std=H0*Math.sqrt(Om*Math.pow(1+zi,3)+Ol);const x=PAD+CW*(zi/MZ),y=PT+CH*(1-std/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  ctx.strokeStyle='#c9932a';ctx.lineWidth=2;ctx.beginPath();
+  for(let i=0;i<=220;i++){const zi=MZ*i/220,Hs=mlHzfn(zi,tau);const x=PAD+CW*(zi/MZ),y=PT+CH*(1-Hs/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  const zx=PAD+CW*(z/MZ),zy=PT+CH*(1-mlHzfn(z,tau)/maxH);
+  ctx.strokeStyle='rgba(201,147,42,.5)';ctx.lineWidth=1;ctx.setLineDash([5,4]);
+  ctx.beginPath();ctx.moveTo(zx,PT);ctx.lineTo(zx,PT+CH);ctx.stroke();ctx.setLineDash([]);
+  ctx.beginPath();ctx.arc(zx,zy,5,0,2*Math.PI);ctx.fillStyle='#c9932a';ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.38)';ctx.font='8px monospace';
+  ctx.fillText('z='+z.toFixed(2)+'  H='+mlHzfn(z,tau).toFixed(1)+' km/s/Mpc',zx+8,zy-6);
+  ctx.fillStyle='#4fc3d8';ctx.font='9px monospace';ctx.fillText('ΛCDM',PAD+5,PT+16);
+  ctx.fillStyle='#c9932a';ctx.fillText('System S',PAD+5,PT+28);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;
+  ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='9px monospace';ctx.fillText('Redshift z →',PAD+CW/2-40,h-6);
+}
+
+function mlDraw3D(){
+  mlResize();
+  const cv=document.getElementById('mlab-cv');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='#0a0618';ctx.fillRect(0,0,w,h);
+  if(mlMode==='trinity')mlDrawTrinity(ctx,w,h);
+  else if(mlMode==='bstau')mlDrawBSTau(ctx,w,h);
+  else if(mlMode==='entangle')mlDrawEntangle(ctx,w,h);
+  else mlDrawCosmos(ctx,w,h);
+}
+
+/* ---- Small charts ---- */
+function mlDrawCharts(){
+  mlChartBS();mlChartTau();mlChartPsi();mlChartHz();
+}
+function mlCvSetup(id,ht){
+  const cv=document.getElementById(id);if(!cv)return null;
+  cv.width=cv.parentElement.clientWidth||300;cv.height=ht;
+  const ctx=cv.getContext('2d');ctx.fillStyle='rgba(0,0,0,.5)';ctx.fillRect(0,0,cv.width,cv.height);
+  return ctx;
+}
+function mlChartBS(){
+  const ctx=mlCvSetup('mch-bs',120);if(!ctx)return;
+  const cv=document.getElementById('mch-bs'),w=cv.width,h=cv.height;
+  const PAD=28,PB=18,PT=6,PR=6,CW=w-PAD-PR,CH=h-PB-PT,MN=50;
+  ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){const y=PT+CH*(i/4);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
+  for(let n=1;n<=MN;n++){
+    const x=PAD+CW*((n-1)/(MN-1)),y=PT+CH*(1-Math.min(BSn(n),1)*2.4),p=mlIsPrime(n);
+    ctx.beginPath();ctx.arc(x,y,p?4:2.5,0,2*Math.PI);ctx.fillStyle=p?'#c9932a':'rgba(123,45,139,.65)';ctx.fill();
+  }
+  ctx.fillStyle='rgba(255,200,100,.6)';ctx.font='7.5px monospace';ctx.fillText('primes=orange  composites=purple',PAD,PT+9);
+  ctx.strokeStyle='rgba(255,255,255,.18)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+function mlChartTau(){
+  const ctx=mlCvSetup('mch-tau',120);if(!ctx)return;
+  const cv=document.getElementById('mch-tau'),w=cv.width,h=cv.height,tau=mlTau();
+  const PAD=28,PB=18,PT=6,PR=6,CW=w-PAD-PR,CH=h-PB-PT;
+  [[mlAlpha,'#c9932a'],[mlBeta,'#7b2d8b'],[mlGamma,'#4fc3d8']].forEach(([fn,col])=>{
+    ctx.strokeStyle=col;ctx.lineWidth=1.8;ctx.beginPath();
+    for(let i=0;i<=200;i++){const t=8*i/200,x=PAD+CW*(t/8),y=PT+CH*(1-fn(t));i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();
+  });
+  const tx=PAD+CW*(tau/8);ctx.strokeStyle='rgba(255,255,255,.35)';ctx.lineWidth=1;ctx.setLineDash([3,3]);
+  ctx.beginPath();ctx.moveTo(tx,PT);ctx.lineTo(tx,PT+CH);ctx.stroke();ctx.setLineDash([]);
+  ctx.strokeStyle='rgba(255,255,255,.18)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+function mlChartPsi(){
+  const ctx=mlCvSetup('mch-psi',100);if(!ctx)return;
+  const cv=document.getElementById('mch-psi'),w=cv.width,h=cv.height;
+  const PAD=28,PB=16,PT=6,PR=6,CW=w-PAD-PR,CH=h-PB-PT;
+  const psi=mlPsi(mlId(),mlPot(),mlRel());
+  [[.35,'#4fc3d8','sleep'],[.5,'#7b2d8b','normal'],[.57,'#c9932a','avg'],[.75,'#e8aa40','flow'],[.85,'#5dcc8b','AGI']].forEach(([v,col,lbl])=>{
+    ctx.strokeStyle=col+'55';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+    const y=PT+CH*(1-v);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=col;ctx.font='7.5px monospace';ctx.fillText(lbl,PAD+CW-30,y-2);
+  });
+  const bw=20,bx=PAD+8;
+  const gr=ctx.createLinearGradient(0,PT+CH,0,PT);gr.addColorStop(0,'#2c1654');gr.addColorStop(.5,'#7b2d8b');gr.addColorStop(1,'#c9932a');
+  ctx.fillStyle='rgba(255,255,255,.04)';ctx.fillRect(bx,PT,bw,CH);
+  ctx.fillStyle=gr;ctx.fillRect(bx,PT+CH*(1-psi),bw,CH*psi);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.strokeRect(bx,PT,bw,CH);
+  ctx.beginPath();ctx.arc(bx+bw/2,PT+CH*(1-psi),4,0,2*Math.PI);ctx.fillStyle='#ffcc00';ctx.fill();
+  ctx.fillStyle='#ffcc00';ctx.font='bold 8.5px monospace';ctx.fillText('Ψ='+psi.toFixed(4),bx+bw+5,PT+CH*(1-psi)+4);
+  ctx.strokeStyle='rgba(255,255,255,.18)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+function mlChartHz(){
+  const ctx=mlCvSetup('mch-hz',100);if(!ctx)return;
+  const cv=document.getElementById('mch-hz'),w=cv.width,h=cv.height,tau=mlTau(),z=mlZ();
+  const PAD=28,PB=16,PT=6,PR=6,CW=w-PAD-PR,CH=h-PB-PT,MZ=5,maxH=155;
+  ctx.strokeStyle='#4fc3d8';ctx.lineWidth=1.5;ctx.beginPath();
+  for(let i=0;i<=200;i++){const zi=MZ*i/200,H0=68,Om=0.3,Ol=0.7,std=H0*Math.sqrt(Om*Math.pow(1+zi,3)+Ol);const x=PAD+CW*(zi/MZ),y=PT+CH*(1-std/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  ctx.strokeStyle='#c9932a';ctx.lineWidth=1.5;ctx.beginPath();
+  for(let i=0;i<=200;i++){const zi=MZ*i/200,Hs=mlHzfn(zi,tau);const x=PAD+CW*(zi/MZ),y=PT+CH*(1-Hs/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  const zx=PAD+CW*(z/MZ),zy=PT+CH*(1-mlHzfn(z,tau)/maxH);
+  ctx.beginPath();ctx.arc(zx,zy,4,0,2*Math.PI);ctx.fillStyle='#c9932a';ctx.fill();
+  ctx.fillStyle='#4fc3d8';ctx.font='7.5px monospace';ctx.fillText('ΛCDM',PAD+3,PT+11);
+  ctx.fillStyle='#c9932a';ctx.fillText('System S',PAD+3,PT+22);
+  ctx.strokeStyle='rgba(255,255,255,.18)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+
+/* ---- Animation loop ---- */
+function mlAnimate(){
+  if(mlAnimating)mlT3+=.4;
+  mlDraw3D();
+  mlRafId=requestAnimationFrame(mlAnimate);
+}
+window.addEventListener('resize',()=>{mlDraw3D();mlDrawCharts();});
+
+/* ---- Boot ---- */
+function mlBoot(){
+  mlabUpdate();
+  mlAnimate();
+}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mlBoot);
+else mlBoot();
+})();
+</script>
 </div><!-- end #doc -->
 <!-- ===== NOTIFICATION TOAST ===== -->
 <div id="comm-toast">✅ <span id="toast-msg">Comment submitted successfully!</span></div>
@@ -2962,7 +3398,9 @@ en:{
   "toc-ext":"NEW EXTENSIONS","toc-thought":"Thought Experiments",
   "toc-critique":"Critique & Refutation","toc-aidial":"Contemporary Dialogues",
   "toc-faq":"FAQ","toc-roadmap":"Roadmap",
-  "toc-app":"APPENDICES","toc-glossary":"Glossary","toc-refs":"References","toc-creds":"Credentials"
+  "toc-app":"APPENDICES","toc-glossary":"Glossary","toc-refs":"References","toc-creds":"Credentials", 
+  "master-lab-title": "§23. Integrated Dynamic Simulation Lab — Testing the Theory in Real Time",
+"page-lab-master": "Lab-M"
 },
 ar:{
   "badge":"النسخة المحسّنة 2026 | أطروحة علمية",
@@ -3585,7 +4023,9 @@ ar:{
 "trinity-3d-legend": "تلوين حسب الارتفاع",
 "trinity-3d-reset-view": "إعادة ضبط العرض",
 "trinity-3d-rotate": "دوران تلقائي",
-"page-3d-adv": "3D-٢"
+"page-3d-adv": "3D-٢", 
+"master-lab-title": "§23. معمل المحاكاة الديناميكية المتكامل — اختبار النظرية في الزمن الحقيقي",
+"page-lab-master": "معمل-م"
 }, 
  // <-- هنا القوس المعكوس } ثم فاصلة ,
 //    👆 مهم جداً: القوس هذا كان ناقص! 
