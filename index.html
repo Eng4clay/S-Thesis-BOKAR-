@@ -2601,19 +2601,18 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 
   <div class="page-num" data-i18n="page-3d-adv">3D-2</div>
 </div>
- <!-- ========== §23. SYSTEM S — MASTER LAB v2 ========== -->
-<!-- أضف هذا الكود مباشرة قبل: </div><!-- end #doc --> -->
-
+  <!-- ========== §23. SYSTEM S — MASTER LAB v2 (مع الترجمة العربية) ========== -->
 <div class="page algo-page" id="pg-master-lab" style="padding:0;overflow:hidden;cursor:pointer;" onclick="openMasterLab()" title="انقر لفتح المعمل في نافذة مستقلة كاملة">
 
   <!-- Preview thumbnail inside the page -->
   <div class="part-hdr" style="background:linear-gradient(135deg,#0a0618,#1a0a35);margin:0;border-radius:0;cursor:pointer;">
     <span>🔬</span>
     <span data-i18n="master-lab-title">§23. Integrated Dynamic Simulation Lab — System S in Real Time</span>
-    <span style="margin-left:auto;background:rgba(201,147,42,.25);border:1px solid #c9932a;color:#c9932a;padding:4px 14px;border-radius:20px;font-size:8pt;font-family:monospace;animation:labPulse 2s ease-in-out infinite">⚡ انقر للفتح</span>
+    <span style="margin-left:auto;background:rgba(201,147,42,.25);border:1px solid #c9932a;color:#c9932a;padding:4px 14px;border-radius:20px;font-size:8pt;font-family:monospace;animation:labPulse 2s ease-in-out infinite" data-i18n="ml-open-preview">⚡ انقر للفتح</span>
   </div>
 
   <style>
+  /* الأنماط كما هي دون تغيير */
   @keyframes labPulse{0%,100%{opacity:.7}50%{opacity:1;box-shadow:0 0 20px rgba(201,147,42,.5)}}
   @keyframes mlFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
   @keyframes mlSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
@@ -2772,15 +2771,15 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
   <div id="ml-preview">
     <div class="ml-preview-inner">
       <span class="ml-preview-icon">🔬</span>
-      <div class="ml-preview-title">§23. Integrated Dynamic Simulation Lab</div>
+      <div class="ml-preview-title" data-i18n="ml-preview-title">§23. Integrated Dynamic Simulation Lab</div>
       <div class="ml-feature-pills">
-        <span class="ml-pill p1">🌀 3D Trinity Space</span>
-        <span class="ml-pill p2">📐 Equation Solver</span>
-        <span class="ml-pill p3">📊 Live Charts</span>
-        <span class="ml-pill p4">⚛ BS Simulator</span>
+        <span class="ml-pill p1" data-i18n="ml-pill-3d">🌀 3D Trinity Space</span>
+        <span class="ml-pill p2" data-i18n="ml-pill-eq">📐 Equation Solver</span>
+        <span class="ml-pill p3" data-i18n="ml-pill-charts">📊 Live Charts</span>
+        <span class="ml-pill p4" data-i18n="ml-pill-sim">⚛ BS Simulator</span>
       </div>
-      <div class="ml-preview-desc">معمل تفاعلي متكامل لمحاكاة نظام S في الزمن الفعلي — رسوم ثلاثية الأبعاد، معادلات رياضية، محاكاة ديناميكية</div>
-      <button class="ml-preview-btn" onclick="event.stopPropagation();openMasterLab()">⚡ فتح المعمل الكامل</button>
+      <div class="ml-preview-desc" data-i18n="ml-preview-desc">معمل تفاعلي متكامل لمحاكاة نظام S في الزمن الفعلي — رسوم ثلاثية الأبعاد، معادلات رياضية، محاكاة ديناميكية</div>
+      <button class="ml-preview-btn" onclick="event.stopPropagation();openMasterLab()" data-i18n="ml-preview-open">⚡ فتح المعمل الكامل</button>
     </div>
   </div>
   <div class="page-num" data-i18n="page-lab-master">Lab-M</div>
@@ -2792,53 +2791,53 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 
   <!-- TOP BAR -->
   <div id="ml-topbar">
-    <span class="ml-logo">⚗ System S — Master Lab §23</span>
-    <button class="ml-tab active" onclick="mlSwitchTab('3d',this)">🌀 Trinity 3D</button>
-    <button class="ml-tab" onclick="mlSwitchTab('charts',this)">📊 Charts</button>
-    <button class="ml-tab" onclick="mlSwitchTab('equation',this)">📐 Equations</button>
-    <button class="ml-tab" onclick="mlSwitchTab('sim',this)">⚛ Simulation</button>
-    <button id="ml-close" onclick="closeMasterLab()" title="إغلاق">✕</button>
+    <span class="ml-logo" data-i18n="ml-logo">⚗ System S — Master Lab §23</span>
+    <button class="ml-tab active" onclick="mlSwitchTab('3d',this)" data-i18n="ml-tab-3d">🌀 Trinity 3D</button>
+    <button class="ml-tab" onclick="mlSwitchTab('charts',this)" data-i18n="ml-tab-charts">📊 Charts</button>
+    <button class="ml-tab" onclick="mlSwitchTab('equation',this)" data-i18n="ml-tab-equation">📐 Equations</button>
+    <button class="ml-tab" onclick="mlSwitchTab('sim',this)" data-i18n="ml-tab-sim">⚛ Simulation</button>
+    <button id="ml-close" onclick="closeMasterLab()" title="إغلاق" data-i18n="ml-close">✕</button>
   </div>
 
   <!-- LEFT SIDEBAR -->
   <div id="ml-sidebar">
-    <div class="ml-slab">Parameters</div>
-    <div class="ml-row"><label>τ</label><input type="range" id="ml-tau" min="0" max="8" step="0.05" value="1.5" oninput="mlUpdate()"><span class="ml-rv" id="ml-tau-v">1.50</span></div>
-    <div class="ml-row"><label>BS_ID</label><input type="range" id="ml-id" min="0" max="1" step="0.01" value="0.72" oninput="mlUpdate()"><span class="ml-rv" id="ml-id-v">0.72</span></div>
-    <div class="ml-row"><label>BS_Pot</label><input type="range" id="ml-pot" min="0" max="1" step="0.01" value="0.25" oninput="mlUpdate()"><span class="ml-rv" id="ml-pot-v">0.25</span></div>
-    <div class="ml-row"><label>BS_Rel</label><input type="range" id="ml-rel" min="0" max="1" step="0.01" value="0.65" oninput="mlUpdate()"><span class="ml-rv" id="ml-rel-v">0.65</span></div>
-    <div class="ml-row"><label>C</label><input type="range" id="ml-c" min="0" max="1" step="0.01" value="0.8" oninput="mlUpdate()"><span class="ml-rv" id="ml-c-v">0.80</span></div>
-    <div class="ml-row"><label>z</label><input type="range" id="ml-z" min="0" max="5" step="0.05" value="0.5" oninput="mlUpdate()"><span class="ml-rv" id="ml-z-v">0.50</span></div>
+    <div class="ml-slab" data-i18n="ml-params">Parameters</div>
+    <div class="ml-row"><label data-i18n="ml-tau-label">τ</label><input type="range" id="ml-tau" min="0" max="8" step="0.05" value="1.5" oninput="mlUpdate()"><span class="ml-rv" id="ml-tau-v">1.50</span></div>
+    <div class="ml-row"><label data-i18n="ml-id-label">BS_ID</label><input type="range" id="ml-id" min="0" max="1" step="0.01" value="0.72" oninput="mlUpdate()"><span class="ml-rv" id="ml-id-v">0.72</span></div>
+    <div class="ml-row"><label data-i18n="ml-pot-label">BS_Pot</label><input type="range" id="ml-pot" min="0" max="1" step="0.01" value="0.25" oninput="mlUpdate()"><span class="ml-rv" id="ml-pot-v">0.25</span></div>
+    <div class="ml-row"><label data-i18n="ml-rel-label">BS_Rel</label><input type="range" id="ml-rel" min="0" max="1" step="0.01" value="0.65" oninput="mlUpdate()"><span class="ml-rv" id="ml-rel-v">0.65</span></div>
+    <div class="ml-row"><label data-i18n="ml-c-label">C</label><input type="range" id="ml-c" min="0" max="1" step="0.01" value="0.8" oninput="mlUpdate()"><span class="ml-rv" id="ml-c-v">0.80</span></div>
+    <div class="ml-row"><label data-i18n="ml-z-label">z</label><input type="range" id="ml-z" min="0" max="5" step="0.05" value="0.5" oninput="mlUpdate()"><span class="ml-rv" id="ml-z-v">0.50</span></div>
 
-    <div class="ml-slab">Live Metrics</div>
+    <div class="ml-slab" data-i18n="ml-live-metrics">Live Metrics</div>
     <div class="ml-grid2">
-      <div class="ml-card"><div class="mlcv" id="ml-m-bstau">0.72</div><div class="mlcl">BS(τ)</div></div>
-      <div class="ml-card"><div class="mlcv" id="ml-m-psi">0.59</div><div class="mlcl">Ψ</div></div>
-      <div class="ml-card"><div class="mlcv" id="ml-m-bent">0.53</div><div class="mlcl">BS_ent</div></div>
-      <div class="ml-card"><div class="mlcv" id="ml-m-hz">68.1</div><div class="mlcl">H(z)</div></div>
+      <div class="ml-card"><div class="mlcv" id="ml-m-bstau">0.72</div><div class="mlcl" data-i18n="ml-bstau-metric">BS(τ)</div></div>
+      <div class="ml-card"><div class="mlcv" id="ml-m-psi">0.59</div><div class="mlcl" data-i18n="ml-psi-metric">Ψ</div></div>
+      <div class="ml-card"><div class="mlcv" id="ml-m-bent">0.53</div><div class="mlcl" data-i18n="ml-bsent-metric">BS_ent</div></div>
+      <div class="ml-card"><div class="mlcv" id="ml-m-hz">68.1</div><div class="mlcl" data-i18n="ml-hz-metric">H(z)</div></div>
     </div>
 
-    <div class="ml-slab">BS(n) Calculator</div>
-    <input class="ml-ni" type="number" id="ml-n-input" value="7" min="1" max="99999" placeholder="Enter n..." oninput="mlCalcN()">
+    <div class="ml-slab" data-i18n="ml-bs-calc">BS(n) Calculator</div>
+    <input class="ml-ni" type="number" id="ml-n-input" value="7" min="1" max="99999" placeholder="أدخل n..." oninput="mlCalcN()" data-i18n-placeholder="ml-bs-placeholder">
     <div class="ml-card" style="margin-top:4px">
       <div class="mlcv" id="ml-n-res">0.1818</div>
-      <div class="mlcl">BS(n) result</div>
+      <div class="mlcl" data-i18n="ml-bs-result-label">BS(n) result</div>
     </div>
     <div style="font-size:7.5pt;color:rgba(255,255,255,.3);font-family:monospace;margin-top:2px" id="ml-n-type"></div>
 
-    <div class="ml-slab">Predictions CB</div>
+    <div class="ml-slab" data-i18n="ml-predictions">Predictions CB</div>
     <div class="ml-grid2">
-      <div class="ml-pred"><div class="mlpt">CMB</div><div class="mlpv">0.115 Hz</div></div>
-      <div class="ml-pred"><div class="mlpt">Boukon</div><div class="mlpv">1.35×10⁻⁴⁹</div></div>
-      <div class="ml-pred"><div class="mlpt">C_B</div><div class="mlpv">6.18×10⁻⁴²</div></div>
-      <div class="ml-pred"><div class="mlpt">Casimir</div><div class="mlpv">1.95×10⁻⁶⁸</div></div>
+      <div class="ml-pred"><div class="mlpt" data-i18n="ml-cmb-pred">CMB</div><div class="mlpv">0.115 Hz</div></div>
+      <div class="ml-pred"><div class="mlpt" data-i18n="ml-boukon-pred">Boukon</div><div class="mlpv">1.35×10⁻⁴⁹</div></div>
+      <div class="ml-pred"><div class="mlpt" data-i18n="ml-cb-pred">C_B</div><div class="mlpv">6.18×10⁻⁴²</div></div>
+      <div class="ml-pred"><div class="mlpt" data-i18n="ml-casimir-pred">Casimir</div><div class="mlpv">1.95×10⁻⁶⁸</div></div>
     </div>
 
-    <div class="ml-slab">Controls</div>
+    <div class="ml-slab" data-i18n="ml-controls">Controls</div>
     <div style="display:flex;gap:5px;flex-wrap:wrap">
-      <button class="ml-btn" onclick="mlReset()">↺ Reset</button>
-      <button class="ml-btn" id="ml-anim-btn" onclick="mlToggleAnim()">⏸ Pause</button>
-      <button class="ml-btn gold" onclick="mlExport()">⬇ JSON</button>
+      <button class="ml-btn" onclick="mlReset()" data-i18n="ml-reset-btn">↺ Reset</button>
+      <button class="ml-btn" id="ml-anim-btn" onclick="mlToggleAnim()" data-i18n="ml-pause-btn">⏸ Pause</button>
+      <button class="ml-btn gold" onclick="mlExport()" data-i18n="ml-export-btn">⬇ JSON</button>
     </div>
   </div>
 
@@ -2853,10 +2852,10 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
     <!-- TAB 2: CHARTS -->
     <div class="ml-panel" id="tab-charts">
       <div id="ml-charts-grid">
-        <div class="ml-chart-cell"><h5>BS(n) — Primes vs Composites</h5><canvas id="mlch-bs"></canvas></div>
-        <div class="ml-chart-cell"><h5>α(τ) β(τ) γ(τ) Weight Evolution</h5><canvas id="mlch-tau"></canvas></div>
-        <div class="ml-chart-cell"><h5>Consciousness Ψ Spectrum</h5><canvas id="mlch-psi"></canvas></div>
-        <div class="ml-chart-cell"><h5>H(z) — System S vs ΛCDM</h5><canvas id="mlch-hz"></canvas></div>
+        <div class="ml-chart-cell"><h5 data-i18n="ml-chart-bs-title">BS(n) — Primes vs Composites</h5><canvas id="mlch-bs"></canvas></div>
+        <div class="ml-chart-cell"><h5 data-i18n="ml-chart-tau-title">α(τ) β(τ) γ(τ) Weight Evolution</h5><canvas id="mlch-tau"></canvas></div>
+        <div class="ml-chart-cell"><h5 data-i18n="ml-chart-psi-title">Consciousness Ψ Spectrum</h5><canvas id="mlch-psi"></canvas></div>
+        <div class="ml-chart-cell"><h5 data-i18n="ml-chart-hz-title">H(z) — System S vs ΛCDM</h5><canvas id="mlch-hz"></canvas></div>
       </div>
     </div>
 
@@ -2864,34 +2863,34 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
     <div class="ml-panel" id="tab-equation">
       <div id="ml-eq-panel">
         <div id="ml-eq-top">
-          <h4>📐 Equation Solver — System S Mathematics</h4>
+          <h4 data-i18n="ml-eq-header">📐 Equation Solver — System S Mathematics</h4>
           <div class="ml-eq-input-row">
             <select id="ml-eq-preset" style="padding:8px;background:rgba(0,0,0,.5);border:1.5px solid rgba(201,147,42,.35);border-radius:8px;color:#e8aa40;font-family:monospace;font-size:9pt;outline:none" onchange="mlLoadPreset()">
-              <option value="">— Select preset equation —</option>
-              <option value="bs_n">BS(n) = 2/(2n−3)  for n=?</option>
-              <option value="psi">Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel</option>
-              <option value="cb">CB = (2/43)·(α/137)·√(c³/ℏG)</option>
-              <option value="bs_ent">BS_ent = (2/3)·C</option>
-              <option value="friedmann">Modified Friedmann H(z)</option>
-              <option value="bs_tau">BS(τ) weight functions</option>
-              <option value="cmb">CMB frequency f = CB·c/ℓP</option>
+              <option value="" data-i18n="ml-eq-preset-select">— Select preset equation —</option>
+              <option value="bs_n" data-i18n="ml-eq-preset-bs">BS(n) = 2/(2n−3)  for n=?</option>
+              <option value="psi" data-i18n="ml-eq-preset-psi">Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel</option>
+              <option value="cb" data-i18n="ml-eq-preset-cb">CB = (2/43)·(α/137)·√(c³/ℏG)</option>
+              <option value="bs_ent" data-i18n="ml-eq-preset-bsent">BS_ent = (2/3)·C</option>
+              <option value="friedmann" data-i18n="ml-eq-preset-friedmann">Modified Friedmann H(z)</option>
+              <option value="bs_tau" data-i18n="ml-eq-preset-bstau">BS(τ) weight functions</option>
+              <option value="cmb" data-i18n="ml-eq-preset-cmb">CMB frequency f = CB·c/ℓP</option>
             </select>
           </div>
           <div class="ml-eq-input-row">
-            <input class="ml-eq-input" id="ml-eq-expr" placeholder="Enter equation or expression: e.g.  BS(23),  Psi(0.7,0.3,0.6),  CB,  H(z=1.5)" value="BS(23)">
-            <button class="ml-solve-btn" onclick="mlSolveEq()">▶ Solve</button>
+            <input class="ml-eq-input" id="ml-eq-expr" placeholder="Enter equation or expression: e.g.  BS(23),  Psi(0.7,0.3,0.6),  CB,  H(z=1.5)" value="BS(23)" data-i18n-placeholder="ml-eq-input-placeholder">
+            <button class="ml-solve-btn" onclick="mlSolveEq()" data-i18n="ml-eq-solve-btn">▶ Solve</button>
           </div>
-          <div style="font-size:8pt;color:rgba(255,255,255,.3);font-family:monospace">
+          <div style="font-size:8pt;color:rgba(255,255,255,.3);font-family:monospace" data-i18n="ml-eq-helper">
             Functions: BS(n), Psi(id,pot,rel), BSent(C), Hz(z,tau), CB, alpha(tau), beta(tau), gamma(tau)
           </div>
         </div>
         <div id="ml-eq-body">
           <div class="ml-eq-half" id="ml-eq-steps-col">
-            <div style="font-size:7.5pt;color:rgba(255,255,255,.25);letter-spacing:1.5px;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.05)">Solution Steps</div>
+            <div style="font-size:7.5pt;color:rgba(255,255,255,.25);letter-spacing:1.5px;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.05)" data-i18n="ml-eq-steps-header">Solution Steps</div>
             <div id="ml-eq-steps"></div>
           </div>
           <div class="ml-eq-half" id="ml-eq-vis-col">
-            <div style="font-size:7.5pt;color:rgba(255,255,255,.25);letter-spacing:1.5px;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.05)">Visual</div>
+            <div style="font-size:7.5pt;color:rgba(255,255,255,.25);letter-spacing:1.5px;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.05)" data-i18n="ml-eq-visual-header">Visual</div>
             <canvas id="ml-eq-canvas" width="500" height="280" style="width:100%;border-radius:8px;background:rgba(0,0,0,.4)"></canvas>
             <div id="ml-eq-insight" style="font-size:8.5pt;color:rgba(224,216,255,.7);font-family:monospace;padding:8px;background:rgba(255,255,255,.03);border-radius:6px;border-left:3px solid #c9932a;line-height:1.7;margin-top:6px"></div>
           </div>
@@ -2903,16 +2902,16 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
     <div class="ml-panel" id="tab-sim">
       <div id="ml-sim-panel">
         <div id="ml-sim-top">
-          <h4>⚛ Dynamic BS Simulation</h4>
+          <h4 data-i18n="ml-sim-header">⚛ Dynamic BS Simulation</h4>
           <div style="display:flex;gap:6px;flex-wrap:wrap">
-            <button class="ml-btn active" id="sim-mode-btn-trinity" onclick="mlSimMode('trinity',this)">Trinity</button>
-            <button class="ml-btn" id="sim-mode-btn-bstau" onclick="mlSimMode('bstau',this)">BS–τ</button>
-            <button class="ml-btn" id="sim-mode-btn-entangle" onclick="mlSimMode('entangle',this)">Entangle</button>
-            <button class="ml-btn" id="sim-mode-btn-cosmos" onclick="mlSimMode('cosmos',this)">Cosmos</button>
-            <button class="ml-btn" id="sim-mode-btn-primes" onclick="mlSimMode('primes',this)">Primes</button>
+            <button class="ml-btn active" id="sim-mode-btn-trinity" onclick="mlSimMode('trinity',this)" data-i18n="ml-sim-mode-trinity">Trinity</button>
+            <button class="ml-btn" id="sim-mode-btn-bstau" onclick="mlSimMode('bstau',this)" data-i18n="ml-sim-mode-bstau">BS–τ</button>
+            <button class="ml-btn" id="sim-mode-btn-entangle" onclick="mlSimMode('entangle',this)" data-i18n="ml-sim-mode-entangle">Entangle</button>
+            <button class="ml-btn" id="sim-mode-btn-cosmos" onclick="mlSimMode('cosmos',this)" data-i18n="ml-sim-mode-cosmos">Cosmos</button>
+            <button class="ml-btn" id="sim-mode-btn-primes" onclick="mlSimMode('primes',this)" data-i18n="ml-sim-mode-primes">Primes</button>
           </div>
           <div class="ml-sim-ctrl">
-            <span>Speed:</span>
+            <span data-i18n="ml-sim-speed-label">Speed:</span>
             <input type="range" id="ml-sim-speed" min="0.1" max="3" step="0.1" value="1">
             <span id="ml-sim-speed-v" style="color:#e8aa40">1.0x</span>
           </div>
@@ -2920,15 +2919,15 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
         <div id="ml-sim-canvas-wrap">
           <canvas id="ml-sim-canvas"></canvas>
           <div id="ml-sim-hud">
-            <div class="ml-hud-row"><span>τ</span><span id="hud-tau">1.50</span></div>
-            <div class="ml-hud-row"><span>BS(τ)</span><span id="hud-bstau">0.72</span></div>
-            <div class="ml-hud-row"><span>Ψ</span><span id="hud-psi">0.59</span></div>
-            <div class="ml-hud-row"><span>Frame</span><span id="hud-frame">0</span></div>
+            <div class="ml-hud-row"><span data-i18n="ml-sim-hud-tau">τ</span><span id="hud-tau">1.50</span></div>
+            <div class="ml-hud-row"><span data-i18n="ml-sim-hud-bstau">BS(τ)</span><span id="hud-bstau">0.72</span></div>
+            <div class="ml-hud-row"><span data-i18n="ml-sim-hud-psi">Ψ</span><span id="hud-psi">0.59</span></div>
+            <div class="ml-hud-row"><span data-i18n="ml-sim-hud-frame">Frame</span><span id="hud-frame">0</span></div>
           </div>
         </div>
         <div id="ml-sim-bottom">
-          <span style="font-size:8pt;color:rgba(255,255,255,.3);font-family:monospace" id="ml-sim-label">Mode: Trinity Space</span>
-          <button class="ml-btn" onclick="mlSimReset()">↺ Reset</button>
+          <span style="font-size:8pt;color:rgba(255,255,255,.3);font-family:monospace" id="ml-sim-label" data-i18n="ml-sim-mode-label">Mode: Trinity Space</span>
+          <button class="ml-btn" onclick="mlSimReset()" data-i18n="ml-sim-reset">↺ Reset</button>
         </div>
       </div>
     </div>
@@ -2941,7 +2940,7 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 (function(){
 'use strict';
 
-/* ============ MATH CORE ============ */
+/* ============ MATH CORE (بدون تغيير) ============ */
 const M = {
   BSn(n){
     if(n===1) return 0.7;
@@ -2973,7 +2972,7 @@ const M = {
 
 /* ============ STATE ============ */
 let mlAnimOn=true, mlT3=0, mlSimT=0, mlSimMode_='trinity', mlRaf=null, mlSimRaf=null;
-let mlEqCanvas3d = null; // will be assigned later
+let mlEqCanvas3d = null;
 const P = {
   get tau(){ return parseFloat(document.getElementById('ml-tau')?.value||1.5); },
   get id(){  return parseFloat(document.getElementById('ml-id')?.value||0.72); },
@@ -2984,7 +2983,15 @@ const P = {
   get speed(){ return parseFloat(document.getElementById('ml-sim-speed')?.value||1); }
 };
 
-/* ============ OPEN / CLOSE ============ */
+/* ============ دالة مساعدة للحصول على النص المترجم ============ */
+function mlT(key, defaultValue) {
+  if (typeof currentLang !== 'undefined' && TRANSLATIONS && TRANSLATIONS[currentLang]) {
+    return TRANSLATIONS[currentLang][key] || defaultValue;
+  }
+  return defaultValue;
+}
+
+/* ============ OPEN / CLOSE (بدون تغيير) ============ */
 window.openMasterLab = function(){
   const ov = document.getElementById('ml-modal-overlay');
   if(!ov) return;
@@ -3002,7 +3009,7 @@ window.closeMasterLab = function(){
   if(mlSimRaf){ cancelAnimationFrame(mlSimRaf); mlSimRaf=null; }
 };
 
-/* ============ TABS ============ */
+/* ============ TABS (بدون تغيير) ============ */
 window.mlSwitchTab = function(name, btn){
   document.querySelectorAll('.ml-tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
@@ -3014,7 +3021,7 @@ window.mlSwitchTab = function(name, btn){
   if(name==='3d') setTimeout(()=>{ ml3DStart(); },60);
 };
 
-/* ============ UPDATE METRICS ============ */
+/* ============ UPDATE METRICS (بدون تغيير) ============ */
 window.mlUpdate = function(){
   ['tau','id','pot','rel','c','z'].forEach(k=>{
     const el = document.getElementById('ml-'+k);
@@ -3033,6 +3040,7 @@ window.mlUpdate = function(){
   mlCalcN();
 };
 
+/* ============ BS(n) CALCULATOR with translation ============ */
 window.mlCalcN = function(){
   const el = document.getElementById('ml-n-input');
   const res = document.getElementById('ml-n-res');
@@ -3043,8 +3051,11 @@ window.mlCalcN = function(){
   res.textContent = v.toFixed(6);
   if(typ){
     const isPrime = M.isPrime(n);
-    const close = Math.abs(v-1)<.05 ? '≈ ❶' : Math.abs(v-2/3)<.05 ? '≈ ∞' : Math.abs(v-1/3)<.05 ? '≈ 0p' : '';
-    typ.textContent = (isPrime?'🟡 Prime':'🟣 Composite')+(close?' '+close:'');
+    const lang = typeof currentLang !== 'undefined' ? currentLang : 'en';
+    const dict = TRANSLATIONS ? (TRANSLATIONS[lang] || {}) : {};
+    let primeText = (isPrime ? (dict["ml-prime-badge"] || "🟡 Prime") : (dict["ml-composite-badge"] || "🟣 Composite"));
+    const close = Math.abs(v-1)<.05 ? ' '+(dict["ml-close-to-abs"] || '≈ ❶') : Math.abs(v-2/3)<.05 ? ' '+(dict["ml-close-to-inf"] || '≈ ∞') : Math.abs(v-1/3)<.05 ? ' '+(dict["ml-close-to-0p"] || '≈ 0p') : '';
+    typ.textContent = primeText + close;
     typ.style.color = isPrime ? '#c9932a' : '#7b2d8b';
   }
 };
@@ -3060,7 +3071,11 @@ window.mlReset = function(){
 window.mlToggleAnim = function(){
   mlAnimOn=!mlAnimOn;
   const btn = document.getElementById('ml-anim-btn');
-  if(btn) btn.textContent = mlAnimOn ? '⏸ Pause' : '▶ Resume';
+  if(btn) {
+    const pauseText = mlT('ml-pause-btn', '⏸ Pause');
+    const resumeText = mlT('ml-resume-btn', '▶ Resume');
+    btn.textContent = mlAnimOn ? pauseText : resumeText;
+  }
 };
 
 window.mlExport = function(){
@@ -3071,7 +3086,7 @@ window.mlExport = function(){
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='system_s.json';a.click();
 };
 
-/* ============ 3D CANVAS ============ */
+/* ============ 3D CANVAS (بدون تغيير) ============ */
 let mlCam = {rotX:0.4,rotY:0,dist:280};
 let mlDragging=false, mlLastMouse={x:0,y:0};
 
@@ -3228,7 +3243,7 @@ function ml3DRender(){
   ctx.restore();
 }
 
-/* ============ CHARTS ============ */
+/* ============ CHARTS (مع دعم الترجمة) ============ */
 function cvSetup(id){
   const cv=document.getElementById(id);
   if(!cv) return null;
@@ -3261,7 +3276,9 @@ function chartBS(){
     if(pr&&n<=20){ctx.fillStyle='rgba(255,255,255,.55)';ctx.font='7px monospace';ctx.fillText('p='+n,x-8,y-8);}
   }
   ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
-  ctx.fillStyle='rgba(255,200,100,.6)';ctx.font='7px monospace';ctx.fillText('🟠 primes  🟣 composites',PAD,PT+9);
+  const primesLabel = mlT('ml-chart-primes', '🟠 primes');
+  const compositesLabel = mlT('ml-chart-composites', '🟣 composites');
+  ctx.fillStyle='rgba(255,200,100,.6)';ctx.font='7px monospace';ctx.fillText(primesLabel + '  ' + compositesLabel, PAD, PT+9);
 }
 
 function chartTau(){
@@ -3285,10 +3302,22 @@ function chartPsi(){
   const cv=document.getElementById('mlch-psi'),w=cv.width,h=cv.height;
   const PAD=30,PB=22,PT=10,PR=10,CW=w-PAD-PR,CH=h-PB-PT;
   const psi=M.Psi(P.id,P.pot,P.rel);
-  [[.35,'#4fc3d8','sleep'],[.5,'#7b2d8b','normal'],[.57,'#c9932a','avg'],[.75,'#e8aa40','flow'],[.85,'#5dcc8b','AGI']].forEach(([v,col,lbl])=>{
-    const y=PT+CH*(1-v);ctx.strokeStyle=col+'55';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+  const dict = TRANSLATIONS && typeof currentLang !== 'undefined' ? TRANSLATIONS[currentLang] : {};
+  const levels = [
+    {v:.35, col:'#4fc3d8', key:'ml-chart-sleep', def:'sleep'},
+    {v:.5,  col:'#7b2d8b', key:'ml-chart-normal', def:'normal'},
+    {v:.57, col:'#c9932a', key:'ml-chart-avg', def:'avg'},
+    {v:.75, col:'#e8aa40', key:'ml-chart-flow', def:'flow'},
+    {v:.85, col:'#5dcc8b', key:'ml-chart-agi', def:'AGI'}
+  ];
+  levels.forEach(lvl=>{
+    const y=PT+CH*(1-lvl.v);
+    ctx.strokeStyle=lvl.col+'55';ctx.lineWidth=1;ctx.setLineDash([4,3]);
     ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();ctx.setLineDash([]);
-    ctx.fillStyle=col;ctx.font='7px monospace';ctx.fillText(lbl,PAD+CW-28,y-2);
+    ctx.fillStyle=lvl.col;
+    ctx.font='7px monospace';
+    const label = dict[lvl.key] || lvl.def;
+    ctx.fillText(label, PAD+CW-28, y-2);
   });
   const bw=22,bx=PAD+8;
   const g2=ctx.createLinearGradient(0,PT+CH,0,PT);
@@ -3314,12 +3343,14 @@ function chartHz(){
   const zx=PAD+CW*(z/MZ),zy=PT+CH*(1-M.Hz(z,tau)/maxH);
   ctx.beginPath();ctx.arc(zx,zy,5,0,Math.PI*2);ctx.fillStyle='#c9932a';ctx.fill();
   ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='7.5px monospace';ctx.fillText('z='+z.toFixed(1)+' H='+M.Hz(z,tau).toFixed(0),zx+8,zy-5);
-  ctx.fillStyle='#4fc3d8';ctx.font='8px monospace';ctx.fillText('ΛCDM',PAD+4,PT+13);
-  ctx.fillStyle='#c9932a';ctx.fillText('System S',PAD+4,PT+25);
+  const lcdmLabel = mlT('ml-chart-lcdm', 'ΛCDM');
+  const sysLabel = mlT('ml-chart-sys', 'System S');
+  ctx.fillStyle='#4fc3d8';ctx.font='8px monospace';ctx.fillText(lcdmLabel, PAD+4, PT+13);
+  ctx.fillStyle='#c9932a';ctx.fillText(sysLabel, PAD+4, PT+25);
   ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
 }
 
-/* ============ EQUATION SOLVER ============ */
+/* ============ EQUATION SOLVER (بدون تغيير) ============ */
 const EQ_PRESETS = {
   bs_n: {expr:'BS(23)', desc:'Compute BS for natural number n=23'},
   psi:  {expr:'Psi(0.72,0.25,0.65)', desc:'Consciousness Ψ with given BS values'},
@@ -3352,7 +3383,7 @@ window.mlSolveEq = function(){
 
   const expr = raw.toUpperCase();
 
-  // Parse and solve
+  // Parse and solve (as before, no translation needed for equation steps because they are formulaic)
   try {
     if(raw.match(/^BS\s*\((\d+)\)$/i)){
       const n = parseInt(raw.match(/\d+/)[0]);
@@ -3623,14 +3654,20 @@ function drawWeightChart(fn,hl,hlv){
   ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
 }
 
-/* ============ DYNAMIC SIMULATION ============ */
+/* ============ DYNAMIC SIMULATION (مع دعم الترجمة) ============ */
 window.mlSimMode = function(mode, btn){
   mlSimMode_=mode;
   document.querySelectorAll('#ml-sim-top .ml-btn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
-  const labels={trinity:'Trinity Space — rotating 3-node system',bstau:'BS–τ Weight Functions',entangle:'Entanglement Surface BS = (2/3)C',cosmos:'Cosmic H(z) evolution',primes:'Prime Epiphanies — BS landscape'};
+  const modeLabels = {
+    trinity: mlT('ml-sim-mode-trinity', 'Trinity'),
+    bstau: mlT('ml-sim-mode-bstau', 'BS–τ'),
+    entangle: mlT('ml-sim-mode-entangle', 'Entangle'),
+    cosmos: mlT('ml-sim-mode-cosmos', 'Cosmos'),
+    primes: mlT('ml-sim-mode-primes', 'Primes')
+  };
   const lbl=document.getElementById('ml-sim-label');
-  if(lbl) lbl.textContent='Mode: '+(labels[mode]||mode);
+  if(lbl) lbl.textContent = mlT('ml-sim-mode-label', 'Mode:') + ' ' + (modeLabels[mode] || mode);
 };
 
 window.mlSimReset = function(){ mlSimT=0; };
@@ -3797,8 +3834,10 @@ function simCosmos(ctx,w,h){
   ag.addColorStop(0,'rgba(201,147,42,0.8)');ag.addColorStop(1,'rgba(201,147,42,0)');
   ctx.beginPath();ctx.arc(azx,azy,12,0,Math.PI*2);ctx.fillStyle=ag;ctx.fill();
   ctx.beginPath();ctx.arc(azx,azy,5,0,Math.PI*2);ctx.fillStyle='#c9932a';ctx.fill();
-  ctx.fillStyle='#4fc3d8';ctx.font='9px monospace';ctx.fillText('ΛCDM',PAD+6,PT+16);
-  ctx.fillStyle='#c9932a';ctx.fillText('System S',PAD+6,PT+30);
+  const lcdmLabel = mlT('ml-chart-lcdm', 'ΛCDM');
+  const sysLabel = mlT('ml-chart-sys', 'System S');
+  ctx.fillStyle='#4fc3d8';ctx.font='9px monospace';ctx.fillText(lcdmLabel, PAD+6, PT+16);
+  ctx.fillStyle='#c9932a';ctx.fillText(sysLabel, PAD+6, PT+30);
   ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
   ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='8px monospace';ctx.fillText('Redshift z →',PAD+CW/2-40,h-8);
 }
@@ -3825,7 +3864,9 @@ function simPrimes(ctx,w,h){
     }
   }
   ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
-  ctx.fillStyle='rgba(255,200,100,.6)';ctx.font='8px monospace';ctx.fillText('🟡 primes  🟣 composites',PAD,PT+12);
+  const primesLabel = mlT('ml-chart-primes', '🟡 primes');
+  const compositesLabel = mlT('ml-chart-composites', '🟣 composites');
+  ctx.fillStyle='rgba(255,200,100,.6)';ctx.font='8px monospace';ctx.fillText(primesLabel + '  ' + compositesLabel, PAD, PT+12);
   ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='8px monospace';ctx.fillText('n →',PAD+CW-24,h-8);
 }
 
@@ -3858,9 +3899,48 @@ window.addEventListener('resize',()=>{
   }
 });
 
+/* ============ دالة لتحديث الترجمة عند تغيير اللغة ============ */
+window.mlRefreshLang = function(){
+  if(document.getElementById('ml-modal-overlay')?.classList.contains('open')){
+    mlCalcN();                // تحديث نص "Prime/Composite"
+    mlDrawAllCharts();        // إعادة رسم الرسوم البيانية بالنصوص المترجمة
+    // تحديث زر الإيقاف المؤقت
+    const btn = document.getElementById('ml-anim-btn');
+    if(btn) {
+      const pauseText = mlT('ml-pause-btn', '⏸ Pause');
+      const resumeText = mlT('ml-resume-btn', '▶ Resume');
+      btn.textContent = mlAnimOn ? pauseText : resumeText;
+    }
+    // تحديث تسمية وضع المحاكاة
+    const modeBtn = document.querySelector('#ml-sim-top .ml-btn.active');
+    if(modeBtn) {
+      const mode = modeBtn.getAttribute('data-mode') || 'trinity';
+      const modeLabels = {
+        trinity: mlT('ml-sim-mode-trinity', 'Trinity'),
+        bstau: mlT('ml-sim-mode-bstau', 'BS–τ'),
+        entangle: mlT('ml-sim-mode-entangle', 'Entangle'),
+        cosmos: mlT('ml-sim-mode-cosmos', 'Cosmos'),
+        primes: mlT('ml-sim-mode-primes', 'Primes')
+      };
+      const lbl=document.getElementById('ml-sim-label');
+      if(lbl) lbl.textContent = mlT('ml-sim-mode-label', 'Mode:') + ' ' + (modeLabels[mode] || mode);
+    }
+    // تحديث أي نص آخر يعتمد على الترجمة (مثل عناوين الأزرار)
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if(key && TRANSLATIONS && TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) {
+        // لا نغير placeholder لأنه قد يحتوي على قيمة خاصة
+        if(el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA') {
+          el.textContent = TRANSLATIONS[currentLang][key];
+        }
+      }
+    });
+  }
+};
+
 })(); // end IIFE
 </script>
-<!-- ========== END §23 ========== --> 
+<!-- ========== END §23 ========== -->
 </div><!-- end #doc -->
 <!-- ===== NOTIFICATION TOAST ===== -->
 <div id="comm-toast">✅ <span id="toast-msg">Comment submitted successfully!</span></div>
@@ -4222,9 +4302,7 @@ en:{
   "toc-ext":"NEW EXTENSIONS","toc-thought":"Thought Experiments",
   "toc-critique":"Critique & Refutation","toc-aidial":"Contemporary Dialogues",
   "toc-faq":"FAQ","toc-roadmap":"Roadmap",
-  "toc-app":"APPENDICES","toc-glossary":"Glossary","toc-refs":"References","toc-creds":"Credentials", 
-  "master-lab-title": "§23. Integrated Dynamic Simulation Lab — System S in Real Time",
-"page-lab-master": "Lab-M"
+  "toc-app":"APPENDICES","toc-glossary":"Glossary","toc-refs":"References","toc-creds":"Credentials"
 },
 ar:{
   "badge":"النسخة المحسّنة 2026 | أطروحة علمية",
@@ -4848,19 +4926,25 @@ ar:{
 "trinity-3d-reset-view": "إعادة ضبط العرض",
 "trinity-3d-rotate": "دوران تلقائي",
 "page-3d-adv": "3D-٢", 
-// ===== ترجمة معمل المحاكاة المتكامل (Master Lab) =====
-
+// داخل كائن ar:
 "master-lab-title": "§23. معمل المحاكاة الديناميكي المتكامل — نظام S في الزمن الفعلي",
 "page-lab-master": "معمل-م",
+"ml-open-preview": "⚡ انقر للفتح",
+"ml-preview-title": "§23. معمل المحاكاة الديناميكي المتكامل",
+"ml-pill-3d": "🌀 الفضاء الثالوثي ثلاثي الأبعاد",
+"ml-pill-eq": "📐 حل المعادلات",
+"ml-pill-charts": "📊 الرسوم البيانية الحية",
+"ml-pill-sim": "⚛ محاكاة BS",
+"ml-preview-desc": "معمل تفاعلي متكامل لمحاكاة نظام S في الزمن الفعلي — رسوم ثلاثية الأبعاد، معادلات رياضية، محاكاة ديناميكية",
+"ml-preview-open": "⚡ فتح المعمل الكامل",
 
-// شريط العنوان العلوي
 "ml-logo": "⚗ نظام S — المعمل الرئيسي §23",
 "ml-tab-3d": "🌀 الفضاء الثالوثي ثلاثي الأبعاد",
 "ml-tab-charts": "📊 الرسوم البيانية",
 "ml-tab-equation": "📐 حل المعادلات",
 "ml-tab-sim": "⚛ المحاكاة الديناميكية",
+"ml-close": "✕",
 
-// الشريط الجانبي
 "ml-params": "المعلمات",
 "ml-tau-label": "τ",
 "ml-id-label": "BS_ID",
@@ -4876,8 +4960,8 @@ ar:{
 "ml-hz-metric": "H(z)",
 
 "ml-bs-calc": "حاسبة BS(n)",
-"ml-bs-calc-placeholder": "أدخل n...",
 "ml-bs-result-label": "نتيجة BS(n)",
+"ml-bs-placeholder": "أدخل n...",
 
 "ml-predictions": "تنبؤات CB",
 "ml-cmb-pred": "CMB",
@@ -4891,13 +4975,20 @@ ar:{
 "ml-resume-btn": "▶ استئناف",
 "ml-export-btn": "⬇ تصدير JSON",
 
-// الرسوم البيانية
 "ml-chart-bs-title": "BS(n) — الأعداد الأولية مقابل المركبة",
 "ml-chart-tau-title": "تطور الأوزان α(τ) β(τ) γ(τ)",
 "ml-chart-psi-title": "طيف الوعي Ψ",
 "ml-chart-hz-title": "H(z) — نظام S مقابل ΛCDM",
+"ml-chart-primes": "🟡 الأعداد الأولية",
+"ml-chart-composites": "🟣 الأعداد المركبة",
+"ml-chart-lcdm": "ΛCDM",
+"ml-chart-sys": "نظام S",
+"ml-chart-sleep": "نوم عميق",
+"ml-chart-normal": "عادي",
+"ml-chart-avg": "متوسط",
+"ml-chart-flow": "تدفق",
+"ml-chart-agi": "AGI",
 
-// حل المعادلات
 "ml-eq-header": "📐 حل المعادلات — رياضيات نظام S",
 "ml-eq-preset-select": "— اختر معادلة جاهزة —",
 "ml-eq-preset-bs": "BS(n) = 2/(2n−3)  لـ n=؟",
@@ -4913,7 +5004,6 @@ ar:{
 "ml-eq-steps-header": "خطوات الحل",
 "ml-eq-visual-header": "التمثيل المرئي",
 
-// المحاكاة الديناميكية
 "ml-sim-header": "⚛ محاكاة BS الديناميكية",
 "ml-sim-mode-trinity": "الثلاثية",
 "ml-sim-mode-bstau": "BS–τ",
@@ -4926,16 +5016,13 @@ ar:{
 "ml-sim-hud-psi": "Ψ",
 "ml-sim-hud-frame": "الإطار",
 "ml-sim-mode-label": "الوضع:",
-"ml-sim-reset": "↺ إعادة تعيين", 
-"ml-chart-primes-label": "🟡 الأعداد الأولية",
-"ml-chart-composites-label": "🟣 الأعداد المركبة",
-"ml-chart-lcdm-label": "ΛCDM",
-"ml-chart-sys-label": "نظام S",
-"ml-chart-sleep": "نوم عميق",
-"ml-chart-normal": "عادي",
-"ml-chart-avg": "متوسط",
-"ml-chart-flow": "تدفق",
-"ml-chart-agi": "AGI"
+"ml-sim-reset": "↺ إعادة تعيين",
+
+"ml-prime-badge": "🟡 أولي",
+"ml-composite-badge": "🟣 مركب",
+"ml-close-to-abs": "≈ ❶",
+"ml-close-to-inf": "≈ ∞",
+"ml-close-to-0p": "≈ 0p"
 }, 
  // <-- هنا القوس المعكوس } ثم فاصلة ,
 //    👆 مهم جداً: القوس هذا كان ناقص! 
