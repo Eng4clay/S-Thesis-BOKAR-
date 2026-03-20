@@ -2601,6 +2601,1266 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 
   <div class="page-num" data-i18n="page-3d-adv">3D-2</div>
 </div>
+ <!-- ========== §23. SYSTEM S — MASTER LAB v2 ========== -->
+<!-- أضف هذا الكود مباشرة قبل: </div><!-- end #doc --> -->
+
+<div class="page algo-page" id="pg-master-lab" style="padding:0;overflow:hidden;cursor:pointer;" onclick="openMasterLab()" title="انقر لفتح المعمل في نافذة مستقلة كاملة">
+
+  <!-- Preview thumbnail inside the page -->
+  <div class="part-hdr" style="background:linear-gradient(135deg,#0a0618,#1a0a35);margin:0;border-radius:0;cursor:pointer;">
+    <span>🔬</span>
+    <span data-i18n="master-lab-title">§23. Integrated Dynamic Simulation Lab — System S in Real Time</span>
+    <span style="margin-left:auto;background:rgba(201,147,42,.25);border:1px solid #c9932a;color:#c9932a;padding:4px 14px;border-radius:20px;font-size:8pt;font-family:monospace;animation:labPulse 2s ease-in-out infinite">⚡ انقر للفتح</span>
+  </div>
+
+  <style>
+  @keyframes labPulse{0%,100%{opacity:.7}50%{opacity:1;box-shadow:0 0 20px rgba(201,147,42,.5)}}
+  @keyframes mlFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes mlSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes mlFadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes mlGlow{0%,100%{text-shadow:0 0 8px rgba(201,147,42,.4)}50%{text-shadow:0 0 24px rgba(201,147,42,.9),0 0 40px rgba(201,147,42,.4)}}
+
+  /* ===== MODAL OVERLAY ===== */
+  #ml-modal-overlay{
+    display:none;position:fixed;inset:0;z-index:99999;
+    background:rgba(4,2,16,.96);backdrop-filter:blur(12px);
+    overflow:hidden;
+  }
+  #ml-modal-overlay.open{display:flex;flex-direction:column;animation:mlFadeIn .35s ease}
+
+  /* ===== MODAL SHELL ===== */
+  #ml-shell{
+    display:grid;grid-template-columns:280px 1fr;grid-template-rows:52px 1fr;
+    width:100%;height:100%;
+  }
+
+  /* ===== TOP BAR ===== */
+  #ml-topbar{
+    grid-column:1/-1;
+    background:rgba(0,0,0,.6);
+    border-bottom:1px solid rgba(201,147,42,.2);
+    display:flex;align-items:center;gap:8px;padding:0 16px;
+  }
+  #ml-topbar .ml-logo{
+    font-family:'Cormorant Garamond',serif;font-size:13pt;color:#c9932a;font-weight:700;margin-right:auto;
+    animation:mlGlow 3s ease-in-out infinite;
+  }
+  .ml-tab{
+    padding:5px 14px;border-radius:18px;border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);
+    font-size:8pt;cursor:pointer;transition:.2s;font-family:monospace;
+  }
+  .ml-tab.active{background:rgba(201,147,42,.2);border-color:#c9932a;color:#c9932a;font-weight:700}
+  .ml-tab:hover:not(.active){background:rgba(255,255,255,.09);color:#fff}
+  #ml-close{
+    width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,100,100,.3);
+    background:rgba(255,60,60,.1);color:rgba(255,120,120,.8);cursor:pointer;
+    font-size:13pt;display:flex;align-items:center;justify-content:center;transition:.2s;
+  }
+  #ml-close:hover{background:rgba(255,60,60,.3);color:#fff;border-color:rgba(255,60,60,.6)}
+
+  /* ===== SIDEBAR ===== */
+  #ml-sidebar{
+    background:rgba(0,0,0,.45);border-right:1px solid rgba(255,255,255,.07);
+    padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;
+  }
+  #ml-sidebar::-webkit-scrollbar{width:3px}
+  #ml-sidebar::-webkit-scrollbar-thumb{background:rgba(201,147,42,.3);border-radius:2px}
+  .ml-slab{font-size:7pt;color:rgba(255,255,255,.25);letter-spacing:2px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid rgba(255,255,255,.05)}
+  .ml-row{display:flex;align-items:center;gap:7px;margin:2px 0}
+  .ml-row label{font-size:8pt;color:rgba(255,255,255,.45);min-width:48px}
+  .ml-row input[type=range]{flex:1;accent-color:#c9932a}
+  .ml-rv{font-size:8pt;color:#e8aa40;font-weight:bold;min-width:36px;text-align:right;font-family:monospace}
+  .ml-grid2{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+  .ml-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:8px;text-align:center}
+  .ml-card .mlcv{font-size:12pt;color:#e8aa40;font-weight:bold;font-family:monospace}
+  .ml-card .mlcl{font-size:6.5pt;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+  .ml-pred{background:rgba(15,92,107,.1);border:1px solid rgba(15,92,107,.25);border-radius:7px;padding:6px 9px}
+  .ml-pred .mlpt{font-size:6.5pt;color:rgba(79,195,216,.6);letter-spacing:.5px;text-transform:uppercase}
+  .ml-pred .mlpv{font-size:8.5pt;color:#e8aa40;font-weight:bold;font-family:monospace;margin-top:1px}
+  .ml-btn{padding:6px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-size:8pt;cursor:pointer;font-family:monospace;transition:.2s;display:inline-flex;align-items:center;gap:4px}
+  .ml-btn:hover{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.35)}
+  .ml-btn.gold{background:rgba(201,147,42,.15);border-color:#c9932a88;color:#c9932a}
+  .ml-btn.gold:hover{background:rgba(201,147,42,.3)}
+  .ml-ni{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:5px;color:#fff;padding:4px 7px;font-size:9pt;font-family:monospace;width:100%;outline:none;margin-top:4px}
+  .ml-ni:focus{border-color:#c9932a}
+
+  /* ===== MAIN CONTENT ===== */
+  #ml-content{display:flex;flex-direction:column;overflow:hidden}
+
+  /* ===== PANELS ===== */
+  .ml-panel{display:none;flex:1;overflow:hidden;flex-direction:column}
+  .ml-panel.active{display:flex}
+
+  /* 3D CANVAS */
+  #ml-canvas3d{width:100%;flex:1;display:block;background:#040210}
+
+  /* CHARTS GRID */
+  #ml-charts-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:1px;background:rgba(255,255,255,.06);
+    flex:1;overflow:hidden;
+  }
+  .ml-chart-cell{background:#080616;padding:10px;display:flex;flex-direction:column;gap:5px;overflow:hidden}
+  .ml-chart-cell h5{font-size:7.5pt;color:#c9932a;letter-spacing:.5px;text-transform:uppercase;font-family:monospace}
+  .ml-chart-cell canvas{flex:1;min-height:0;border-radius:4px}
+
+  /* EQUATION PANEL */
+  #ml-eq-panel{flex:1;display:flex;flex-direction:column;gap:0;overflow:hidden}
+  #ml-eq-top{padding:14px 18px;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06)}
+  #ml-eq-top h4{color:#c9932a;font-size:10pt;margin-bottom:10px;font-family:'Cormorant Garamond',serif}
+  .ml-eq-input-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+  .ml-eq-input{
+    flex:1;background:rgba(255,255,255,.07);border:1.5px solid rgba(201,147,42,.35);
+    border-radius:8px;color:#fff;padding:8px 12px;font-size:10pt;font-family:monospace;outline:none;
+  }
+  .ml-eq-input:focus{border-color:#c9932a;background:rgba(255,255,255,.1)}
+  .ml-solve-btn{padding:8px 18px;background:linear-gradient(135deg,#c9932a,#e8aa40);border:none;border-radius:8px;color:#1a0a00;font-weight:bold;cursor:pointer;font-family:monospace;font-size:9pt;white-space:nowrap}
+  #ml-eq-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);overflow:hidden}
+  .ml-eq-half{background:#080616;padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+  .ml-eq-half::-webkit-scrollbar{width:3px}
+  .ml-eq-half::-webkit-scrollbar-thumb{background:rgba(201,147,42,.2)}
+  #ml-eq-result{flex:1;background:#080616;padding:14px;overflow-y:auto;font-family:monospace;font-size:9pt;color:#e0d8ff}
+  .ml-eq-step{background:rgba(255,255,255,.04);border-radius:8px;padding:10px;border-left:3px solid #c9932a;margin-bottom:6px}
+  .ml-eq-step .step-n{font-size:7pt;color:#c9932a;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+  .ml-eq-step .step-v{color:#e8aa40;font-size:10pt}
+  .ml-eq-final{background:rgba(201,147,42,.12);border:1px solid rgba(201,147,42,.4);border-radius:10px;padding:12px;text-align:center;color:#e8aa40;font-size:11pt;font-weight:bold}
+
+  /* SIMULATION PANEL */
+  #ml-sim-panel{flex:1;display:flex;flex-direction:column;gap:0;overflow:hidden}
+  #ml-sim-top{padding:10px 16px;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  #ml-sim-top h4{color:#c9932a;font-family:'Cormorant Garamond',serif;font-size:10pt;margin-right:auto}
+  #ml-sim-canvas-wrap{flex:1;position:relative;background:#040210;overflow:hidden}
+  #ml-sim-canvas{width:100%;height:100%;display:block}
+  #ml-sim-hud{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.65);border:1px solid rgba(201,147,42,.25);border-radius:9px;padding:8px 12px;font-size:8pt;font-family:monospace;color:rgba(255,255,255,.7);pointer-events:none}
+  .ml-hud-row{display:flex;justify-content:space-between;gap:12px;margin:1px 0}
+  .ml-hud-row span:last-child{color:#e8aa40;font-weight:bold}
+  #ml-sim-bottom{padding:8px 16px;background:rgba(0,0,0,.4);border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .ml-sim-ctrl{display:flex;align-items:center;gap:6px;font-size:8pt;color:rgba(255,255,255,.5);font-family:monospace}
+  .ml-sim-ctrl input[type=range]{width:120px;accent-color:#7b2d8b}
+
+  /* PAGE PREVIEW */
+  #ml-preview{
+    padding:24px 28px;cursor:pointer;background:linear-gradient(160deg,#0c0820,#1a1240);
+    min-height:220px;display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  #ml-preview::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 30% 50%,rgba(123,45,139,.15) 0%,transparent 60%),
+               radial-gradient(ellipse at 70% 50%,rgba(201,147,42,.1) 0%,transparent 60%);
+  }
+  .ml-preview-inner{text-align:center;position:relative;z-index:1}
+  .ml-preview-icon{font-size:36pt;animation:mlFloat 3s ease-in-out infinite;display:block;margin-bottom:12px}
+  .ml-preview-title{font-family:'Cormorant Garamond',serif;font-size:14pt;color:#e8aa40;margin-bottom:6px;animation:mlGlow 3s ease-in-out infinite}
+  .ml-preview-desc{font-size:9pt;color:rgba(255,255,255,.45);max-width:360px;line-height:1.7;margin-bottom:14px}
+  .ml-preview-btn{
+    padding:10px 28px;background:linear-gradient(135deg,rgba(201,147,42,.25),rgba(123,45,139,.2));
+    border:1.5px solid #c9932a;border-radius:24px;color:#e8aa40;font-family:monospace;
+    font-size:9pt;cursor:pointer;transition:.25s;letter-spacing:.5px;
+  }
+  .ml-preview-btn:hover{background:linear-gradient(135deg,rgba(201,147,42,.4),rgba(123,45,139,.35));transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,147,42,.3)}
+  .ml-feature-pills{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+  .ml-pill{padding:3px 10px;border-radius:12px;font-size:7.5pt;font-family:monospace;border:1px solid}
+  .ml-pill.p1{background:rgba(201,147,42,.1);border-color:rgba(201,147,42,.3);color:#c9932a}
+  .ml-pill.p2{background:rgba(123,45,139,.1);border-color:rgba(123,45,139,.3);color:#a060c0}
+  .ml-pill.p3{background:rgba(15,92,107,.1);border-color:rgba(15,92,107,.3);color:#4fc3d8}
+  .ml-pill.p4{background:rgba(39,174,96,.1);border-color:rgba(39,174,96,.3);color:#5dcc8b}
+  </style>
+
+  <!-- PAGE PREVIEW (visible in document) -->
+  <div id="ml-preview">
+    <div class="ml-preview-inner">
+      <span class="ml-preview-icon">🔬</span>
+      <div class="ml-preview-title">§23. Integrated Dynamic Simulation Lab</div>
+      <div class="ml-feature-pills">
+        <span class="ml-pill p1">🌀 3D Trinity Space</span>
+        <span class="ml-pill p2">📐 Equation Solver</span>
+        <span class="ml-pill p3">📊 Live Charts</span>
+        <span class="ml-pill p4">⚛ BS Simulator</span>
+      </div>
+      <div class="ml-preview-desc">معمل تفاعلي متكامل لمحاكاة نظام S في الزمن الفعلي — رسوم ثلاثية الأبعاد، معادلات رياضية، محاكاة ديناميكية</div>
+      <button class="ml-preview-btn" onclick="event.stopPropagation();openMasterLab()">⚡ فتح المعمل الكامل</button>
+    </div>
+  </div>
+  <div class="page-num" data-i18n="page-lab-master">Lab-M</div>
+</div>
+
+<!-- ========== FULL SCREEN MODAL ========== -->
+<div id="ml-modal-overlay">
+<div id="ml-shell">
+
+  <!-- TOP BAR -->
+  <div id="ml-topbar">
+    <span class="ml-logo">⚗ System S — Master Lab §23</span>
+    <button class="ml-tab active" onclick="mlSwitchTab('3d',this)">🌀 Trinity 3D</button>
+    <button class="ml-tab" onclick="mlSwitchTab('charts',this)">📊 Charts</button>
+    <button class="ml-tab" onclick="mlSwitchTab('equation',this)">📐 Equations</button>
+    <button class="ml-tab" onclick="mlSwitchTab('sim',this)">⚛ Simulation</button>
+    <button id="ml-close" onclick="closeMasterLab()" title="إغلاق">✕</button>
+  </div>
+
+  <!-- LEFT SIDEBAR -->
+  <div id="ml-sidebar">
+    <div class="ml-slab">Parameters</div>
+    <div class="ml-row"><label>τ</label><input type="range" id="ml-tau" min="0" max="8" step="0.05" value="1.5" oninput="mlUpdate()"><span class="ml-rv" id="ml-tau-v">1.50</span></div>
+    <div class="ml-row"><label>BS_ID</label><input type="range" id="ml-id" min="0" max="1" step="0.01" value="0.72" oninput="mlUpdate()"><span class="ml-rv" id="ml-id-v">0.72</span></div>
+    <div class="ml-row"><label>BS_Pot</label><input type="range" id="ml-pot" min="0" max="1" step="0.01" value="0.25" oninput="mlUpdate()"><span class="ml-rv" id="ml-pot-v">0.25</span></div>
+    <div class="ml-row"><label>BS_Rel</label><input type="range" id="ml-rel" min="0" max="1" step="0.01" value="0.65" oninput="mlUpdate()"><span class="ml-rv" id="ml-rel-v">0.65</span></div>
+    <div class="ml-row"><label>C</label><input type="range" id="ml-c" min="0" max="1" step="0.01" value="0.8" oninput="mlUpdate()"><span class="ml-rv" id="ml-c-v">0.80</span></div>
+    <div class="ml-row"><label>z</label><input type="range" id="ml-z" min="0" max="5" step="0.05" value="0.5" oninput="mlUpdate()"><span class="ml-rv" id="ml-z-v">0.50</span></div>
+
+    <div class="ml-slab">Live Metrics</div>
+    <div class="ml-grid2">
+      <div class="ml-card"><div class="mlcv" id="ml-m-bstau">0.72</div><div class="mlcl">BS(τ)</div></div>
+      <div class="ml-card"><div class="mlcv" id="ml-m-psi">0.59</div><div class="mlcl">Ψ</div></div>
+      <div class="ml-card"><div class="mlcv" id="ml-m-bent">0.53</div><div class="mlcl">BS_ent</div></div>
+      <div class="ml-card"><div class="mlcv" id="ml-m-hz">68.1</div><div class="mlcl">H(z)</div></div>
+    </div>
+
+    <div class="ml-slab">BS(n) Calculator</div>
+    <input class="ml-ni" type="number" id="ml-n-input" value="7" min="1" max="99999" placeholder="Enter n..." oninput="mlCalcN()">
+    <div class="ml-card" style="margin-top:4px">
+      <div class="mlcv" id="ml-n-res">0.1818</div>
+      <div class="mlcl">BS(n) result</div>
+    </div>
+    <div style="font-size:7.5pt;color:rgba(255,255,255,.3);font-family:monospace;margin-top:2px" id="ml-n-type"></div>
+
+    <div class="ml-slab">Predictions CB</div>
+    <div class="ml-grid2">
+      <div class="ml-pred"><div class="mlpt">CMB</div><div class="mlpv">0.115 Hz</div></div>
+      <div class="ml-pred"><div class="mlpt">Boukon</div><div class="mlpv">1.35×10⁻⁴⁹</div></div>
+      <div class="ml-pred"><div class="mlpt">C_B</div><div class="mlpv">6.18×10⁻⁴²</div></div>
+      <div class="ml-pred"><div class="mlpt">Casimir</div><div class="mlpv">1.95×10⁻⁶⁸</div></div>
+    </div>
+
+    <div class="ml-slab">Controls</div>
+    <div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="ml-btn" onclick="mlReset()">↺ Reset</button>
+      <button class="ml-btn" id="ml-anim-btn" onclick="mlToggleAnim()">⏸ Pause</button>
+      <button class="ml-btn gold" onclick="mlExport()">⬇ JSON</button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div id="ml-content">
+
+    <!-- TAB 1: 3D TRINITY -->
+    <div class="ml-panel active" id="tab-3d">
+      <canvas id="ml-canvas3d"></canvas>
+    </div>
+
+    <!-- TAB 2: CHARTS -->
+    <div class="ml-panel" id="tab-charts">
+      <div id="ml-charts-grid">
+        <div class="ml-chart-cell"><h5>BS(n) — Primes vs Composites</h5><canvas id="mlch-bs"></canvas></div>
+        <div class="ml-chart-cell"><h5>α(τ) β(τ) γ(τ) Weight Evolution</h5><canvas id="mlch-tau"></canvas></div>
+        <div class="ml-chart-cell"><h5>Consciousness Ψ Spectrum</h5><canvas id="mlch-psi"></canvas></div>
+        <div class="ml-chart-cell"><h5>H(z) — System S vs ΛCDM</h5><canvas id="mlch-hz"></canvas></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: EQUATION SOLVER -->
+    <div class="ml-panel" id="tab-equation">
+      <div id="ml-eq-panel">
+        <div id="ml-eq-top">
+          <h4>📐 Equation Solver — System S Mathematics</h4>
+          <div class="ml-eq-input-row">
+            <select id="ml-eq-preset" style="padding:8px;background:rgba(0,0,0,.5);border:1.5px solid rgba(201,147,42,.35);border-radius:8px;color:#e8aa40;font-family:monospace;font-size:9pt;outline:none" onchange="mlLoadPreset()">
+              <option value="">— Select preset equation —</option>
+              <option value="bs_n">BS(n) = 2/(2n−3)  for n=?</option>
+              <option value="psi">Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel</option>
+              <option value="cb">CB = (2/43)·(α/137)·√(c³/ℏG)</option>
+              <option value="bs_ent">BS_ent = (2/3)·C</option>
+              <option value="friedmann">Modified Friedmann H(z)</option>
+              <option value="bs_tau">BS(τ) weight functions</option>
+              <option value="cmb">CMB frequency f = CB·c/ℓP</option>
+            </select>
+          </div>
+          <div class="ml-eq-input-row">
+            <input class="ml-eq-input" id="ml-eq-expr" placeholder="Enter equation or expression: e.g.  BS(23),  Psi(0.7,0.3,0.6),  CB,  H(z=1.5)" value="BS(23)">
+            <button class="ml-solve-btn" onclick="mlSolveEq()">▶ Solve</button>
+          </div>
+          <div style="font-size:8pt;color:rgba(255,255,255,.3);font-family:monospace">
+            Functions: BS(n), Psi(id,pot,rel), BSent(C), Hz(z,tau), CB, alpha(tau), beta(tau), gamma(tau)
+          </div>
+        </div>
+        <div id="ml-eq-body">
+          <div class="ml-eq-half" id="ml-eq-steps-col">
+            <div style="font-size:7.5pt;color:rgba(255,255,255,.25);letter-spacing:1.5px;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.05)">Solution Steps</div>
+            <div id="ml-eq-steps"></div>
+          </div>
+          <div class="ml-eq-half" id="ml-eq-vis-col">
+            <div style="font-size:7.5pt;color:rgba(255,255,255,.25);letter-spacing:1.5px;text-transform:uppercase;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,.05)">Visual</div>
+            <canvas id="ml-eq-canvas" width="500" height="280" style="width:100%;border-radius:8px;background:rgba(0,0,0,.4)"></canvas>
+            <div id="ml-eq-insight" style="font-size:8.5pt;color:rgba(224,216,255,.7);font-family:monospace;padding:8px;background:rgba(255,255,255,.03);border-radius:6px;border-left:3px solid #c9932a;line-height:1.7;margin-top:6px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 4: DYNAMIC SIMULATION -->
+    <div class="ml-panel" id="tab-sim">
+      <div id="ml-sim-panel">
+        <div id="ml-sim-top">
+          <h4>⚛ Dynamic BS Simulation</h4>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button class="ml-btn active" id="sim-mode-btn-trinity" onclick="mlSimMode('trinity',this)">Trinity</button>
+            <button class="ml-btn" id="sim-mode-btn-bstau" onclick="mlSimMode('bstau',this)">BS–τ</button>
+            <button class="ml-btn" id="sim-mode-btn-entangle" onclick="mlSimMode('entangle',this)">Entangle</button>
+            <button class="ml-btn" id="sim-mode-btn-cosmos" onclick="mlSimMode('cosmos',this)">Cosmos</button>
+            <button class="ml-btn" id="sim-mode-btn-primes" onclick="mlSimMode('primes',this)">Primes</button>
+          </div>
+          <div class="ml-sim-ctrl">
+            <span>Speed:</span>
+            <input type="range" id="ml-sim-speed" min="0.1" max="3" step="0.1" value="1">
+            <span id="ml-sim-speed-v" style="color:#e8aa40">1.0x</span>
+          </div>
+        </div>
+        <div id="ml-sim-canvas-wrap">
+          <canvas id="ml-sim-canvas"></canvas>
+          <div id="ml-sim-hud">
+            <div class="ml-hud-row"><span>τ</span><span id="hud-tau">1.50</span></div>
+            <div class="ml-hud-row"><span>BS(τ)</span><span id="hud-bstau">0.72</span></div>
+            <div class="ml-hud-row"><span>Ψ</span><span id="hud-psi">0.59</span></div>
+            <div class="ml-hud-row"><span>Frame</span><span id="hud-frame">0</span></div>
+          </div>
+        </div>
+        <div id="ml-sim-bottom">
+          <span style="font-size:8pt;color:rgba(255,255,255,.3);font-family:monospace" id="ml-sim-label">Mode: Trinity Space</span>
+          <button class="ml-btn" onclick="mlSimReset()">↺ Reset</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end ml-content -->
+</div><!-- end ml-shell -->
+</div><!-- end ml-modal-overlay -->
+
+<script>
+(function(){
+'use strict';
+
+/* ============ MATH CORE ============ */
+const M = {
+  BSn(n){
+    if(n===1) return 0.7;
+    if(n===2) return 4/7;
+    if(n===3) return 8/17;
+    if(n===4) return 10/27;
+    if(n>=5)  return 2/(2*n-3);
+    return 0;
+  },
+  alpha(t){ return 0.7*Math.exp(-0.3*t)+0.2*(1-Math.exp(-0.3*t)); },
+  beta(t){  return 0.1+0.5/(1+Math.exp(-0.5*(t-3))); },
+  gamma(t){ return 0.4*Math.pow(Math.sin(2*Math.PI/5*t),2)+0.1; },
+  delta(t){ return 0.15*Math.exp(-0.1*t*t); },
+  BStau(t){ return Math.min(1,(M.alpha(t)+M.beta(t)+M.gamma(t))/1.8); },
+  Psi(id,pot,rel){ return 0.47*id+0.23*pot+0.30*rel; },
+  BSent(C){ return (2/3)*C; },
+  Hz(z,tau){
+    const H0=68,Om=0.3,Ol=0.7;
+    const std=H0*Math.sqrt(Om*Math.pow(1+z,3)+Ol);
+    return std*(1+M.beta(tau)*0.05*z*z*0.01);
+  },
+  CB: 6.184033e-42,
+  isPrime(n){
+    if(n<2) return false;
+    for(let i=2;i<=Math.sqrt(n);i++) if(n%i===0) return false;
+    return true;
+  }
+};
+
+/* ============ STATE ============ */
+let mlAnimOn=true, mlT3=0, mlSimT=0, mlSimMode_='trinity', mlRaf=null, mlSimRaf=null;
+let mlEqCanvas3d = null; // will be assigned later
+const P = {
+  get tau(){ return parseFloat(document.getElementById('ml-tau')?.value||1.5); },
+  get id(){  return parseFloat(document.getElementById('ml-id')?.value||0.72); },
+  get pot(){ return parseFloat(document.getElementById('ml-pot')?.value||0.25); },
+  get rel(){ return parseFloat(document.getElementById('ml-rel')?.value||0.65); },
+  get C(){   return parseFloat(document.getElementById('ml-c')?.value||0.8); },
+  get z(){   return parseFloat(document.getElementById('ml-z')?.value||0.5); },
+  get speed(){ return parseFloat(document.getElementById('ml-sim-speed')?.value||1); }
+};
+
+/* ============ OPEN / CLOSE ============ */
+window.openMasterLab = function(){
+  const ov = document.getElementById('ml-modal-overlay');
+  if(!ov) return;
+  ov.classList.add('open');
+  document.body.style.overflow='hidden';
+  mlUpdate();
+  setTimeout(()=>{ mlStartAll(); },120);
+};
+window.closeMasterLab = function(){
+  const ov = document.getElementById('ml-modal-overlay');
+  if(!ov) return;
+  ov.classList.remove('open');
+  document.body.style.overflow='';
+  if(mlRaf){ cancelAnimationFrame(mlRaf); mlRaf=null; }
+  if(mlSimRaf){ cancelAnimationFrame(mlSimRaf); mlSimRaf=null; }
+};
+
+/* ============ TABS ============ */
+window.mlSwitchTab = function(name, btn){
+  document.querySelectorAll('.ml-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.ml-panel').forEach(p=>p.classList.remove('active'));
+  const panel = document.getElementById('tab-'+name);
+  if(panel) panel.classList.add('active');
+  if(name==='charts') setTimeout(mlDrawAllCharts, 60);
+  if(name==='sim') setTimeout(()=>{ mlSimStart(); },60);
+  if(name==='3d') setTimeout(()=>{ ml3DStart(); },60);
+};
+
+/* ============ UPDATE METRICS ============ */
+window.mlUpdate = function(){
+  ['tau','id','pot','rel','c','z'].forEach(k=>{
+    const el = document.getElementById('ml-'+k);
+    const ve = document.getElementById('ml-'+k+'-v');
+    if(el && ve) ve.textContent = parseFloat(el.value).toFixed(2);
+  });
+  const t=P.tau, id=P.id, pot=P.pot, rel=P.rel, C=P.C, z=P.z;
+  const set = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+  set('ml-m-bstau', M.BStau(t).toFixed(4));
+  set('ml-m-psi',   M.Psi(id,pot,rel).toFixed(4));
+  set('ml-m-bent',  M.BSent(C).toFixed(4));
+  set('ml-m-hz',    M.Hz(z,t).toFixed(1));
+  set('hud-tau',    t.toFixed(2));
+  set('hud-bstau',  M.BStau(t).toFixed(4));
+  set('hud-psi',    M.Psi(id,pot,rel).toFixed(4));
+  mlCalcN();
+};
+
+window.mlCalcN = function(){
+  const el = document.getElementById('ml-n-input');
+  const res = document.getElementById('ml-n-res');
+  const typ = document.getElementById('ml-n-type');
+  if(!el||!res) return;
+  const n = parseInt(el.value)||7;
+  const v = M.BSn(n);
+  res.textContent = v.toFixed(6);
+  if(typ){
+    const isPrime = M.isPrime(n);
+    const close = Math.abs(v-1)<.05 ? '≈ ❶' : Math.abs(v-2/3)<.05 ? '≈ ∞' : Math.abs(v-1/3)<.05 ? '≈ 0p' : '';
+    typ.textContent = (isPrime?'🟡 Prime':'🟣 Composite')+(close?' '+close:'');
+    typ.style.color = isPrime ? '#c9932a' : '#7b2d8b';
+  }
+};
+
+window.mlReset = function(){
+  [['ml-tau',1.5],['ml-id',.72],['ml-pot',.25],['ml-rel',.65],['ml-c',.8],['ml-z',.5]].forEach(([id,v])=>{
+    const el = document.getElementById(id);
+    if(el) el.value=v;
+  });
+  mlUpdate();
+};
+
+window.mlToggleAnim = function(){
+  mlAnimOn=!mlAnimOn;
+  const btn = document.getElementById('ml-anim-btn');
+  if(btn) btn.textContent = mlAnimOn ? '⏸ Pause' : '▶ Resume';
+};
+
+window.mlExport = function(){
+  const d = {tau:P.tau,BS_ID:P.id,BS_Pot:P.pot,BS_Rel:P.rel,C:P.C,z:P.z,
+    BS_tau:M.BStau(P.tau).toFixed(4),Psi:M.Psi(P.id,P.pot,P.rel).toFixed(4),
+    BS_ent:M.BSent(P.C).toFixed(4),H_z:M.Hz(P.z,P.tau).toFixed(2),CB:'6.184033e-42'};
+  const blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='system_s.json';a.click();
+};
+
+/* ============ 3D CANVAS ============ */
+let mlCam = {rotX:0.4,rotY:0,dist:280};
+let mlDragging=false, mlLastMouse={x:0,y:0};
+
+function ml3DStart(){
+  const cv = document.getElementById('ml-canvas3d');
+  if(!cv) return;
+  if(mlRaf){ cancelAnimationFrame(mlRaf); }
+
+  cv.addEventListener('mousedown', e=>{ mlDragging=true; mlLastMouse={x:e.clientX,y:e.clientY}; });
+  cv.addEventListener('mousemove', e=>{
+    if(!mlDragging) return;
+    mlCam.rotY += (e.clientX-mlLastMouse.x)*0.008;
+    mlCam.rotX += (e.clientY-mlLastMouse.y)*0.005;
+    mlCam.rotX = Math.max(-0.8, Math.min(1.2, mlCam.rotX));
+    mlLastMouse={x:e.clientX,y:e.clientY};
+  });
+  cv.addEventListener('mouseup', ()=>mlDragging=false);
+  cv.addEventListener('wheel', e=>{ mlCam.dist = Math.max(150,Math.min(500,mlCam.dist+e.deltaY*0.3)); e.preventDefault(); },{passive:false});
+
+  function loop(){
+    if(mlAnimOn) mlT3 += 0.4;
+    ml3DRender();
+    mlRaf = requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+function ml3DRender(){
+  const cv = document.getElementById('ml-canvas3d');
+  if(!cv) return;
+  cv.width = cv.parentElement.clientWidth;
+  cv.height = cv.parentElement.clientHeight||500;
+  const ctx = cv.getContext('2d');
+  const w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+
+  /* Starfield background */
+  ctx.fillStyle='#040210';
+  ctx.fillRect(0,0,w,h);
+  const stars = 80;
+  for(let i=0;i<stars;i++){
+    const sx=((i*137.5)%w), sy=((i*97.3+50)%h);
+    const sr=0.5+((i*53)%3)*0.4;
+    ctx.beginPath();ctx.arc(sx,sy,sr,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${0.1+((i*41)%40)*0.01})`;ctx.fill();
+  }
+
+  const angle = mlAnimOn ? mlT3*0.012 : mlCam.rotY;
+  const tilt  = mlCam.rotX;
+
+  function project(x,y,z){
+    const cos=Math.cos, sin=Math.sin;
+    const ry = y*cos(tilt)-z*sin(tilt), rz2=y*sin(tilt)+z*cos(tilt);
+    const rx2= x*cos(angle)-rz2*sin(angle), rz3=x*sin(angle)+rz2*cos(angle);
+    const scale=mlCam.dist, fov=600, d=fov/(fov+rz3+400);
+    return {x:w/2+rx2*scale*d, y:h/2-ry*scale*d, d:d};
+  }
+
+  /* Grid plane */
+  ctx.strokeStyle='rgba(44,22,84,.25)';ctx.lineWidth=0.5;
+  for(let i=-4;i<=4;i++){
+    const a=project(i*.15,-.35,-.4), b=project(i*.15,-.35,.4);
+    const c=project(-.4,-.35,i*.15), d2=project(.4,-.35,i*.15);
+    ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(c.x,c.y);ctx.lineTo(d2.x,d2.y);ctx.stroke();
+  }
+
+  /* Axes */
+  const orig=project(0,0,0);
+  [[.35,0,0,'#c9932a','X'],[0,.35,0,'#4fc3d8','Y'],[0,0,.35,'#7b2d8b','Z']].forEach(([x,y,z,col,lbl])=>{
+    const tip=project(x,y,z);
+    ctx.strokeStyle=col+'88';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(orig.x,orig.y);ctx.lineTo(tip.x,tip.y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=col+'aa';ctx.font='9px monospace';ctx.fillText(lbl,tip.x+4,tip.y);
+  });
+
+  const tau=P.tau, a=M.alpha(tau), b2=M.beta(tau), g=M.gamma(tau);
+
+  /* Nodes */
+  const nodes=[
+    {p:[.42,0,0],c:'#c9932a',lbl:'❶',sub:'BS=1',r:22},
+    {p:[-.21,.36,0],c:'#4fc3d8',lbl:'0p',sub:'BS=⅓',r:18},
+    {p:[-.21,-.36,0],c:'#7b2d8b',lbl:'∞',sub:'BS=⅔',r:20}
+  ];
+
+  /* Glow rings (orbiting particles) */
+  [0,1,2].forEach(ni=>{
+    const nd=nodes[ni];
+    const nq=project(...nd.p);
+    const orbitR=nd.r*nq.d*1.8;
+    const phase=mlT3*0.02+(ni*2.1);
+    const px=nq.x+orbitR*Math.cos(phase), py=nq.y+orbitR*Math.sin(phase)*0.45;
+    ctx.beginPath();ctx.arc(px,py,2.5*nq.d,0,Math.PI*2);
+    ctx.fillStyle=nd.c+'cc';ctx.fill();
+  });
+
+  /* Triangle frame */
+  ctx.strokeStyle='rgba(201,147,42,.12)';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+  ctx.beginPath();
+  const ps=nodes.map(n=>project(...n.p));
+  ps.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));
+  ctx.closePath();ctx.stroke();ctx.setLineDash([]);
+
+  /* Animated operation arrows */
+  const ops=[
+    {fr:0,to:1,col:'#c9932a',lbl:'ε',w:a},
+    {fr:1,to:2,col:'#4fc3d8',lbl:'δ',w:b2},
+    {fr:2,to:0,col:'#7b2d8b',lbl:'η',w:g}
+  ];
+  ops.forEach((op,oi)=>{
+    const p1=project(...nodes[op.fr].p), p2=project(...nodes[op.to].p);
+    ctx.strokeStyle=op.col+'55';ctx.lineWidth=1.5;
+    ctx.beginPath();ctx.moveTo(p1.x,p1.y);ctx.lineTo(p2.x,p2.y);ctx.stroke();
+    const prog=((mlT3*1.5+oi*60)%120)/120;
+    const px=p1.x+(p2.x-p1.x)*prog, py=p1.y+(p2.y-p1.y)*prog;
+    const pr=4.5*((p1.d+p2.d)/2);
+    const g2=ctx.createRadialGradient(px,py,0,px,py,pr);
+    g2.addColorStop(0,op.col+'ff');g2.addColorStop(1,op.col+'00');
+    ctx.beginPath();ctx.arc(px,py,pr,0,Math.PI*2);ctx.fillStyle=g2;ctx.fill();
+    const mx=(p1.x+p2.x)/2,my=(p1.y+p2.y)/2-14;
+    ctx.fillStyle=op.col+'aa';ctx.font=`italic ${10*(p1.d+p2.d)/2}px monospace`;ctx.textAlign='center';
+    ctx.fillText(op.lbl+'('+op.w.toFixed(2)+')',mx,my);
+  });
+  ctx.textAlign='left';
+
+  /* Node spheres */
+  nodes.forEach(nd=>{
+    const q=project(...nd.p);
+    const r=nd.r*q.d;
+    /* ambient glow */
+    const gl=ctx.createRadialGradient(q.x,q.y,0,q.x,q.y,r*2.8);
+    gl.addColorStop(0,nd.c+'44');gl.addColorStop(1,nd.c+'00');
+    ctx.beginPath();ctx.arc(q.x,q.y,r*2.8,0,Math.PI*2);ctx.fillStyle=gl;ctx.fill();
+    /* sphere */
+    const sg=ctx.createRadialGradient(q.x-r*0.3,q.y-r*0.3,0,q.x,q.y,r);
+    sg.addColorStop(0,nd.c+'ff');sg.addColorStop(0.4,nd.c+'bb');sg.addColorStop(1,nd.c+'55');
+    ctx.beginPath();ctx.arc(q.x,q.y,r,0,Math.PI*2);ctx.fillStyle=sg;ctx.fill();
+    ctx.strokeStyle=nd.c;ctx.lineWidth=1.5;ctx.stroke();
+    /* labels */
+    ctx.fillStyle='#fff';ctx.font=`bold ${Math.round(12*q.d)}px monospace`;ctx.textAlign='center';
+    ctx.fillText(nd.lbl,q.x,q.y+4);
+    ctx.fillStyle=nd.c+'cc';ctx.font=`${Math.round(9*q.d)}px monospace`;
+    ctx.fillText(nd.sub,q.x,q.y+r+12);
+    ctx.textAlign='left';
+  });
+
+  /* Central equation */
+  ctx.save();
+  ctx.font='bold 12px monospace';ctx.textAlign='center';
+  ctx.fillStyle='rgba(201,147,42,.8)';
+  ctx.fillText('❶ ⊕ 0p = 1 = ∞',w/2,h-20);
+  ctx.font='9px monospace';ctx.fillStyle='rgba(255,255,255,.35)';
+  ctx.fillText(`τ = ${P.tau.toFixed(2)}  ·  BS(τ) = ${M.BStau(P.tau).toFixed(4)}`,w/2,h-6);
+  ctx.restore();
+}
+
+/* ============ CHARTS ============ */
+function cvSetup(id){
+  const cv=document.getElementById(id);
+  if(!cv) return null;
+  const par=cv.parentElement;
+  cv.width=par.clientWidth||400;
+  cv.height=cv.getAttribute('height')||200;
+  const ctx=cv.getContext('2d');
+  ctx.fillStyle='rgba(0,0,0,.6)';ctx.fillRect(0,0,cv.width,cv.height);
+  return ctx;
+}
+
+function mlDrawAllCharts(){
+  chartBS(); chartTau(); chartPsi(); chartHz();
+}
+
+function chartBS(){
+  const ctx=cvSetup('mlch-bs');if(!ctx)return;
+  const cv=document.getElementById('mlch-bs'),w=cv.width,h=cv.height;
+  const PAD=30,PB=22,PT=10,PR=10,CW=w-PAD-PR,CH=h-PB-PT,MN=50;
+  for(let i=0;i<=5;i++){ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;ctx.beginPath();const y=PT+CH*(i/5);ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
+  const gr=ctx.createLinearGradient(PAD,0,PAD+CW,0);
+  gr.addColorStop(0,'#c9932a');gr.addColorStop(.5,'#7b2d8b');gr.addColorStop(1,'#2c6b80');
+  ctx.strokeStyle=gr;ctx.lineWidth=2;ctx.beginPath();
+  for(let n=1;n<=MN;n++){const x=PAD+CW*((n-1)/(MN-1)),y=PT+CH*(1-Math.min(M.BSn(n),1)*2.2);n===1?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  for(let n=1;n<=MN;n++){
+    const x=PAD+CW*((n-1)/(MN-1)),y=PT+CH*(1-Math.min(M.BSn(n),1)*2.2),pr=M.isPrime(n);
+    ctx.beginPath();ctx.arc(x,y,pr?5:3,0,Math.PI*2);
+    ctx.fillStyle=pr?'#c9932a':'rgba(123,45,139,.7)';ctx.fill();
+    if(pr&&n<=20){ctx.fillStyle='rgba(255,255,255,.55)';ctx.font='7px monospace';ctx.fillText('p='+n,x-8,y-8);}
+  }
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,200,100,.6)';ctx.font='7px monospace';ctx.fillText('🟠 primes  🟣 composites',PAD,PT+9);
+}
+
+function chartTau(){
+  const ctx=cvSetup('mlch-tau');if(!ctx)return;
+  const cv=document.getElementById('mlch-tau'),w=cv.width,h=cv.height,tau=P.tau;
+  const PAD=30,PB=22,PT=10,PR=10,CW=w-PAD-PR,CH=h-PB-PT;
+  [[M.alpha,'#c9932a','α'],[M.beta,'#7b2d8b','β'],[M.gamma,'#4fc3d8','γ']].forEach(([fn,col,lbl])=>{
+    ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();
+    for(let i=0;i<=200;i++){const t=8*i/200,x=PAD+CW*(t/8),y=PT+CH*(1-fn(t));i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();ctx.fillStyle=col;ctx.font='8px monospace';ctx.fillText(lbl+'(τ)',PAD+CW-30,PT+CH*(1-fn(8))-2);
+  });
+  const tx=PAD+CW*(tau/8);
+  ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=1;ctx.setLineDash([5,3]);
+  ctx.beginPath();ctx.moveTo(tx,PT);ctx.lineTo(tx,PT+CH);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';ctx.fillText('τ='+tau.toFixed(1),tx+3,PT+9);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+
+function chartPsi(){
+  const ctx=cvSetup('mlch-psi');if(!ctx)return;
+  const cv=document.getElementById('mlch-psi'),w=cv.width,h=cv.height;
+  const PAD=30,PB=22,PT=10,PR=10,CW=w-PAD-PR,CH=h-PB-PT;
+  const psi=M.Psi(P.id,P.pot,P.rel);
+  [[.35,'#4fc3d8','sleep'],[.5,'#7b2d8b','normal'],[.57,'#c9932a','avg'],[.75,'#e8aa40','flow'],[.85,'#5dcc8b','AGI']].forEach(([v,col,lbl])=>{
+    const y=PT+CH*(1-v);ctx.strokeStyle=col+'55';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+    ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=col;ctx.font='7px monospace';ctx.fillText(lbl,PAD+CW-28,y-2);
+  });
+  const bw=22,bx=PAD+8;
+  const g2=ctx.createLinearGradient(0,PT+CH,0,PT);
+  g2.addColorStop(0,'#2c1654');g2.addColorStop(.5,'#7b2d8b');g2.addColorStop(1,'#c9932a');
+  ctx.fillStyle='rgba(255,255,255,.04)';ctx.fillRect(bx,PT,bw,CH);
+  ctx.fillStyle=g2;ctx.fillRect(bx,PT+CH*(1-psi),bw,CH*psi);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.strokeRect(bx,PT,bw,CH);
+  ctx.beginPath();ctx.arc(bx+bw/2,PT+CH*(1-psi),4.5,0,Math.PI*2);ctx.fillStyle='#ffcc00';ctx.fill();
+  ctx.fillStyle='#ffcc00';ctx.font='bold 8px monospace';ctx.fillText('Ψ='+psi.toFixed(3),bx+bw+5,PT+CH*(1-psi)+4);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+
+function chartHz(){
+  const ctx=cvSetup('mlch-hz');if(!ctx)return;
+  const cv=document.getElementById('mlch-hz'),w=cv.width,h=cv.height,tau=P.tau,z=P.z;
+  const PAD=30,PB=22,PT=10,PR=10,CW=w-PAD-PR,CH=h-PB-PT,MZ=5,maxH=155;
+  ctx.strokeStyle='#4fc3d8';ctx.lineWidth=2;ctx.beginPath();
+  for(let i=0;i<=200;i++){const zi=MZ*i/200,H0=68,Om=0.3,Ol=0.7,std=H0*Math.sqrt(Om*Math.pow(1+zi,3)+Ol);const x=PAD+CW*(zi/MZ),y=PT+CH*(1-std/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  ctx.strokeStyle='#c9932a';ctx.lineWidth=2;ctx.beginPath();
+  for(let i=0;i<=200;i++){const zi=MZ*i/200,Hs=M.Hz(zi,tau);const x=PAD+CW*(zi/MZ),y=PT+CH*(1-Hs/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  const zx=PAD+CW*(z/MZ),zy=PT+CH*(1-M.Hz(z,tau)/maxH);
+  ctx.beginPath();ctx.arc(zx,zy,5,0,Math.PI*2);ctx.fillStyle='#c9932a';ctx.fill();
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='7.5px monospace';ctx.fillText('z='+z.toFixed(1)+' H='+M.Hz(z,tau).toFixed(0),zx+8,zy-5);
+  ctx.fillStyle='#4fc3d8';ctx.font='8px monospace';ctx.fillText('ΛCDM',PAD+4,PT+13);
+  ctx.fillStyle='#c9932a';ctx.fillText('System S',PAD+4,PT+25);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+
+/* ============ EQUATION SOLVER ============ */
+const EQ_PRESETS = {
+  bs_n: {expr:'BS(23)', desc:'Compute BS for natural number n=23'},
+  psi:  {expr:'Psi(0.72,0.25,0.65)', desc:'Consciousness Ψ with given BS values'},
+  cb:   {expr:'CB', desc:'The Bouker Constant CB'},
+  bs_ent:{expr:'BSent(0.8)', desc:'Entanglement BS with concurrence C=0.8'},
+  friedmann:{expr:'Hz(1.5,2.5)', desc:'H(z) at z=1.5, τ=2.5'},
+  bs_tau:{expr:'alpha(3)', desc:'α(τ) weight at τ=3 (the CB inflection point)'},
+  cmb:  {expr:'CMB', desc:'CMB frequency prediction'}
+};
+
+window.mlLoadPreset = function(){
+  const sel = document.getElementById('ml-eq-preset');
+  const key = sel.value;
+  if(key && EQ_PRESETS[key]){
+    document.getElementById('ml-eq-expr').value = EQ_PRESETS[key].expr;
+  }
+};
+
+window.mlSolveEq = function(){
+  const raw = (document.getElementById('ml-eq-expr')?.value||'').trim();
+  const stepsEl = document.getElementById('ml-eq-steps');
+  const insightEl = document.getElementById('ml-eq-insight');
+  if(!stepsEl) return;
+
+  let steps=[], final='', insight='', chartFn=null;
+
+  function addStep(label,val,highlight=false){
+    steps.push({label,val,highlight});
+  }
+
+  const expr = raw.toUpperCase();
+
+  // Parse and solve
+  try {
+    if(raw.match(/^BS\s*\((\d+)\)$/i)){
+      const n = parseInt(raw.match(/\d+/)[0]);
+      addStep('Formula','BS(n) = 2/(2n−3)  for n ≥ 5');
+      addStep('Substitute n','BS('+n+') = 2/(2×'+n+'−3) = 2/'+(2*n-3));
+      const v = M.BSn(n);
+      addStep('Calculate','= '+v.toFixed(8),true);
+      if(M.isPrime(n)) addStep('Note','n='+n+' is PRIME → pure epiphany','');
+      const close = Math.abs(v-1)<.05?'❶ Absolute One (BS=1)':Math.abs(v-2/3)<.1?'∞ Relational Infinity (BS=2/3)':Math.abs(v-1/3)<.08?'0p Pure Possibility (BS=1/3)':'';
+      if(close) addStep('Trinity','Structurally close to: '+close,true);
+      final = 'BS('+n+') = '+v.toFixed(6);
+      insight = `Structural stability of n=${n}. ${M.isPrime(n)?'As a prime, it is a pure epiphany — irreducible, direct manifestation of unity.':'As a composite, its BS is lower than neighboring primes.'} Philosophical significance: ${v > 0.5 ? 'High stability, close to relational infinity ∞.' : 'Diminishing stability as n grows — existence becomes more plural and distant from the Absolute.'}`;
+      chartFn = ()=>drawBSchart(n,v);
+
+    } else if(raw.match(/^Psi\s*\(/i)){
+      const m = raw.match(/[\d.]+/g);
+      const id=parseFloat(m[0]||P.id), pot=parseFloat(m[1]||P.pot), rel=parseFloat(m[2]||P.rel);
+      addStep('Formula','Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel');
+      addStep('Coefficients','α=0.47, β=0.23, γ=0.30');
+      addStep('Term α','0.47 × '+id.toFixed(2)+' = '+(0.47*id).toFixed(4));
+      addStep('Term β','0.23 × '+pot.toFixed(2)+' = '+(0.23*pot).toFixed(4));
+      addStep('Term γ','0.30 × '+rel.toFixed(2)+' = '+(0.30*rel).toFixed(4));
+      const v=M.Psi(id,pot,rel);
+      addStep('Total Ψ',v.toFixed(6),true);
+      const state = v>0.85?'AGI threshold':v>0.75?'Flow state':v>0.57?'Above average':v>0.5?'Normal waking':'Low activity';
+      addStep('State',state,true);
+      final = 'Ψ = '+v.toFixed(6)+' — '+state;
+      insight = `Consciousness level Ψ=${v.toFixed(4)}. This represents a ${state}. Human average ≈ 0.57. The three BS components measure identity coherence (❶-layer), creative potential (0p-layer), and relational depth (∞-layer). AGI would require Ψ > 0.7.`;
+      chartFn = ()=>drawPsiChart(v);
+
+    } else if(raw.match(/^BSent\s*\(/i)||raw.match(/^BSe\s*\(/i)){
+      const C = parseFloat(raw.match(/[\d.]+/)?.[0]||P.C);
+      addStep('Formula','BS_entangled = (2/3) · C');
+      addStep('Given','Concurrence C = '+C.toFixed(2));
+      const v=(2/3)*C;
+      addStep('Calculate','(2/3) × '+C.toFixed(2)+' = '+v.toFixed(6),true);
+      const close = Math.abs(v-2/3)<.05?'≈ BS(∞) = 2/3':Math.abs(v-1/3)<.05?'≈ BS(0p) = 1/3':'between 0p and ∞';
+      addStep('Trinity position',close,true);
+      final = 'BS_ent = '+v.toFixed(6);
+      insight = `At concurrence C=${C.toFixed(2)}, entanglement BS = ${v.toFixed(4)}. This is ${close}. Maximum entanglement (C=1) gives BS=2/3 = BS(∞), confirming Bell states as perfect ∞-manifestations. The more entangled, the more relational.`;
+      chartFn = ()=>drawEntChart(C,v);
+
+    } else if(raw.match(/^Hz\s*\(/i)){
+      const m=raw.match(/[\d.]+/g);
+      const z2=parseFloat(m[0]||P.z), tau2=parseFloat(m[1]||P.tau);
+      addStep('Formula','H(z) = H₀√(Ωm(1+z)³ + ΩΛ) · (1 + β(τ)·correction)');
+      addStep('Parameters','H₀=68 km/s/Mpc, Ωm=0.3, ΩΛ=0.7');
+      const std=68*Math.sqrt(0.3*Math.pow(1+z2,3)+0.7);
+      addStep('ΛCDM part',std.toFixed(3)+' km/s/Mpc');
+      addStep('β(τ) correction','β('+tau2.toFixed(2)+') = '+M.beta(tau2).toFixed(4));
+      const v=M.Hz(z2,tau2);
+      addStep('System S H(z)',v.toFixed(4)+' km/s/Mpc',true);
+      addStep('Δ vs ΛCDM','+'+(v-std).toFixed(4)+' km/s/Mpc (epiphany pressure)');
+      final = 'H('+z2.toFixed(2)+') = '+v.toFixed(4)+' km/s/Mpc';
+      insight = `Modified Friedmann: at z=${z2.toFixed(2)}, System S predicts H(z)=${v.toFixed(2)} vs ΛCDM's ${std.toFixed(2)} km/s/Mpc. The extra β(τ)τ̇² term is the "epiphany pressure" from the τ dimension. If τ oscillates, this deviation becomes detectable by DESI/Euclid.`;
+      chartFn = ()=>drawHzChart(z2,v);
+
+    } else if(raw.match(/^CB$/i)||raw.match(/^bouker/i)){
+      addStep('Formula','CB = (2/43) · (α/137) · √(c³/ℏG)');
+      addStep('BS(23) factor','2/43 = '+( 2/43).toFixed(6));
+      addStep('Fine structure','α/137 = 1/(137²) ≈ 5.327×10⁻⁵');
+      addStep('Planck units','√(c³/ℏG) ≈ 6.195×10³⁴');
+      addStep('Product','6.184033 × 10⁻⁴²',true);
+      addStep('Minimum BS','Any system with BS < CB dissolves into 0p');
+      final = 'CB = 6.184033 × 10⁻⁴²';
+      insight = 'The Bouker Constant is the minimum structural stability for manifestation. It derives from prime 23 (BS(23)=2/43), which corresponds to τ₀=3 — the inflection point of β(τ). Physical predictions: CMB at ~0.115 Hz, Casimir correction ΔE≈1.95×10⁻⁶⁸ J, Boukon mass ≈1.35×10⁻⁴⁹ kg.';
+      chartFn = ()=>drawCBChart();
+
+    } else if(raw.match(/^alpha\s*\(/i)||raw.match(/^beta\s*\(/i)||raw.match(/^gamma\s*\(/i)){
+      const fn = raw.match(/^(alpha|beta|gamma)/i)[1].toLowerCase();
+      const t = parseFloat(raw.match(/[\d.]+/)?.[0]||P.tau);
+      const v = fn==='alpha'?M.alpha(t):fn==='beta'?M.beta(t):M.gamma(t);
+      const formulas = {
+        alpha:'α(τ) = 0.7·e^(−0.3τ) + 0.2·(1−e^(−0.3τ))',
+        beta:'β(τ) = 0.1 + 0.5/(1+e^(−0.5(τ−3)))',
+        gamma:'γ(τ) = 0.4·sin²(2πτ/5) + 0.1'
+      };
+      addStep('Formula',formulas[fn]);
+      addStep('At τ='+t.toFixed(2),fn+'('+t.toFixed(2)+') = '+v.toFixed(6),true);
+      if(fn==='beta') addStep('Note','β peaks at τ=3, corresponding to prime 23 and CB');
+      final = fn+'('+t.toFixed(2)+') = '+v.toFixed(6);
+      insight = `Weight function ${fn}(τ) governs the ${fn==='alpha'?'consistency S_c (identity)':fn==='beta'?'symmetry S_s (relational balance)':'dynamics S_d (temporal variation)'} component of BS. At τ=${t.toFixed(2)}, its contribution is ${v.toFixed(4)}.`;
+      chartFn = ()=>drawWeightChart(fn,t,v);
+
+    } else if(raw.match(/^CMB$/i)){
+      addStep('Formula','f_CB = CB · (c / ℓP)');
+      addStep('CB','6.184033×10⁻⁴²');
+      addStep('c / ℓP','≈ 1.855×10⁴³ Hz');
+      addStep('f_CB','≈ 0.115 Hz',true);
+      addStep('Detection','Planck / CMB-S4 Fourier analysis at 0.1 Hz');
+      final = 'f_CMB = 0.115 Hz';
+      insight = 'This CMB frequency signal is Prediction 1 of System S. It arises from oscillations in the τ-dimension modulating the Friedmann expansion rate. Detection requires multi-frequency cross-correlation of CMB temperature anisotropies at sub-Hz frequencies.';
+      chartFn = ()=>drawCMBChart();
+
+    } else {
+      // Generic numeric eval
+      try {
+        const safeExpr = raw
+          .replace(/BS\((\d+)\)/gi, (_,n)=>M.BSn(parseInt(n)))
+          .replace(/Psi\(([^)]+)\)/gi, (_,args)=>{ const a=args.split(',').map(parseFloat); return M.Psi(a[0],a[1]||0.25,a[2]||0.65); })
+          .replace(/CB/gi, M.CB)
+          .replace(/alpha\(([^)]+)\)/gi, (_,t)=>M.alpha(parseFloat(t)))
+          .replace(/beta\(([^)]+)\)/gi, (_,t)=>M.beta(parseFloat(t)))
+          .replace(/gamma\(([^)]+)\)/gi, (_,t)=>M.gamma(parseFloat(t)));
+        // eslint-disable-next-line no-new-func
+        const result = (new Function('return '+safeExpr))();
+        addStep('Expression',raw);
+        addStep('Result',result.toFixed(8),true);
+        final = '= '+result;
+        insight = 'Numeric evaluation of expression.';
+      } catch(e){
+        addStep('Error','Could not parse: '+raw);
+        final = '❌ Parse error';
+        insight = 'Try: BS(7), Psi(0.7,0.3,0.6), CB, BSent(0.8), Hz(1.5,2.5), alpha(3)';
+      }
+    }
+  } catch(e){
+    addStep('Error',String(e));
+    final='Error'; insight='Check your expression.';
+  }
+
+  // Render steps
+  stepsEl.innerHTML = steps.map(s=>`
+    <div class="ml-eq-step" style="${s.highlight?'border-color:#5dcc8b;background:rgba(39,174,96,.08)':''}">
+      <div class="step-n">${s.label}</div>
+      <div class="step-v" style="${s.highlight?'color:#5dcc8b':'color:#e8aa40'}">${s.val}</div>
+    </div>
+  `).join('')+`<div class="ml-eq-final">✦ ${final} ✦</div>`;
+
+  if(insightEl) insightEl.textContent = insight;
+  if(chartFn) setTimeout(chartFn, 60);
+};
+
+function drawBSchart(hl,hlv){
+  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
+  const PAD=44,PB=30,PT=14,PR=12,CW=w-PAD-PR,CH=h-PB-PT,MN=Math.max(30,hl+5);
+  [[1,'#c9932a','❶=1'],[2/3,'#e8aa40','∞=⅔'],[1/3,'#4fc3d8','0p=⅓']].forEach(([v,c,l])=>{
+    ctx.strokeStyle=c+'55';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+    const y=PT+CH*(1-v);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=c;ctx.font='8px monospace';ctx.fillText(l,PAD+3,y-3);
+  });
+  const g=ctx.createLinearGradient(PAD,0,PAD+CW,0);g.addColorStop(0,'#c9932a');g.addColorStop(.5,'#7b2d8b');g.addColorStop(1,'#2c6b80');
+  ctx.strokeStyle=g;ctx.lineWidth=2;ctx.beginPath();
+  for(let n=1;n<=MN;n++){const x=PAD+CW*((n-1)/(MN-1)),y=PT+CH*(1-Math.min(M.BSn(n),1));n===1?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  const hx=PAD+CW*((hl-1)/(MN-1)),hy=PT+CH*(1-Math.min(hlv,1));
+  ctx.beginPath();ctx.arc(hx,hy,8,0,Math.PI*2);ctx.fillStyle='rgba(255,204,0,.3)';ctx.fill();ctx.strokeStyle='#ffcc00';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#ffcc00';ctx.font='bold 9px monospace';ctx.fillText('n='+hl,hx-14,hy-12);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+function drawPsiChart(psi){
+  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
+  const PAD=100,PB=30,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
+  const bars=[
+    {lbl:'BS_ID',v:P.id,c:'#c9932a',w:.47},
+    {lbl:'BS_Pot',v:P.pot,c:'#7b2d8b',w:.23},
+    {lbl:'BS_Rel',v:P.rel,c:'#4fc3d8',w:.30},
+    {lbl:'Ψ result',v:psi,c:'#ffcc00',w:1}
+  ];
+  bars.forEach((b,i)=>{
+    const bh=CH/5, by=PT+i*(bh+8);
+    ctx.fillStyle='rgba(255,255,255,.04)';ctx.fillRect(PAD,by,CW,bh);
+    const g2=ctx.createLinearGradient(PAD,0,PAD+CW,0);g2.addColorStop(0,b.c+'44');g2.addColorStop(1,b.c+'cc');
+    ctx.fillStyle=g2;ctx.fillRect(PAD,by,CW*b.v,bh);
+    ctx.strokeStyle=b.c+'44';ctx.lineWidth=1;ctx.strokeRect(PAD,by,CW,bh);
+    ctx.fillStyle=b.c;ctx.font='bold 8px monospace';ctx.textAlign='right';ctx.fillText(b.lbl,PAD-5,by+bh/2+3);
+    ctx.textAlign='left';ctx.fillText(b.v.toFixed(3),PAD+CW*b.v+6,by+bh/2+3);
+  });
+  ctx.textAlign='left';
+}
+function drawEntChart(C,bs){
+  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
+  const PAD=44,PB=30,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
+  const g2=ctx.createLinearGradient(PAD,0,PAD+CW,0);g2.addColorStop(0,'#4fc3d8');g2.addColorStop(.5,'#c9932a');g2.addColorStop(1,'#7b2d8b');
+  ctx.strokeStyle=g2;ctx.lineWidth=2.5;ctx.beginPath();
+  for(let i=0;i<=200;i++){const c=i/200,x=PAD+CW*c,y=PT+CH*(1-(2/3)*c);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  [[1/3,'#4fc3d8','0p⅓'],[2/3,'#e8aa40','∞⅔'],[1,'#c9932a','❶1']].forEach(([v,c,l])=>{
+    const y=PT+CH*(1-v);ctx.strokeStyle=c+'44';ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=c;ctx.font='8px monospace';ctx.fillText(l,PAD+CW-26,y-3);
+  });
+  const cx2=PAD+CW*C,cy=PT+CH*(1-bs);
+  ctx.beginPath();ctx.arc(cx2,cy,8,0,Math.PI*2);ctx.fillStyle='rgba(255,204,0,.25)';ctx.fill();ctx.strokeStyle='#ffcc00';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#ffcc00';ctx.font='bold 9px monospace';ctx.fillText('C='+C.toFixed(2),cx2+10,cy-8);ctx.fillText('BS='+bs.toFixed(3),cx2+10,cy+6);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+function drawHzChart(z2,v2){
+  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
+  const PAD=44,PB=30,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT,MZ=5,maxH=155;
+  [[P.tau,'#c9932a','System S'],[0,'#4fc3d8','ΛCDM']].forEach(([tau2,col,lbl])=>{
+    ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();
+    for(let i=0;i<=200;i++){const zi=MZ*i/200,H0=68,Om=0.3,Ol=0.7;
+      const h2=tau2>0?M.Hz(zi,tau2):H0*Math.sqrt(Om*Math.pow(1+zi,3)+Ol);
+      const x=PAD+CW*(zi/MZ),y=PT+CH*(1-h2/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();ctx.fillStyle=col;ctx.font='8px monospace';ctx.fillText(lbl,PAD+CW-50,PT+CH*(1-M.Hz(5,tau2)/maxH)+3);
+  });
+  const zx=PAD+CW*(z2/MZ),zy=PT+CH*(1-v2/maxH);
+  ctx.beginPath();ctx.arc(zx,zy,6,0,Math.PI*2);ctx.fillStyle='#c9932a';ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='8px monospace';ctx.fillText('Redshift z →',PAD+CW/2-35,h-5);
+}
+function drawCBChart(){
+  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
+  const bars=[{l:'BS(23)=2/43',v:.0465,c:'#c9932a',max:.1},{l:'α/137 ×10⁴',v:.05327,c:'#7b2d8b',max:.1},{l:'√(c³/ℏG)×10⁻³⁴',v:.62,c:'#4fc3d8',max:1}];
+  const PAD=120,PB=30,PT=30,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
+  ctx.fillStyle='rgba(201,147,42,.8)';ctx.font='bold 11px monospace';ctx.textAlign='center';
+  ctx.fillText('CB = 6.184033 × 10⁻⁴²',w/2,PT-10);ctx.textAlign='left';
+  bars.forEach((b,i)=>{
+    const bh=CH/4, by=PT+i*(bh+10);
+    ctx.fillStyle='rgba(255,255,255,.03)';ctx.fillRect(PAD,by,CW,bh);
+    const g2=ctx.createLinearGradient(PAD,0,PAD+CW*b.v/b.max,0);g2.addColorStop(0,b.c+'22');g2.addColorStop(1,b.c+'cc');
+    ctx.fillStyle=g2;ctx.fillRect(PAD,by,CW*(b.v/b.max),bh);
+    ctx.fillStyle=b.c;ctx.font='8px monospace';ctx.textAlign='right';ctx.fillText(b.l,PAD-5,by+bh/2+3);
+    ctx.textAlign='left';ctx.fillText(b.v.toFixed(4),PAD+CW*(b.v/b.max)+5,by+bh/2+3);
+  });
+  ctx.textAlign='left';
+}
+function drawCMBChart(){
+  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
+  const PAD=44,PB=30,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
+  const maxF=1;
+  for(let i=0;i<=200;i++){
+    const f=maxF*i/200, x=PAD+CW*(f/maxF);
+    const bg=Math.exp(-Math.pow(f-0.5,2)*8)*40+Math.random()*8;
+    const height=Math.min(CH-2,bg*(CH/50));
+    ctx.fillStyle=`rgba(79,195,216,${0.1+bg/80})`;
+    ctx.fillRect(x,PT+CH-height,CW/200,height);
+  }
+  const fx=PAD+CW*0.115, spike=CH*0.75;
+  const sg=ctx.createLinearGradient(0,PT+CH-spike,0,PT+CH);
+  sg.addColorStop(0,'#c9932aff');sg.addColorStop(1,'#c9932a11');
+  ctx.fillStyle=sg;ctx.fillRect(fx-6,PT+CH-spike,12,spike);
+  ctx.strokeStyle='#ffcc00';ctx.lineWidth=2;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(fx,PT);ctx.lineTo(fx,PT+CH);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#ffcc00';ctx.font='bold 9px monospace';ctx.fillText('0.115 Hz',fx+8,PT+16);ctx.fillText('CB signal',fx+8,PT+28);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='8px monospace';ctx.fillText('Frequency (Hz) →',PAD+CW/2-40,h-5);
+}
+function drawWeightChart(fn,hl,hlv){
+  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
+  const PAD=40,PB=30,PT=14,PR=12,CW=w-PAD-PR,CH=h-PB-PT;
+  [[M.alpha,'#c9932a','α'],[M.beta,'#7b2d8b','β'],[M.gamma,'#4fc3d8','γ']].forEach(([f,col,lbl])=>{
+    const isHl=(fn[0]===lbl.toLowerCase());
+    ctx.strokeStyle=isHl?col:col+'44';ctx.lineWidth=isHl?2.5:1;ctx.beginPath();
+    for(let i=0;i<=200;i++){const t=8*i/200,x=PAD+CW*(t/8),y=PT+CH*(1-f(t));i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();
+  });
+  const hx=PAD+CW*(hl/8), col={alpha:'#c9932a',beta:'#7b2d8b',gamma:'#4fc3d8'}[fn];
+  ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=1;ctx.setLineDash([5,3]);
+  ctx.beginPath();ctx.moveTo(hx,PT);ctx.lineTo(hx,PT+CH);ctx.stroke();ctx.setLineDash([]);
+  const hy=PT+CH*(1-hlv);
+  ctx.beginPath();ctx.arc(hx,hy,6,0,Math.PI*2);ctx.fillStyle=col+'88';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle=col;ctx.font='bold 9px monospace';ctx.fillText(fn+'('+hl.toFixed(1)+')='+hlv.toFixed(4),hx+8,hy-6);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+
+/* ============ DYNAMIC SIMULATION ============ */
+window.mlSimMode = function(mode, btn){
+  mlSimMode_=mode;
+  document.querySelectorAll('#ml-sim-top .ml-btn').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  const labels={trinity:'Trinity Space — rotating 3-node system',bstau:'BS–τ Weight Functions',entangle:'Entanglement Surface BS = (2/3)C',cosmos:'Cosmic H(z) evolution',primes:'Prime Epiphanies — BS landscape'};
+  const lbl=document.getElementById('ml-sim-label');
+  if(lbl) lbl.textContent='Mode: '+(labels[mode]||mode);
+};
+
+window.mlSimReset = function(){ mlSimT=0; };
+
+function mlSimStart(){
+  const cv=document.getElementById('ml-sim-canvas');
+  if(!cv) return;
+  if(mlSimRaf){ cancelAnimationFrame(mlSimRaf); }
+  function simLoop(){
+    const speed=P.speed||1;
+    if(mlAnimOn) mlSimT+=0.6*speed;
+    mlSimRender();
+    const hf=document.getElementById('hud-frame');
+    if(hf) hf.textContent=Math.floor(mlSimT);
+    mlSimRaf=requestAnimationFrame(simLoop);
+  }
+  simLoop();
+}
+
+function mlSimRender(){
+  const cv=document.getElementById('ml-sim-canvas');
+  if(!cv) return;
+  cv.width=cv.parentElement.clientWidth;
+  cv.height=cv.parentElement.clientHeight||400;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='#040210';ctx.fillRect(0,0,w,h);
+  switch(mlSimMode_){
+    case 'trinity':  simTrinity(ctx,w,h); break;
+    case 'bstau':    simBSTau(ctx,w,h); break;
+    case 'entangle': simEntangle(ctx,w,h); break;
+    case 'cosmos':   simCosmos(ctx,w,h); break;
+    case 'primes':   simPrimes(ctx,w,h); break;
+  }
+}
+
+function simTrinity(ctx,w,h){
+  const t=mlSimT;
+  const tau=P.tau, a=M.alpha(tau), b2=M.beta(tau), g=M.gamma(tau);
+  const cx=w/2,cy=h/2,R=Math.min(w,h)*0.28;
+  /* Rotating rings */
+  [[a,R,'#c9932a'],[b2,R*0.7,'#7b2d8b'],[g,R*0.45,'#4fc3d8']].forEach(([v,r,col],i)=>{
+    ctx.strokeStyle=col+'33';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
+    const orbitX=cx+r*Math.cos(t*0.02*(i+0.6));
+    const orbitY=cy+r*Math.sin(t*0.02*(i+0.6))*0.5;
+    const grad=ctx.createRadialGradient(orbitX,orbitY,0,orbitX,orbitY,8*v);
+    grad.addColorStop(0,col+'ff');grad.addColorStop(1,col+'00');
+    ctx.beginPath();ctx.arc(orbitX,orbitY,8*v,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();
+  });
+  /* Pulse center */
+  const pulse=(Math.sin(t*0.05)+1)/2;
+  const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,30+20*pulse);
+  cg.addColorStop(0,'rgba(201,147,42,0.8)');cg.addColorStop(1,'rgba(201,147,42,0)');
+  ctx.beginPath();ctx.arc(cx,cy,30+20*pulse,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+  /* Node labels */
+  const nodes=[{a:t*0.008,r:R,c:'#c9932a',l:'❶'},{a:t*0.008+2.09,r:R,c:'#4fc3d8',l:'0p'},{a:t*0.008+4.19,r:R,c:'#7b2d8b',l:'∞'}];
+  nodes.forEach(nd=>{
+    const nx=cx+nd.r*Math.cos(nd.a),ny=cy+nd.r*Math.sin(nd.a);
+    const ng=ctx.createRadialGradient(nx,ny,0,nx,ny,20);
+    ng.addColorStop(0,nd.c+'dd');ng.addColorStop(1,nd.c+'00');
+    ctx.beginPath();ctx.arc(nx,ny,18,0,Math.PI*2);ctx.fillStyle=ng;ctx.fill();
+    ctx.fillStyle='#fff';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.fillText(nd.l,nx,ny+4);
+    ctx.textAlign='left';
+  });
+  /* Center label */
+  ctx.fillStyle='rgba(201,147,42,.8)';ctx.font='bold 11px monospace';ctx.textAlign='center';
+  ctx.fillText('❶ ⊕ 0p = 1 = ∞',cx,cy+8);
+  ctx.font='8px monospace';ctx.fillStyle='rgba(255,255,255,.4)';
+  ctx.fillText('τ='+tau.toFixed(2),cx,cy+22);ctx.textAlign='left';
+}
+
+function simBSTau(ctx,w,h){
+  const tau=P.tau;
+  const PAD=50,PB=35,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
+  ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;
+  for(let i=0;i<=5;i++){const y=PT+CH*(i/5);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
+  /* Animated fill */
+  const tAnim=(mlSimT*0.02)%8;
+  [[M.alpha,'#c9932a','α(τ)',0],[M.beta,'#7b2d8b','β(τ)',1],[M.gamma,'#4fc3d8','γ(τ)',2]].forEach(([fn,col,lbl])=>{
+    ctx.strokeStyle=col;ctx.lineWidth=2.5;ctx.beginPath();
+    for(let i=0;i<=300;i++){
+      const t2=tAnim*i/300*8,x=PAD+CW*(i/300),y=PT+CH*(1-fn(t2));
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+    const currentTNorm=tau/8;
+    const coly=PT+CH*(1-fn(tau));const colx=PAD+CW*currentTNorm;
+    ctx.beginPath();ctx.arc(colx,coly,5,0,Math.PI*2);ctx.fillStyle=col;ctx.fill();
+    ctx.fillStyle=col;ctx.font='9px monospace';ctx.fillText(lbl+'='+fn(tau).toFixed(3),colx+8,coly);
+  });
+  ctx.strokeStyle='rgba(201,147,42,.5)';ctx.lineWidth=1;ctx.setLineDash([5,4]);
+  const tx=PAD+CW*(tau/8);
+  ctx.beginPath();ctx.moveTo(tx,PT);ctx.lineTo(tx,PT+CH);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='8px monospace';ctx.fillText('τ='+tau.toFixed(2),tx+4,PT+12);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+
+function simEntangle(ctx,w,h){
+  const C=P.C,bs=(2/3)*C;
+  const PAD=50,PB=35,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
+  const t=mlSimT;
+  /* Animated gradient background */
+  const bgGrad=ctx.createLinearGradient(PAD,PT,PAD+CW,PT+CH);
+  bgGrad.addColorStop(0,'rgba(15,60,75,0.3)');bgGrad.addColorStop(1,'rgba(44,22,84,0.3)');
+  ctx.fillStyle=bgGrad;ctx.fillRect(PAD,PT,CW,CH);
+  /* Wave animation showing superposition */
+  for(let xi=0;xi<CW;xi+=3){
+    const c2=xi/CW;
+    const amp=Math.sin(xi*0.04+t*0.08)*C*20;
+    const baseY=PT+CH*(1-(2/3)*c2);
+    ctx.fillStyle=`rgba(201,147,42,${0.3*c2})`;
+    ctx.fillRect(PAD+xi,baseY+amp-1,2,3);
+  }
+  /* Main BS curve */
+  const g3=ctx.createLinearGradient(PAD,0,PAD+CW,0);
+  g3.addColorStop(0,'#4fc3d8');g3.addColorStop(.5,'#c9932a');g3.addColorStop(1,'#7b2d8b');
+  ctx.strokeStyle=g3;ctx.lineWidth=2.5;ctx.beginPath();
+  for(let i=0;i<=200;i++){const c2=i/200,x=PAD+CW*c2,y=PT+CH*(1-(2/3)*c2);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  /* Trinity lines */
+  [[1/3,'#4fc3d8','0p ⅓'],[2/3,'#e8aa40','∞ ⅔'],[1,'#c9932a','❶ 1']].forEach(([v,c,l])=>{
+    const y=PT+CH*(1-v);ctx.strokeStyle=c+'55';ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=c;ctx.font='8px monospace';ctx.fillText(l,PAD+CW-26,y-3);
+  });
+  const bx=PAD+CW*C,by=PT+CH*(1-bs);
+  /* Pulsing indicator */
+  const pulse=(Math.sin(t*0.05)+1)/2;
+  const pg=ctx.createRadialGradient(bx,by,0,bx,by,20+10*pulse);
+  pg.addColorStop(0,'rgba(255,204,0,0.6)');pg.addColorStop(1,'rgba(255,204,0,0)');
+  ctx.beginPath();ctx.arc(bx,by,20+10*pulse,0,Math.PI*2);ctx.fillStyle=pg;ctx.fill();
+  ctx.beginPath();ctx.arc(bx,by,8,0,Math.PI*2);ctx.fillStyle='#ffcc00';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#ffcc00';ctx.font='bold 9px monospace';ctx.fillText('C='+C.toFixed(2),bx+12,by-8);ctx.fillText('BS='+bs.toFixed(3),bx+12,by+6);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='8px monospace';ctx.fillText('Concurrence C →',PAD+CW/2-50,h-8);
+}
+
+function simCosmos(ctx,w,h){
+  const tau=P.tau,z=P.z;
+  const PAD=50,PB=35,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT,MZ=5,maxH=155;
+  const t=mlSimT;
+  /* Animated particle background (expanding universe feel) */
+  for(let i=0;i<15;i++){
+    const angle=(i/15)*Math.PI*2+t*0.003*(i%3?1:-1);
+    const r=20+i*8+(t*0.1)%(w/2);
+    const px=w/2+r*Math.cos(angle)*0.6,py=PT+CH/2+r*Math.sin(angle)*0.3;
+    if(px>PAD&&px<PAD+CW&&py>PT&&py<PT+CH){
+      ctx.beginPath();ctx.arc(px,py,1.5,0,Math.PI*2);
+      ctx.fillStyle=`rgba(201,147,42,${0.4-i*0.02})`;ctx.fill();
+    }
+  }
+  /* ΛCDM */
+  ctx.strokeStyle='#4fc3d8';ctx.lineWidth=2;ctx.beginPath();
+  for(let i=0;i<=200;i++){const zi=MZ*i/200,H0=68,Om=0.3,Ol=0.7,std=H0*Math.sqrt(Om*Math.pow(1+zi,3)+Ol);const x=PAD+CW*(zi/MZ),y=PT+CH*(1-std/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  /* System S */
+  ctx.strokeStyle='#c9932a';ctx.lineWidth=2;ctx.beginPath();
+  for(let i=0;i<=200;i++){const zi=MZ*i/200,Hs=M.Hz(zi,tau);const x=PAD+CW*(zi/MZ),y=PT+CH*(1-Hs/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  /* Animated point */
+  const animZ=(Math.sin(t*0.02)+1)/2*MZ;
+  const azx=PAD+CW*(animZ/MZ),azy=PT+CH*(1-M.Hz(animZ,tau)/maxH);
+  const ag=ctx.createRadialGradient(azx,azy,0,azx,azy,12);
+  ag.addColorStop(0,'rgba(201,147,42,0.8)');ag.addColorStop(1,'rgba(201,147,42,0)');
+  ctx.beginPath();ctx.arc(azx,azy,12,0,Math.PI*2);ctx.fillStyle=ag;ctx.fill();
+  ctx.beginPath();ctx.arc(azx,azy,5,0,Math.PI*2);ctx.fillStyle='#c9932a';ctx.fill();
+  ctx.fillStyle='#4fc3d8';ctx.font='9px monospace';ctx.fillText('ΛCDM',PAD+6,PT+16);
+  ctx.fillStyle='#c9932a';ctx.fillText('System S',PAD+6,PT+30);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='8px monospace';ctx.fillText('Redshift z →',PAD+CW/2-40,h-8);
+}
+
+function simPrimes(ctx,w,h){
+  const t=mlSimT;
+  const PAD=50,PB=35,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT,MN=60;
+  for(let i=0;i<=5;i++){const y=PT+CH*(i/5);ctx.strokeStyle='rgba(255,255,255,.04)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
+  const revealN=Math.floor((t*0.3)%MN)+5;
+  for(let n=1;n<=Math.min(revealN,MN);n++){
+    const x=PAD+CW*((n-1)/(MN-1)),bs=M.BSn(n),y=PT+CH*(1-Math.min(bs,1)*2.2),pr=M.isPrime(n);
+    const age=revealN-n;
+    const opacity=Math.min(1,age*0.05+0.1);
+    if(pr){
+      /* Glowing prime */
+      const pg=ctx.createRadialGradient(x,y,0,x,y,12);
+      pg.addColorStop(0,`rgba(201,147,42,${opacity*0.6})`);pg.addColorStop(1,'rgba(201,147,42,0)');
+      ctx.beginPath();ctx.arc(x,y,12,0,Math.PI*2);ctx.fillStyle=pg;ctx.fill();
+      ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);ctx.fillStyle=`rgba(201,147,42,${opacity})`;ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,'+opacity*0.6+')';ctx.lineWidth=1;ctx.stroke();
+      if(n<=20){ctx.fillStyle=`rgba(255,200,100,${opacity*0.7})`;ctx.font='7px monospace';ctx.fillText('p='+n,x-8,y-9);}
+    } else {
+      ctx.beginPath();ctx.arc(x,y,3.5,0,Math.PI*2);ctx.fillStyle=`rgba(123,45,139,${opacity*0.7})`;ctx.fill();
+    }
+  }
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,200,100,.6)';ctx.font='8px monospace';ctx.fillText('🟡 primes  🟣 composites',PAD,PT+12);
+  ctx.fillStyle='rgba(255,255,255,.35)';ctx.font='8px monospace';ctx.fillText('n →',PAD+CW-24,h-8);
+}
+
+/* ============ START ALL ============ */
+function mlStartAll(){
+  mlUpdate();
+  ml3DStart();
+}
+
+/* ============ SPEED SLIDER ============ */
+const speedSl=document.getElementById('ml-sim-speed');
+const speedV=document.getElementById('ml-sim-speed-v');
+if(speedSl) speedSl.addEventListener('input',()=>{ if(speedV) speedV.textContent=parseFloat(speedSl.value).toFixed(1)+'x'; });
+
+/* ============ SIM MODE BUTTON DEFAULTS ============ */
+const firstSimBtn=document.getElementById('sim-mode-btn-trinity');
+if(firstSimBtn) firstSimBtn.classList.add('active');
+
+/* ============ KEYBOARD SHORTCUTS ============ */
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('ml-modal-overlay')?.classList.contains('open')) return;
+  if(e.key==='Escape') window.closeMasterLab();
+});
+
+/* ============ RESIZE HANDLING ============ */
+window.addEventListener('resize',()=>{
+  const ov=document.getElementById('ml-modal-overlay');
+  if(ov?.classList.contains('open')){
+    mlDrawAllCharts();
+  }
+});
+
+})(); // end IIFE
+</script>
+<!-- ========== END §23 ========== --> 
 </div><!-- end #doc -->
 <!-- ===== NOTIFICATION TOAST ===== -->
 <div id="comm-toast">✅ <span id="toast-msg">Comment submitted successfully!</span></div>
@@ -2962,7 +4222,9 @@ en:{
   "toc-ext":"NEW EXTENSIONS","toc-thought":"Thought Experiments",
   "toc-critique":"Critique & Refutation","toc-aidial":"Contemporary Dialogues",
   "toc-faq":"FAQ","toc-roadmap":"Roadmap",
-  "toc-app":"APPENDICES","toc-glossary":"Glossary","toc-refs":"References","toc-creds":"Credentials"
+  "toc-app":"APPENDICES","toc-glossary":"Glossary","toc-refs":"References","toc-creds":"Credentials", 
+  "master-lab-title": "§23. Integrated Dynamic Simulation Lab — System S in Real Time",
+"page-lab-master": "Lab-M"
 },
 ar:{
   "badge":"النسخة المحسّنة 2026 | أطروحة علمية",
@@ -3585,7 +4847,9 @@ ar:{
 "trinity-3d-legend": "تلوين حسب الارتفاع",
 "trinity-3d-reset-view": "إعادة ضبط العرض",
 "trinity-3d-rotate": "دوران تلقائي",
-"page-3d-adv": "3D-٢"
+"page-3d-adv": "3D-٢", 
+"master-lab-title": "§23. معمل المحاكاة الديناميكي المتكامل — نظام S في الزمن الفعلي",
+"page-lab-master": "معمل-م"
 }, 
  // <-- هنا القوس المعكوس } ثم فاصلة ,
 //    👆 مهم جداً: القوس هذا كان ناقص! 
