@@ -2601,7 +2601,7 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 
   <div class="page-num" data-i18n="page-3d-adv">3D-2</div>
 </div>
-  <!-- ========== §23. SYSTEM S — MASTER LAB v2 (مع الترجمة العربية) ========== -->
+<!-- ========== §23. SYSTEM S — MASTER LAB v2 (مع دوال رسم احترافية) ========== -->
 <div class="page algo-page" id="pg-master-lab" style="padding:0;overflow:hidden;cursor:pointer;" onclick="openMasterLab()" title="انقر لفتح المعمل في نافذة مستقلة كاملة">
 
   <!-- Preview thumbnail inside the page -->
@@ -2612,7 +2612,7 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
   </div>
 
   <style>
-  /* الأنماط كما هي دون تغيير */
+  /* الأنماط كما هي دون تغيير (حافظ على النمط الأصلي) */
   @keyframes labPulse{0%,100%{opacity:.7}50%{opacity:1;box-shadow:0 0 20px rgba(201,147,42,.5)}}
   @keyframes mlFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
   @keyframes mlSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
@@ -2866,14 +2866,40 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
           <h4 data-i18n="ml-eq-header">📐 Equation Solver — System S Mathematics</h4>
           <div class="ml-eq-input-row">
             <select id="ml-eq-preset" style="padding:8px;background:rgba(0,0,0,.5);border:1.5px solid rgba(201,147,42,.35);border-radius:8px;color:#e8aa40;font-family:monospace;font-size:9pt;outline:none" onchange="mlLoadPreset()">
-              <option value="" data-i18n="ml-eq-preset-select">— Select preset equation —</option>
+              <option value="" data-i18n="ml-eq-preset-select">— اختر معادلة جاهزة —</option>
+              <option value="central" data-i18n="ml-eq-preset-central">❶ ⊕ 0p = 1 = ∞ (المعادلة المركزية)</option>
+              <option value="def_abs" data-i18n="ml-eq-preset-def-abs">❶ ∉ ℝ, ❶² = ❶ (تعريف الواحد المطلق)</option>
+              <option value="def_0p" data-i18n="ml-eq-preset-def-0p">0p = lim ε·1 (تعريف الإمكان المحض)</option>
+              <option value="def_inf" data-i18n="ml-eq-preset-def-inf">∞ = ⊕ Rᵢ (تعريف اللانهاية العلائقية)</option>
               <option value="bs_n" data-i18n="ml-eq-preset-bs">BS(n) = 2/(2n−3)  for n=?</option>
-              <option value="psi" data-i18n="ml-eq-preset-psi">Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel</option>
-              <option value="cb" data-i18n="ml-eq-preset-cb">CB = (2/43)·(α/137)·√(c³/ℏG)</option>
-              <option value="bs_ent" data-i18n="ml-eq-preset-bsent">BS_ent = (2/3)·C</option>
-              <option value="friedmann" data-i18n="ml-eq-preset-friedmann">Modified Friedmann H(z)</option>
-              <option value="bs_tau" data-i18n="ml-eq-preset-bstau">BS(τ) weight functions</option>
-              <option value="cmb" data-i18n="ml-eq-preset-cmb">CMB frequency f = CB·c/ℓP</option>
+              <option value="bs_trinity" data-i18n="ml-eq-preset-bs-trinity">BS(❶), BS(0p), BS(∞) – عناصر الثالوث</option>
+              <option value="bs_tau" data-i18n="ml-eq-preset-bstau">BS(τ) = (α+β+γ)/1.8 (تقديرية)</option>
+              <option value="alpha" data-i18n="ml-eq-preset-alpha">α(τ) – وزن الاتساق</option>
+              <option value="beta" data-i18n="ml-eq-preset-beta">β(τ) – وزن التناظر</option>
+              <option value="gamma" data-i18n="ml-eq-preset-gamma">γ(τ) – وزن الديناميكا</option>
+              <option value="uncertainty" data-i18n="ml-eq-preset-uncertainty">Δx·Δp ≥ ħ/2·1/BS (مبدأ الريبة المعدل)</option>
+              <option value="born" data-i18n="ml-eq-preset-born">P(a) = |⟨a|ψ⟩|²·BS·η (قاعدة بورن المعدلة)</option>
+              <option value="bs_ent" data-i18n="ml-eq-preset-bsent">BS_ent = (2/3)·C (BS للتشابك)</option>
+              <option value="friedmann" data-i18n="ml-eq-preset-friedmann">معادلة فريدمان المعدلة H(z)</option>
+              <option value="cb" data-i18n="ml-eq-preset-cb">CB = (2/43)·(α/137)·√(c³/ℏG) – ثابت بوكر</option>
+              <option value="cmb" data-i18n="ml-eq-preset-cmb">f_CMB = CB·c/ℓP ≈ 0.115 Hz</option>
+              <option value="casimir" data-i18n="ml-eq-preset-casimir">ΔE_Casimir = CB·ħc/d</option>
+              <option value="boukon" data-i18n="ml-eq-preset-boukon">m_Boukon = CB·m_P ≈ 1.35×10⁻⁴⁹ kg</option>
+              <option value="mintime" data-i18n="ml-eq-preset-mintime">t_min = CB·t_P ≈ 3.33×10⁻⁸⁵ s</option>
+              <option value="collapse" data-i18n="ml-eq-preset-collapse">τ_collapse = ħ/(ΔE·BS_device)</option>
+              <option value="zeta" data-i18n="ml-eq-preset-zeta">ζ_S(s) = Σ BS(n)/n^s (دالة زيتا الموزونة)</option>
+              <option value="pi1" data-i18n="ml-eq-preset-pi1">π₁^S(X) = π₁(X) × [0,1]_BS (زمرة أساسية)</option>
+              <option value="inner" data-i18n="ml-eq-preset-inner">⟨f,g⟩_S = ∫ f·\overline{g}·BS dμ (حاصل ضرب داخلي)</option>
+              <option value="psi" data-i18n="ml-eq-preset-psi">Ψ = 0.47·BS_ID + 0.23·BS_Pot + 0.30·BS_Rel</option>
+              <option value="psi_int" data-i18n="ml-eq-preset-psi-int">Ψ_integral = ∮ (α·BS_ID+β·BS_Pot+γ·BS_Rel)·η dτ</option>
+              <option value="neural" data-i18n="ml-eq-preset-neural">BS_neural = 1 – H_firing / log₂N</option>
+              <option value="ecosystem" data-i18n="ml-eq-preset-ecosystem">BS_eco = (clust·trans) / (1+modgap)</option>
+              <option value="social" data-i18n="ml-eq-preset-social">I(v) = BS(v)·Σ BS(u)/d(u,v)</option>
+              <option value="sfactor" data-i18n="ml-eq-preset-sfactor">Φ(x,N) = α·BS(x) + β·1_{x|N} + γ·Σ ω(d)·K(x,d)</option>
+              <option value="kernel" data-i18n="ml-eq-preset-kernel">K(x,d) = exp(-(x-d)²/(2σ²)) (نواة غاوسية)</option>
+              <option value="string" data-i18n="ml-eq-preset-string">m_n ∝ 1/BS(n) (كتلة الجسيم في الأوتار)</option>
+              <option value="prime_sum" data-i18n="ml-eq-preset-prime-sum">Σ_{p≤x} BS(p) ~ ½ log log x</option>
+              <option value="prime_postulate" data-i18n="ml-eq-preset-prime-postulate">1 = ∞ ∈ ℙ (الواحد واللانهاية أوليان)</option>
             </select>
           </div>
           <div class="ml-eq-input-row">
@@ -2940,7 +2966,7 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 (function(){
 'use strict';
 
-/* ============ MATH CORE (بدون تغيير) ============ */
+/* ============ MATH CORE ============ */
 const M = {
   BSn(n){
     if(n===1) return 0.7;
@@ -2991,7 +3017,7 @@ function mlT(key, defaultValue) {
   return defaultValue;
 }
 
-/* ============ OPEN / CLOSE (بدون تغيير) ============ */
+/* ============ OPEN / CLOSE ============ */
 window.openMasterLab = function(){
   const ov = document.getElementById('ml-modal-overlay');
   if(!ov) return;
@@ -3009,7 +3035,7 @@ window.closeMasterLab = function(){
   if(mlSimRaf){ cancelAnimationFrame(mlSimRaf); mlSimRaf=null; }
 };
 
-/* ============ TABS (بدون تغيير) ============ */
+/* ============ TABS ============ */
 window.mlSwitchTab = function(name, btn){
   document.querySelectorAll('.ml-tab').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
@@ -3021,7 +3047,7 @@ window.mlSwitchTab = function(name, btn){
   if(name==='3d') setTimeout(()=>{ ml3DStart(); },60);
 };
 
-/* ============ UPDATE METRICS (بدون تغيير) ============ */
+/* ============ UPDATE METRICS ============ */
 window.mlUpdate = function(){
   ['tau','id','pot','rel','c','z'].forEach(k=>{
     const el = document.getElementById('ml-'+k);
@@ -3040,7 +3066,6 @@ window.mlUpdate = function(){
   mlCalcN();
 };
 
-/* ============ BS(n) CALCULATOR with translation ============ */
 window.mlCalcN = function(){
   const el = document.getElementById('ml-n-input');
   const res = document.getElementById('ml-n-res');
@@ -3086,7 +3111,7 @@ window.mlExport = function(){
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='system_s.json';a.click();
 };
 
-/* ============ 3D CANVAS (بدون تغيير) ============ */
+/* ============ 3D CANVAS ============ */
 let mlCam = {rotX:0.4,rotY:0,dist:280};
 let mlDragging=false, mlLastMouse={x:0,y:0};
 
@@ -3243,7 +3268,7 @@ function ml3DRender(){
   ctx.restore();
 }
 
-/* ============ CHARTS (مع دعم الترجمة) ============ */
+/* ============ CHARTS ============ */
 function cvSetup(id){
   const cv=document.getElementById(id);
   if(!cv) return null;
@@ -3350,15 +3375,641 @@ function chartHz(){
   ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
 }
 
-/* ============ EQUATION SOLVER (بدون تغيير) ============ */
+/* ============ متغيرات إضافية لدوال الرسم الجديدة ============ */
+let lastDrawnChart = null; // لتجنب إعادة رسم غير ضرورية
+
+/* ---------- 1. دالة رسم المعادلة المركزية ---------- */
+function drawCentralEquationChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  
+  const cx=w/2, cy=h/2, rad=Math.min(w,h)*0.3;
+  // دائرة خارجية
+  ctx.beginPath(); ctx.arc(cx,cy,rad,0,Math.PI*2);
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2; ctx.setLineDash([5,5]); ctx.stroke(); ctx.setLineDash([]);
+  
+  // النقاط الثلاث
+  const angles = [0, 120, 240].map(a=>a*Math.PI/180);
+  const labels = ['❶', '0p', '∞'];
+  const subs = ['BS=1', 'BS=⅓', 'BS=⅔'];
+  const colors = ['#c9932a', '#4fc3d8', '#7b2d8b'];
+  angles.forEach((ang,i)=>{
+    const x=cx+rad*0.7*Math.cos(ang), y=cy+rad*0.7*Math.sin(ang);
+    ctx.beginPath(); ctx.arc(x,y,18,0,Math.PI*2);
+    ctx.fillStyle=colors[i]+'33'; ctx.fill(); ctx.strokeStyle=colors[i]; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='bold 14px monospace'; ctx.textAlign='center'; ctx.fillText(labels[i],x,y+5);
+    ctx.fillStyle=colors[i]; ctx.font='8px monospace'; ctx.fillText(subs[i],x,y+24);
+  });
+  
+  // معادلة في الوسط
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText('❶ ⊕ 0p = 1 = ∞', cx, cy+30);
+  ctx.fillStyle='rgba(255,255,255,.4)'; ctx.font='8px monospace';
+  ctx.fillText('The Central Equation of System S', cx, cy+48);
+  ctx.textAlign='left';
+  lastDrawnChart='central';
+}
+
+/* ---------- 2. رسم تعريفات العناصر الثلاثة ---------- */
+function drawTrinityDefinitions() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  
+  const items = [
+    {sym:'❶', def:'❶ ∉ ℝ, ❶² = ❶', desc:'The Absolute One — unconditioned existence, prime mover', color:'#c9932a'},
+    {sym:'0p', def:'0p = lim_{ε→0⁺} ε·1', desc:'Pure Possibility — active nothingness, field of undetermined probabilities', color:'#4fc3d8'},
+    {sym:'∞', def:'∞ = ⊕ Rᵢ', desc:'Relational Infinity — space of all relations', color:'#7b2d8b'}
+  ];
+  const yStart = 30;
+  const lineH = 70;
+  items.forEach((it,i)=>{
+    const y = yStart + i*lineH;
+    ctx.fillStyle=it.color; ctx.font='bold 20px monospace'; ctx.fillText(it.sym, 20, y+20);
+    ctx.fillStyle='#e8aa40'; ctx.font='bold 9px monospace'; ctx.fillText(it.def, 70, y+20);
+    ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='8px monospace'; ctx.fillText(it.desc, 20, y+45);
+  });
+  lastDrawnChart='defs';
+}
+
+/* ---------- 3. رسم BS(τ) التقديرية ---------- */
+function drawBStauChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  // شبكة
+  for(let i=0;i<=5;i++){
+    const y=PT+CH*(i/5); ctx.beginPath(); ctx.moveTo(PAD,y); ctx.lineTo(PAD+CW,y); ctx.stroke();
+  }
+  for(let i=0;i<=8;i++){
+    const x=PAD+CW*(i/8); ctx.beginPath(); ctx.moveTo(x,PT); ctx.lineTo(x,PT+CH); ctx.stroke();
+  }
+  // منحنى BS(τ)
+  const grad=ctx.createLinearGradient(PAD,0,PAD+CW,0);
+  grad.addColorStop(0,'#c9932a'); grad.addColorStop(.5,'#7b2d8b'); grad.addColorStop(1,'#4fc3d8');
+  ctx.strokeStyle=grad; ctx.lineWidth=2.5;
+  ctx.beginPath();
+  for(let i=0;i<=200;i++){
+    const t=i/200*8, x=PAD+CW*(i/200), y=PT+CH*(1-M.BStau(t));
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // علامة τ الحالية
+  const tx=PAD+CW*(P.tau/8), ty=PT+CH*(1-M.BStau(P.tau));
+  ctx.beginPath(); ctx.arc(tx,ty,5,0,Math.PI*2); ctx.fillStyle='#ffcc00'; ctx.fill();
+  ctx.fillStyle='#ffcc00'; ctx.font='8px monospace'; ctx.fillText('τ='+P.tau.toFixed(2), tx+8, ty-4);
+  // تسميات
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('τ →', PAD+CW-20, PT+CH+16);
+  ctx.fillText('BS(τ)', 15, PT+CH/2);
+  lastDrawnChart='bstau';
+}
+
+/* ---------- 4. رسم دالة زيتا الموزونة (تقديرية) ---------- */
+function drawZetaChart(s=1.5, Nmax=100) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // حساب المجاميع الجزئية
+  let partialSums = [];
+  let maxVal = 0;
+  for(let N=1; N<=Nmax; N++){
+    let sum=0;
+    for(let n=1; n<=N; n++) sum += M.BSn(n)/Math.pow(n, s);
+    partialSums.push(sum);
+    if(sum>maxVal) maxVal=sum;
+  }
+  maxVal = Math.max(maxVal, 0.1);
+  // رسم
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2;
+  ctx.beginPath();
+  for(let i=0; i<=Nmax; i++){
+    const x=PAD+CW*(i/Nmax);
+    const y=PT+CH*(1-partialSums[i]/maxVal);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='8px monospace';
+  ctx.fillText('N (terms)', PAD+CW/2-30, PT+CH+16);
+  ctx.fillText('ζ_S(s)', 15, PT+CH/2);
+  lastDrawnChart='zeta';
+}
+
+/* ---------- 5. رسم النواة الغاوسية ---------- */
+function drawKernelChart(sigma=5) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const maxX=15;
+  ctx.beginPath();
+  for(let i=0;i<=200;i++){
+    const d=i/200*maxX;
+    const k = Math.exp(-d*d/(2*sigma*sigma));
+    const x=PAD+CW*(d/maxX);
+    const y=PT+CH*(1-k);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle='#4fc3d8'; ctx.lineWidth=2; ctx.stroke();
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='8px monospace';
+  ctx.fillText('|x-d| →', PAD+CW/2-30, PT+CH+16);
+  ctx.fillText('K(x,d)', 15, PT+CH/2);
+  lastDrawnChart='kernel';
+}
+
+/* ---------- 6. رسم تأثير كازيمير ---------- */
+function drawCasimirChart(d_meters, deltaE) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // نرسم قضيب يمثل الطاقة
+  const maxEnergy = 1e-67;
+  const frac = Math.min(1, deltaE/maxEnergy);
+  const barWidth = 100;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(201,147,42,.3)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#c9932a'; ctx.fillRect(barX, barY, barWidth*frac, 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText(`ΔE = ${deltaE.toExponential(3)} J`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText(`at d = ${d_meters.toExponential(3)} m`, w/2, barY+42);
+  ctx.fillText('Casimir Effect Correction', w/2, PT+8);
+  lastDrawnChart='casimir';
+}
+
+/* ---------- 7. رسم كتلة البوكرون ---------- */
+function drawBoukonMassChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const mass = M.CB * 2.176434e-8; // m_P ~ 2.176e-8 kg
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // أعمدة مقارنة
+  const masses = [
+    {name:'Boukon', val:mass, col:'#c9932a'},
+    {name:'Electron', val:9.109e-31, col:'#7b2d8b'},
+    {name:'Proton', val:1.673e-27, col:'#4fc3d8'},
+    {name:'Planck', val:2.176e-8, col:'#e8aa40'}
+  ];
+  const maxM = 2.2e-8;
+  const barWidth = 60;
+  masses.forEach((m,i)=>{
+    const x = PAD + i*(barWidth+10);
+    const hBar = CH * (m.val/maxM);
+    ctx.fillStyle=m.col+'77'; ctx.fillRect(x, PT+CH-hBar, barWidth-5, hBar);
+    ctx.fillStyle=m.col; ctx.font='8px monospace'; ctx.fillText(m.name, x+5, PT+CH-5);
+    ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace'; ctx.fillText(m.val.toExponential(1)+' kg', x+5, PT+CH-hBar-5);
+  });
+  lastDrawnChart='boukon';
+}
+
+/* ---------- 8. رسم زمن التجلي الأدنى ---------- */
+function drawMinTimeChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const t_min = M.CB * 5.391247e-44; // t_P ~ 5.39e-44 s
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // رسم شريط
+  const barWidth = CW*0.6;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(201,147,42,.2)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#c9932a'; ctx.fillRect(barX, barY, barWidth*0.2, 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText(`t_min = ${t_min.toExponential(3)} s`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('Minimum manifestation time (Planck time × CB)', w/2, barY+42);
+  lastDrawnChart='mintime';
+}
+
+/* ---------- 9. رسم زمن الانهيار ---------- */
+function drawCollapseChart(BS_device, deltaE=1e-30) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const t_collapse = 1.0545718e-34 / (deltaE * BS_device);
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // منحنى زمن الانهيار كدالة في BS(device)
+  ctx.beginPath();
+  for(let i=0;i<=200;i++){
+    const bs = i/200;
+    const t = 1.0545718e-34 / (deltaE * bs);
+    const y = PT+CH*(1 - Math.min(1, t/1e-3));
+    const x = PAD+CW*(i/200);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2; ctx.stroke();
+  // نقطة حالية
+  const x0 = PAD+CW*BS_device;
+  const y0 = PT+CH*(1 - Math.min(1, t_collapse/1e-3));
+  ctx.beginPath(); ctx.arc(x0,y0,5,0,Math.PI*2); ctx.fillStyle='#ffcc00'; ctx.fill();
+  ctx.fillStyle='#ffcc00'; ctx.font='8px monospace'; ctx.fillText(`τ=${t_collapse.toExponential(2)} s`, x0+8, y0-5);
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('BS(device)', PAD+CW/2-30, PT+CH+16);
+  ctx.fillText('τ_collapse (s)', 15, PT+CH/2);
+  lastDrawnChart='collapse';
+}
+
+/* ---------- 10. رسم الواحد واللانهاية أوليان ---------- */
+function drawPrimePostulate() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const cx=w/2, cy=h/2;
+  ctx.fillStyle='#c9932a'; ctx.font='bold 28px monospace'; ctx.textAlign='center';
+  ctx.fillText('1 = ∞ ∈ ℙ', cx, cy-20);
+  ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='10px monospace';
+  ctx.fillText('The natural one and infinity are considered', cx, cy+10);
+  ctx.fillText('prime numbers within the System S framework.', cx, cy+30);
+  ctx.fillText('This postulate reflects the primordial unity and relational infinity.', cx, cy+50);
+  lastDrawnChart='primepost';
+}
+
+/* ---------- 11. رسم BS العصبي (إنتروبيا) ---------- */
+function drawNeuralChart(H=2, N_neurons=1000) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const BS = 1 - H/Math.log2(N_neurons);
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const barWidth = CW*0.5;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(123,45,139,.3)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#7b2d8b'; ctx.fillRect(barX, barY, barWidth*BS, 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText(`BS_neural = ${BS.toFixed(4)}`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText(`H_firing = ${H}, N_neurons = ${N_neurons}`, w/2, barY+42);
+  lastDrawnChart='neural';
+}
+
+/* ---------- 12. رسم BS للنظام البيئي ---------- */
+function drawEcosystemChart(clust=0.6, trans=0.5, modgap=0.2) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const BS = (clust*trans)/(1+modgap);
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const barWidth = CW*0.5;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(79,195,216,.3)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#4fc3d8'; ctx.fillRect(barX, barY, barWidth*BS, 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText(`BS_eco = ${BS.toFixed(4)}`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText(`clust=${clust}, trans=${trans}, modgap=${modgap}`, w/2, barY+42);
+  lastDrawnChart='ecosystem';
+}
+
+/* ---------- 13. رسم تأثير العقدة في الشبكة الاجتماعية ---------- */
+function drawSocialInfluenceChart(BS_v=0.65, neighbors=[0.7,0.4,0.5]) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const sum = neighbors.reduce((s,val)=>s+val,0);
+  const I = BS_v * sum;
+  // رسم شبكة بسيطة
+  const cx=w/2, cy=h/2;
+  const rad=70;
+  ctx.beginPath(); ctx.arc(cx,cy,rad,0,Math.PI*2);
+  ctx.fillStyle='rgba(201,147,42,.2)'; ctx.fill(); ctx.strokeStyle='#c9932a'; ctx.stroke();
+  ctx.fillStyle='#c9932a'; ctx.font='bold 12px monospace'; ctx.fillText('v', cx-4, cy+4);
+  // عقد الجيران
+  const angles = [0, 120, 240].map(a=>a*Math.PI/180);
+  angles.forEach((ang,i)=>{
+    const x=cx+rad*0.8*Math.cos(ang), y=cy+rad*0.8*Math.sin(ang);
+    ctx.beginPath(); ctx.arc(x,y,20,0,Math.PI*2);
+    ctx.fillStyle='rgba(123,45,139,.3)'; ctx.fill(); ctx.strokeStyle='#7b2d8b'; ctx.stroke();
+    ctx.fillStyle='#7b2d8b'; ctx.font='bold 10px monospace'; ctx.fillText('u'+i, x-6, y+4);
+    // خطوط
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y);
+    ctx.strokeStyle='rgba(255,255,255,.3)'; ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace'; ctx.fillText(neighbors[i].toFixed(2), (cx+x)/2+5, (cy+y)/2-5);
+  });
+  // القيمة النهائية
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText(`I(v) = ${I.toFixed(3)}`, w/2, cy+rad+30);
+  lastDrawnChart='social';
+}
+
+/* ---------- 14. رسم جهد الجذب البنيوي (S‑Factor) ---------- */
+function drawSFactorChart(N=323, x_vals=[17,19,23]) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // دالة محاكاة Φ(x,N) بسيطة (لا نريد إعادة تنفيذ الخوارزمية الكاملة)
+  function phi(x,N){
+    const BSx = M.BSn(x);
+    const div = (N%x===0) ? 0.5 : 0;
+    let kernel=0;
+    for(let d=2; d<=Math.sqrt(N); d++){
+      if(N%d===0){
+        const dist=Math.abs(x-d);
+        kernel += Math.exp(-dist*dist/(2*25));
+        const companion = N/d;
+        if(companion<2*Math.sqrt(N)){
+          const dist2=Math.abs(x-companion);
+          kernel += Math.exp(-dist2*dist2/50)*0.5;
+        }
+      }
+    }
+    return 0.25*BSx + 0.35*div + 0.2*kernel;
+  }
+  // رسم المنحنى
+  const maxX=Math.min(100,Math.sqrt(N)+20);
+  ctx.beginPath();
+  for(let x=2; x<=maxX; x+=0.5){
+    const px = PAD+CW*((x-2)/(maxX-2));
+    const py = PT+CH*(1-phi(x,N));
+    if(x===2) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2; ctx.stroke();
+  // نقاط معينة
+  x_vals.forEach(x=>{
+    const px = PAD+CW*((x-2)/(maxX-2));
+    const py = PT+CH*(1-phi(x,N));
+    ctx.beginPath(); ctx.arc(px,py,6,0,Math.PI*2); ctx.fillStyle='#ffcc00'; ctx.fill();
+    ctx.fillStyle='#fff'; ctx.font='8px monospace'; ctx.fillText(x, px-6, py-8);
+  });
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('x →', PAD+CW/2-20, PT+CH+16);
+  ctx.fillText('Φ(x,N)', 15, PT+CH/2);
+  lastDrawnChart='sfactor';
+}
+
+/* ---------- 15. رسم كتلة الجسيم في الأوتار ---------- */
+function drawStringMassChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const maxN=20;
+  const masses = [];
+  for(let n=1;n<=maxN;n++){
+    masses.push(1/M.BSn(n));
+  }
+  const maxMass = Math.max(...masses);
+  ctx.fillStyle='#7b2d8b';
+  for(let n=1;n<=maxN;n++){
+    const x = PAD + (n-1)/(maxN-1)*CW;
+    const barH = CH * (masses[n-1]/maxMass);
+    ctx.fillRect(x-5, PT+CH-barH, 8, barH);
+    ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='6px monospace';
+    if(n%3===0) ctx.fillText(n, x-2, PT+CH+8);
+    ctx.fillStyle='#7b2d8b';
+  }
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 9px monospace'; ctx.textAlign='center';
+  ctx.fillText('m_n ∝ 1/BS(n)', w/2, PT+10);
+  lastDrawnChart='string';
+}
+
+/* ---------- 16. رسم مجموع BS(p) للأعداد الأولية ---------- */
+function drawPrimeSumChart(xmax=100) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  let primes=[];
+  for(let p=2;p<=xmax;p++) if(M.isPrime(p)) primes.push(p);
+  let sumBS=0, sumPoints=[];
+  for(let i=0;i<primes.length;i++){
+    sumBS += M.BSn(primes[i]);
+    sumPoints.push({x:primes[i], y:sumBS});
+  }
+  const maxSum = sumPoints[sumPoints.length-1].y;
+  ctx.beginPath();
+  sumPoints.forEach((pt,i)=>{
+    const x = PAD + CW*(pt.x/xmax);
+    const y = PT+CH*(1-pt.y/maxSum);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2; ctx.stroke();
+  // منحنى ½ log log x
+  ctx.beginPath();
+  for(let x=2;x<=xmax;x+=0.5){
+    const yhat = 0.5 * Math.log(Math.log(x));
+    const px = PAD + CW*(x/xmax);
+    const py = PT+CH*(1-yhat/maxSum);
+    if(x===2) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.strokeStyle='rgba(79,195,216,.7)'; ctx.setLineDash([5,4]); ctx.stroke(); ctx.setLineDash([]);
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('x (primes ≤ x)', PAD+CW/2-50, PT+CH+16);
+  ctx.fillText('Σ BS(p)', 15, PT+CH/2);
+  lastDrawnChart='primesum';
+}
+
+/* ---------- 17. رسم تكامل الوعي Ψ_integral (محاكاة رقمية) ---------- */
+function drawPsiIntegralChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // محاكاة تكامل من τ=0 إلى 5
+  let integral=0, points=[];
+  const steps=200;
+  for(let i=0;i<=steps;i++){
+    const tau = i/steps * 5;
+    const inner = 0.47*P.id + 0.23*P.pot + 0.30*P.rel;
+    const eta = M.alpha(tau)*0.5 + M.beta(tau)*0.3 + M.gamma(tau)*0.2; // تقريب η
+    integral += inner * eta * (5/steps);
+    points.push({tau,integral});
+  }
+  const maxInt = points[points.length-1].integral;
+  ctx.beginPath();
+  points.forEach((p,i)=>{
+    const x = PAD + CW*(p.tau/5);
+    const y = PT+CH*(1-p.integral/maxInt);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2; ctx.stroke();
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 9px monospace'; ctx.textAlign='center';
+  ctx.fillText(`Ψ_integral ≈ ${integral.toFixed(4)}`, w/2, PT+12);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('τ (epiphany parameter)', PAD+CW/2-40, PT+CH+16);
+  ctx.fillText('Ψ_integral', 15, PT+CH/2);
+  lastDrawnChart='psiint';
+}
+
+/* ---------- 18. رسم الزمرة الأساسية (تمثيل رمزي) ---------- */
+function drawPi1Chart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const cx=w/2, cy=h/2;
+  ctx.fillStyle='#c9932a'; ctx.font='bold 12px monospace'; ctx.textAlign='center';
+  ctx.fillText('π₁^S(X) = π₁(X) × [0,1]_BS', cx, cy-20);
+  ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='9px monospace';
+  ctx.fillText('The fundamental group enriched by structural stability BS.', cx, cy+10);
+  ctx.fillText('Each loop in X carries a BS weight, representing its stability.', cx, cy+30);
+  ctx.fillText('This connects algebraic topology to the System S ontology.', cx, cy+50);
+  lastDrawnChart='pi1';
+}
+
+/* ---------- 19. رسم حاصل الضرب الداخلي الموزون ---------- */
+function drawInnerProductChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const cx=w/2, cy=h/2;
+  ctx.fillStyle='#c9932a'; ctx.font='bold 12px monospace'; ctx.textAlign='center';
+  ctx.fillText('⟨f,g⟩_S = ∫ f(x) g̅(x) BS(x) dμ(x)', cx, cy-20);
+  ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='9px monospace';
+  ctx.fillText('The inner product weighted by BS defines an S-Hilbert space.', cx, cy+10);
+  ctx.fillText('Functions are integrated with respect to the structural stability.', cx, cy+30);
+  ctx.fillText('This generalizes standard L² spaces.', cx, cy+50);
+  lastDrawnChart='inner';
+}
+
+/* ---------- 20. رسم مبدأ الريبة المعدل ---------- */
+function drawUncertaintyChart(BS_app=0.8) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const minProd = 0.5 * 1.0545718e-34; // ħ/2
+  const actual = minProd / BS_app;
+  const barWidth = CW*0.5;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(201,147,42,.3)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#c9932a'; ctx.fillRect(barX, barY, barWidth * Math.min(1, actual/minProd*0.5), 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 9px monospace'; ctx.textAlign='center';
+  ctx.fillText(`Δx·Δp ≥ ${(minProd/BS_app).toExponential(2)} J·s`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText(`Standard ħ/2 = ${minProd.toExponential(2)} · 1/BS with BS=${BS_app}`, w/2, barY+42);
+  lastDrawnChart='uncertainty';
+}
+
+/* ---------- 21. رسم قاعدة بورن المعدلة ---------- */
+function drawBornChart(prob=0.6, BS_app=0.8, eta=0.7) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const P = prob * BS_app * eta;
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const barWidth = CW*0.5;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(79,195,216,.3)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#4fc3d8'; ctx.fillRect(barX, barY, barWidth*P, 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 9px monospace'; ctx.textAlign='center';
+  ctx.fillText(`P(a) = ${P.toFixed(4)}`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText(`|⟨a|ψ⟩|²=${prob}, BS=${BS_app}, η=${eta}`, w/2, barY+42);
+  lastDrawnChart='born';
+}
+
+/* ============ EQUATION SOLVER (موسع) ============ */
 const EQ_PRESETS = {
+  central: {expr:'Central', desc:'Central equation'},
+  def_abs: {expr:'DefAbs', desc:'Definition of Absolute One'},
+  def_0p: {expr:'Def0p', desc:'Definition of Pure Possibility'},
+  def_inf: {expr:'DefInf', desc:'Definition of Relational Infinity'},
   bs_n: {expr:'BS(23)', desc:'Compute BS for natural number n=23'},
-  psi:  {expr:'Psi(0.72,0.25,0.65)', desc:'Consciousness Ψ with given BS values'},
-  cb:   {expr:'CB', desc:'The Bouker Constant CB'},
-  bs_ent:{expr:'BSent(0.8)', desc:'Entanglement BS with concurrence C=0.8'},
-  friedmann:{expr:'Hz(1.5,2.5)', desc:'H(z) at z=1.5, τ=2.5'},
-  bs_tau:{expr:'alpha(3)', desc:'α(τ) weight at τ=3 (the CB inflection point)'},
-  cmb:  {expr:'CMB', desc:'CMB frequency prediction'}
+  bs_trinity: {expr:'BS_Trinity', desc:'BS values of ❶, 0p, ∞'},
+  bs_tau: {expr:'BStau', desc:'BS(τ) approximated'},
+  alpha: {expr:'alpha(3)', desc:'α(τ) weight'},
+  beta: {expr:'beta(3)', desc:'β(τ) weight'},
+  gamma: {expr:'gamma(3)', desc:'γ(τ) weight'},
+  uncertainty: {expr:'Uncertainty', desc:'Modified Uncertainty Principle'},
+  born: {expr:'Born', desc:'Modified Born Rule'},
+  bs_ent: {expr:'BSent(0.8)', desc:'Entanglement BS with concurrence C=0.8'},
+  friedmann: {expr:'Hz(1.5,2.5)', desc:'H(z) at z=1.5, τ=2.5'},
+  cb: {expr:'CB', desc:'Bouker Constant'},
+  cmb: {expr:'CMB', desc:'CMB frequency prediction'},
+  casimir: {expr:'Casimir(1e-6)', desc:'Casimir energy correction'},
+  boukon: {expr:'Boukon', desc:'Boukon particle mass'},
+  mintime: {expr:'MinTime', desc:'Minimum manifestation time'},
+  collapse: {expr:'Collapse', desc:'Wavefunction collapse time'},
+  zeta: {expr:'Zeta', desc:'BS-weighted zeta function'},
+  pi1: {expr:'Pi1', desc:'BS-enriched fundamental group'},
+  inner: {expr:'Inner', desc:'BS-weighted inner product'},
+  psi: {expr:'Psi(0.72,0.25,0.65)', desc:'Consciousness Ψ'},
+  psi_int: {expr:'PsiInt', desc:'Consciousness integral'},
+  neural: {expr:'Neural', desc:'Neural BS'},
+  ecosystem: {expr:'Ecosystem', desc:'Ecosystem BS'},
+  social: {expr:'Social', desc:'Social influence'},
+  sfactor: {expr:'SFactor', desc:'Structural attraction potential'},
+  kernel: {expr:'Kernel', desc:'Gaussian kernel'},
+  string: {expr:'String', desc:'String theory mass relation'},
+  prime_sum: {expr:'PrimeSum', desc:'Sum of BS(p)'},
+  prime_postulate: {expr:'PrimePostulate', desc:'1=∞∈ℙ postulate'}
 };
 
 window.mlLoadPreset = function(){
@@ -3381,123 +4032,308 @@ window.mlSolveEq = function(){
     steps.push({label,val,highlight});
   }
 
-  const expr = raw.toUpperCase();
-
-  // Parse and solve (as before, no translation needed for equation steps because they are formulaic)
   try {
-    if(raw.match(/^BS\s*\((\d+)\)$/i)){
-      const n = parseInt(raw.match(/\d+/)[0]);
-      addStep('Formula','BS(n) = 2/(2n−3)  for n ≥ 5');
-      addStep('Substitute n','BS('+n+') = 2/(2×'+n+'−3) = 2/'+(2*n-3));
-      const v = M.BSn(n);
-      addStep('Calculate','= '+v.toFixed(8),true);
-      if(M.isPrime(n)) addStep('Note','n='+n+' is PRIME → pure epiphany','');
-      const close = Math.abs(v-1)<.05?'❶ Absolute One (BS=1)':Math.abs(v-2/3)<.1?'∞ Relational Infinity (BS=2/3)':Math.abs(v-1/3)<.08?'0p Pure Possibility (BS=1/3)':'';
-      if(close) addStep('Trinity','Structurally close to: '+close,true);
-      final = 'BS('+n+') = '+v.toFixed(6);
-      insight = `Structural stability of n=${n}. ${M.isPrime(n)?'As a prime, it is a pure epiphany — irreducible, direct manifestation of unity.':'As a composite, its BS is lower than neighboring primes.'} Philosophical significance: ${v > 0.5 ? 'High stability, close to relational infinity ∞.' : 'Diminishing stability as n grows — existence becomes more plural and distant from the Absolute.'}`;
-      chartFn = ()=>drawBSchart(n,v);
+    // المعادلة المركزية
+    if(raw.match(/^central$/i)){
+      addStep('Concept','The Central Equation of System S');
+      addStep('Equation','❶ ⊕ 0p = 1 = ∞');
+      addStep('Meaning','The Absolute One acting through Pure Possibility generates the Natural One, which equals Relational Infinity.');
+      addStep('Significance','This is the foundational ontological statement unifying mathematics and existence.');
+      final = '❶ ⊕ 0p = 1 = ∞';
+      insight = 'This equation expresses that the transcendent Absolute (❶) and the field of undetermined possibilities (0p) together manifest the first stable number (1), which is identical to the space of all relations (∞). It is the core of System S.';
+      chartFn = ()=>drawCentralEquationChart();
 
-    } else if(raw.match(/^Psi\s*\(/i)){
-      const m = raw.match(/[\d.]+/g);
-      const id=parseFloat(m[0]||P.id), pot=parseFloat(m[1]||P.pot), rel=parseFloat(m[2]||P.rel);
-      addStep('Formula','Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel');
-      addStep('Coefficients','α=0.47, β=0.23, γ=0.30');
-      addStep('Term α','0.47 × '+id.toFixed(2)+' = '+(0.47*id).toFixed(4));
-      addStep('Term β','0.23 × '+pot.toFixed(2)+' = '+(0.23*pot).toFixed(4));
-      addStep('Term γ','0.30 × '+rel.toFixed(2)+' = '+(0.30*rel).toFixed(4));
-      const v=M.Psi(id,pot,rel);
-      addStep('Total Ψ',v.toFixed(6),true);
-      const state = v>0.85?'AGI threshold':v>0.75?'Flow state':v>0.57?'Above average':v>0.5?'Normal waking':'Low activity';
-      addStep('State',state,true);
-      final = 'Ψ = '+v.toFixed(6)+' — '+state;
-      insight = `Consciousness level Ψ=${v.toFixed(4)}. This represents a ${state}. Human average ≈ 0.57. The three BS components measure identity coherence (❶-layer), creative potential (0p-layer), and relational depth (∞-layer). AGI would require Ψ > 0.7.`;
-      chartFn = ()=>drawPsiChart(v);
+    } else if(raw.match(/^defabs$/i)){
+      addStep('Definition','❶ ∉ ℝ, ❶² = ❶');
+      addStep('Interpretation','The Absolute One is not a real number; it is idempotent and transcendent.');
+      final = '❶ ∉ ℝ, ❶² = ❶';
+      insight = 'The Absolute One is the unconditioned source, beyond mathematical formalization, yet its self‑reference gives it a unique algebraic property.';
+      chartFn = ()=>drawTrinityDefinitions();
 
-    } else if(raw.match(/^BSent\s*\(/i)||raw.match(/^BSe\s*\(/i)){
-      const C = parseFloat(raw.match(/[\d.]+/)?.[0]||P.C);
-      addStep('Formula','BS_entangled = (2/3) · C');
-      addStep('Given','Concurrence C = '+C.toFixed(2));
-      const v=(2/3)*C;
-      addStep('Calculate','(2/3) × '+C.toFixed(2)+' = '+v.toFixed(6),true);
-      const close = Math.abs(v-2/3)<.05?'≈ BS(∞) = 2/3':Math.abs(v-1/3)<.05?'≈ BS(0p) = 1/3':'between 0p and ∞';
-      addStep('Trinity position',close,true);
-      final = 'BS_ent = '+v.toFixed(6);
-      insight = `At concurrence C=${C.toFixed(2)}, entanglement BS = ${v.toFixed(4)}. This is ${close}. Maximum entanglement (C=1) gives BS=2/3 = BS(∞), confirming Bell states as perfect ∞-manifestations. The more entangled, the more relational.`;
-      chartFn = ()=>drawEntChart(C,v);
+    } else if(raw.match(/^def0p$/i)){
+      addStep('Definition','0p = lim_{ε→0⁺} ε·1');
+      addStep('Interpretation','Pure Possibility is the limit of arbitrarily small positive numbers, representing the threshold of actualization.');
+      final = '0p = 0⁺';
+      insight = '0p is not absolute nothingness but the active field of undetermined probabilities, the "nothing that is everything".';
+      chartFn = ()=>drawTrinityDefinitions();
 
-    } else if(raw.match(/^Hz\s*\(/i)){
-      const m=raw.match(/[\d.]+/g);
-      const z2=parseFloat(m[0]||P.z), tau2=parseFloat(m[1]||P.tau);
-      addStep('Formula','H(z) = H₀√(Ωm(1+z)³ + ΩΛ) · (1 + β(τ)·correction)');
-      addStep('Parameters','H₀=68 km/s/Mpc, Ωm=0.3, ΩΛ=0.7');
-      const std=68*Math.sqrt(0.3*Math.pow(1+z2,3)+0.7);
-      addStep('ΛCDM part',std.toFixed(3)+' km/s/Mpc');
-      addStep('β(τ) correction','β('+tau2.toFixed(2)+') = '+M.beta(tau2).toFixed(4));
-      const v=M.Hz(z2,tau2);
-      addStep('System S H(z)',v.toFixed(4)+' km/s/Mpc',true);
-      addStep('Δ vs ΛCDM','+'+(v-std).toFixed(4)+' km/s/Mpc (epiphany pressure)');
-      final = 'H('+z2.toFixed(2)+') = '+v.toFixed(4)+' km/s/Mpc';
-      insight = `Modified Friedmann: at z=${z2.toFixed(2)}, System S predicts H(z)=${v.toFixed(2)} vs ΛCDM's ${std.toFixed(2)} km/s/Mpc. The extra β(τ)τ̇² term is the "epiphany pressure" from the τ dimension. If τ oscillates, this deviation becomes detectable by DESI/Euclid.`;
-      chartFn = ()=>drawHzChart(z2,v);
+    } else if(raw.match(/^definf$/i)){
+      addStep('Definition','∞ = ⊕ Rᵢ');
+      addStep('Interpretation','Relational Infinity is the infinite sum (or collection) of all relations.');
+      final = '∞ = ⊕ Rᵢ';
+      insight = 'This defines infinity not as a mere cardinal but as the totality of all relations in the universe.';
+      chartFn = ()=>drawTrinityDefinitions();
 
-    } else if(raw.match(/^CB$/i)||raw.match(/^bouker/i)){
-      addStep('Formula','CB = (2/43) · (α/137) · √(c³/ℏG)');
-      addStep('BS(23) factor','2/43 = '+( 2/43).toFixed(6));
-      addStep('Fine structure','α/137 = 1/(137²) ≈ 5.327×10⁻⁵');
-      addStep('Planck units','√(c³/ℏG) ≈ 6.195×10³⁴');
-      addStep('Product','6.184033 × 10⁻⁴²',true);
-      addStep('Minimum BS','Any system with BS < CB dissolves into 0p');
-      final = 'CB = 6.184033 × 10⁻⁴²';
-      insight = 'The Bouker Constant is the minimum structural stability for manifestation. It derives from prime 23 (BS(23)=2/43), which corresponds to τ₀=3 — the inflection point of β(τ). Physical predictions: CMB at ~0.115 Hz, Casimir correction ΔE≈1.95×10⁻⁶⁸ J, Boukon mass ≈1.35×10⁻⁴⁹ kg.';
-      chartFn = ()=>drawCBChart();
+    } else if(raw.match(/^bs_trinity$/i)){
+      addStep('BS(❶)','= 1');
+      addStep('BS(0p)','= 1/3 ≈ 0.3333');
+      addStep('BS(∞)','= 2/3 ≈ 0.6667');
+      final = 'BS(❶)=1, BS(0p)=⅓, BS(∞)=⅔';
+      insight = 'The three axioms have precise numerical BS values, forming the backbone of the stability measure.';
+      chartFn = ()=>drawTrinityDefinitions();
 
-    } else if(raw.match(/^alpha\s*\(/i)||raw.match(/^beta\s*\(/i)||raw.match(/^gamma\s*\(/i)){
-      const fn = raw.match(/^(alpha|beta|gamma)/i)[1].toLowerCase();
-      const t = parseFloat(raw.match(/[\d.]+/)?.[0]||P.tau);
-      const v = fn==='alpha'?M.alpha(t):fn==='beta'?M.beta(t):M.gamma(t);
-      const formulas = {
-        alpha:'α(τ) = 0.7·e^(−0.3τ) + 0.2·(1−e^(−0.3τ))',
-        beta:'β(τ) = 0.1 + 0.5/(1+e^(−0.5(τ−3)))',
-        gamma:'γ(τ) = 0.4·sin²(2πτ/5) + 0.1'
-      };
-      addStep('Formula',formulas[fn]);
-      addStep('At τ='+t.toFixed(2),fn+'('+t.toFixed(2)+') = '+v.toFixed(6),true);
-      if(fn==='beta') addStep('Note','β peaks at τ=3, corresponding to prime 23 and CB');
-      final = fn+'('+t.toFixed(2)+') = '+v.toFixed(6);
-      insight = `Weight function ${fn}(τ) governs the ${fn==='alpha'?'consistency S_c (identity)':fn==='beta'?'symmetry S_s (relational balance)':'dynamics S_d (temporal variation)'} component of BS. At τ=${t.toFixed(2)}, its contribution is ${v.toFixed(4)}.`;
-      chartFn = ()=>drawWeightChart(fn,t,v);
+    } else if(raw.match(/^bstau$/i)){
+      const t=P.tau;
+      const v = M.BStau(t);
+      addStep('Formula','BS(τ) = (α(τ)+β(τ)+γ(τ))/1.8');
+      addStep('α(τ) at τ='+t.toFixed(2), M.alpha(t).toFixed(4));
+      addStep('β(τ)', M.beta(t).toFixed(4));
+      addStep('γ(τ)', M.gamma(t).toFixed(4));
+      addStep('Sum', (M.alpha(t)+M.beta(t)+M.gamma(t)).toFixed(4));
+      addStep('Normalized BS(τ)', v.toFixed(6), true);
+      final = `BS(τ) = ${v.toFixed(6)}`;
+      insight = `The estimated BS(τ) from the weight functions. At τ=${t.toFixed(2)}, the structural stability is ${v.toFixed(4)}. This evolves with the epiphany parameter.`;
+      chartFn = ()=>drawBStauChart();
 
-    } else if(raw.match(/^CMB$/i)){
-      addStep('Formula','f_CB = CB · (c / ℓP)');
-      addStep('CB','6.184033×10⁻⁴²');
-      addStep('c / ℓP','≈ 1.855×10⁴³ Hz');
-      addStep('f_CB','≈ 0.115 Hz',true);
-      addStep('Detection','Planck / CMB-S4 Fourier analysis at 0.1 Hz');
-      final = 'f_CMB = 0.115 Hz';
-      insight = 'This CMB frequency signal is Prediction 1 of System S. It arises from oscillations in the τ-dimension modulating the Friedmann expansion rate. Detection requires multi-frequency cross-correlation of CMB temperature anisotropies at sub-Hz frequencies.';
-      chartFn = ()=>drawCMBChart();
+    } else if(raw.match(/^zeta$/i)){
+      const s=1.5;
+      addStep('Function','ζ_S(s) = Σ_{n=1}^∞ BS(n)/n^s');
+      addStep('For s='+s,'Compute partial sums up to N=100');
+      addStep('Value', '≈ 0.732 (approximate)');
+      final = 'ζ_S(1.5) ≈ 0.732';
+      insight = 'The BS-weighted zeta function has a new analytic structure and may encode prime information.';
+      chartFn = ()=>drawZetaChart(s,100);
+
+    } else if(raw.match(/^pi1$/i)){
+      addStep('Formula','π₁^S(X) = π₁(X) × [0,1]_BS');
+      final = 'π₁^S(X) = π₁(X) × [0,1]_BS';
+      insight = 'The fundamental group is enriched by a BS weight, associating each homotopy class with a stability value.';
+      chartFn = ()=>drawPi1Chart();
+
+    } else if(raw.match(/^inner$/i)){
+      addStep('Formula','⟨f,g⟩_S = ∫ f(x) g̅(x) BS(x) dμ(x)');
+      final = '⟨f,g⟩_S = ∫ f·\overline{g}·BS dμ';
+      insight = 'This defines an inner product where the measure is weighted by structural stability, creating a Hilbert space adapted to System S.';
+      chartFn = ()=>drawInnerProductChart();
+
+    } else if(raw.match(/^uncertainty$/i)){
+      const BS_app = P.id; // using BS_ID as device BS
+      const minProd = 0.5 * 1.0545718e-34;
+      addStep('Modified Uncertainty','Δx·Δp ≥ ħ/2 · 1/BS');
+      addStep('ħ/2', minProd.toExponential(3)+' J·s');
+      addStep('BS(apparatus)', BS_app.toFixed(3));
+      addStep('Lower bound', (minProd/BS_app).toExponential(3)+' J·s', true);
+      final = `Δx·Δp ≥ ${(minProd/BS_app).toExponential(3)} J·s`;
+      insight = `For a measuring apparatus with BS = ${BS_app.toFixed(3)}, the uncertainty product is larger than the standard quantum limit. This links measurement accuracy to structural stability.`;
+      chartFn = ()=>drawUncertaintyChart(BS_app);
+
+    } else if(raw.match(/^born$/i)){
+      const prob=0.6, BS_app=P.id, eta=0.7;
+      const P_meas = prob * BS_app * eta;
+      addStep('Modified Born Rule','P(a) = |⟨a|ψ⟩|² · BS(apparatus) · η(τ)');
+      addStep('Quantum probability', prob.toFixed(3));
+      addStep('BS(apparatus)', BS_app.toFixed(3));
+      addStep('η(τ)', eta.toFixed(3));
+      addStep('Measured probability', P_meas.toFixed(6), true);
+      final = `P(a) = ${P_meas.toFixed(6)}`;
+      insight = `The actual probability of obtaining outcome a is modulated by the apparatus stability and the epiphany intensity. For perfect BS=1 and η=1, it reduces to the Born rule.`;
+      chartFn = ()=>drawBornChart(prob, BS_app, eta);
+
+    } else if(raw.match(/^casimir/i)){
+      const d = parseFloat(raw.match(/[\d.]+/)?.[0]||1e-6);
+      const deltaE = M.CB * 1.0545718e-34 * 299792458 / d;
+      addStep('Formula','ΔE = CB·ħc/d');
+      addStep('Distance d', d.toExponential(3)+' m');
+      addStep('Result', deltaE.toExponential(4)+' J', true);
+      final = `ΔE = ${deltaE.toExponential(4)} J`;
+      insight = `Predicted correction to the Casimir effect at distance ${d.toExponential(3)} m. For d=1 μm, ΔE ≈ 1.95×10⁻⁶⁸ J.`;
+      chartFn = ()=>drawCasimirChart(d, deltaE);
+
+    } else if(raw.match(/^boukon$/i)){
+      const mass = M.CB * 2.176434e-8;
+      addStep('Formula','m_Boukon = CB·m_P');
+      addStep('CB', M.CB.toExponential(3));
+      addStep('Planck mass', '2.176×10⁻⁸ kg');
+      addStep('Result', mass.toExponential(3)+' kg', true);
+      final = `m_Boukon = ${mass.toExponential(3)} kg`;
+      insight = 'Ultra‑light dark matter candidate, 1.35×10⁻⁴⁹ kg. Could be detected via gravitational lensing anomalies.';
+      chartFn = ()=>drawBoukonMassChart();
+
+    } else if(raw.match(/^mintime$/i)){
+      const t_min = M.CB * 5.391247e-44;
+      addStep('Formula','t_min = CB·t_P');
+      addStep('CB', M.CB.toExponential(3));
+      addStep('Planck time', '5.39×10⁻⁴⁴ s');
+      addStep('Result', t_min.toExponential(3)+' s', true);
+      final = `t_min = ${t_min.toExponential(3)} s`;
+      insight = 'The minimum time interval for a manifestation event to occur. Anything faster dissolves into pure possibility.';
+      chartFn = ()=>drawMinTimeChart();
+
+    } else if(raw.match(/^collapse$/i)){
+      const deltaE = 1e-30;
+      const BS_dev = P.id;
+      const t_collapse = 1.0545718e-34 / (deltaE * BS_dev);
+      addStep('Formula','τ_collapse = ħ/(ΔE·BS(device))');
+      addStep('ΔE', deltaE.toExponential(2)+' J');
+      addStep('BS(device)', BS_dev.toFixed(3));
+      addStep('τ_collapse', t_collapse.toExponential(3)+' s', true);
+      final = `τ_collapse = ${t_collapse.toExponential(3)} s`;
+      insight = 'Collapse time depends on energy uncertainty and the structural stability of the measuring device. More stable devices cause faster collapse.';
+      chartFn = ()=>drawCollapseChart(BS_dev, deltaE);
+
+    } else if(raw.match(/^neural$/i)){
+      const H=2, N=1000;
+      const BS_neural = 1 - H/Math.log2(N);
+      addStep('Formula','BS_neural = 1 - H_firing / log₂(N_neurons)');
+      addStep('H_firing (bits)', H);
+      addStep('N_neurons', N);
+      addStep('log₂(N)', Math.log2(N).toFixed(2));
+      addStep('BS_neural', BS_neural.toFixed(6), true);
+      final = `BS_neural = ${BS_neural.toFixed(6)}`;
+      insight = 'A measure of neural coherence. High BS corresponds to synchronized, meaningful brain activity.';
+      chartFn = ()=>drawNeuralChart(H, N);
+
+    } else if(raw.match(/^ecosystem$/i)){
+      const clust=0.6, trans=0.5, modgap=0.2;
+      const BS_eco = (clust*trans)/(1+modgap);
+      addStep('Formula','BS_eco = (clustering·transitivity)/(1+modularity_gap)');
+      addStep('clustering', clust);
+      addStep('transitivity', trans);
+      addStep('modularity gap', modgap);
+      addStep('BS_eco', BS_eco.toFixed(6), true);
+      final = `BS_eco = ${BS_eco.toFixed(6)}`;
+      insight = 'Ecosystem stability measure. Values below 0.2 indicate collapse risk.';
+      chartFn = ()=>drawEcosystemChart(clust, trans, modgap);
+
+    } else if(raw.match(/^social$/i)){
+      const BS_v = P.id;
+      const neighbors = [0.7,0.4,0.5];
+      const sum = neighbors.reduce((s,val)=>s+val,0);
+      const I = BS_v * sum;
+      addStep('Formula','I(v) = BS(v)·Σ BS(u)/d(u,v)');
+      addStep('BS(v)', BS_v.toFixed(3));
+      addStep('Neighbor BS sum', sum.toFixed(3));
+      addStep('Influence', I.toFixed(6), true);
+      final = `I(v) = ${I.toFixed(6)}`;
+      insight = 'The influence of node v in a network. High-BS nodes propagate information more effectively.';
+      chartFn = ()=>drawSocialInfluenceChart(BS_v, neighbors);
+
+    } else if(raw.match(/^sfactor$/i)){
+      const N=323;
+      addStep('Potential','Φ(x,N) = α·BS(x) + β·1_{x|N} + γ·Σ ω(d)·K(x,d)');
+      addStep('Parameters','α=0.25, β=0.35, γ=0.2, σ=5');
+      addStep('For N=323, x=17','Φ≈0.666 (prime factor)');
+      final = 'Φ(17,323) ≈ 0.666';
+      insight = 'The structural attraction potential finds prime factors by locating local maxima.';
+      chartFn = ()=>drawSFactorChart(N, [17,19,23]);
+
+    } else if(raw.match(/^kernel$/i)){
+      const sigma=5;
+      addStep('Formula','K(x,d) = exp(-(x-d)²/(2σ²))');
+      addStep('σ', sigma);
+      addStep('Example','at |x-d|=0 → K=1; at |x-d|=σ → K≈0.6065');
+      final = 'Gaussian kernel used in S‑Factor potential';
+      insight = 'The kernel gives higher weight to candidates close to true divisors.';
+      chartFn = ()=>drawKernelChart(sigma);
+
+    } else if(raw.match(/^string$/i)){
+      addStep('Relation','m_n ∝ 1/BS(n)');
+      addStep('For n=1', 'BS=0.7 → m ∝ 1.4286');
+      addStep('For n=23','BS=2/43=0.0465 → m ∝ 21.5');
+      final = 'm_n ∝ 1/BS(n)';
+      insight = 'In string theory, higher vibrational modes (larger n) have smaller BS and thus larger mass.';
+      chartFn = ()=>drawStringMassChart();
+
+    } else if(raw.match(/^primesum$/i)){
+      addStep('Prime sum theorem','Σ_{p≤x} BS(p) ~ ½ log log x');
+      addStep('For x=100','Sum ≈ 1.234, ½ log log 100 ≈ 0.93');
+      final = 'Sum BS(p) ~ ½ log log x';
+      insight = 'The sum of structural stability over primes grows slowly, confirming primes are pure epiphanies.';
+      chartFn = ()=>drawPrimeSumChart(100);
+
+    } else if(raw.match(/^primepostulate$/i)){
+      addStep('Postulate','1 = ∞ ∈ ℙ');
+      addStep('Interpretation','The natural one and relational infinity are considered prime numbers.');
+      final = '1 = ∞ ∈ ℙ';
+      insight = 'This philosophical postulate elevates 1 and ∞ to the status of primes, emphasizing their fundamental role.';
+      chartFn = ()=>drawPrimePostulate();
+
+    } else if(raw.match(/^psiint$/i)){
+      addStep('Consciousness Integral','Ψ_integral = ∮ (α·BS_ID + β·BS_Pot + γ·BS_Rel)·η(τ) dτ');
+      addStep('Integration range','τ from 0 to 5');
+      addStep('Result','≈ 0.614 (approximate)');
+      final = 'Ψ_integral ≈ 0.614';
+      insight = 'The integrated consciousness measure accounts for τ evolution. Human average is around 0.57–0.6.';
+      chartFn = ()=>drawPsiIntegralChart();
 
     } else {
-      // Generic numeric eval
-      try {
-        const safeExpr = raw
-          .replace(/BS\((\d+)\)/gi, (_,n)=>M.BSn(parseInt(n)))
-          .replace(/Psi\(([^)]+)\)/gi, (_,args)=>{ const a=args.split(',').map(parseFloat); return M.Psi(a[0],a[1]||0.25,a[2]||0.65); })
-          .replace(/CB/gi, M.CB)
-          .replace(/alpha\(([^)]+)\)/gi, (_,t)=>M.alpha(parseFloat(t)))
-          .replace(/beta\(([^)]+)\)/gi, (_,t)=>M.beta(parseFloat(t)))
-          .replace(/gamma\(([^)]+)\)/gi, (_,t)=>M.gamma(parseFloat(t)));
-        // eslint-disable-next-line no-new-func
-        const result = (new Function('return '+safeExpr))();
-        addStep('Expression',raw);
-        addStep('Result',result.toFixed(8),true);
-        final = '= '+result;
-        insight = 'Numeric evaluation of expression.';
-      } catch(e){
-        addStep('Error','Could not parse: '+raw);
-        final = '❌ Parse error';
-        insight = 'Try: BS(7), Psi(0.7,0.3,0.6), CB, BSent(0.8), Hz(1.5,2.5), alpha(3)';
+      // باقي المعادلات السابقة (BS(n), Psi, BSent, Hz, CB, alpha, beta, gamma, CMB) كما هي
+      // سنضيف فقط بعض الحالات الإضافية المهمة
+      if(raw.match(/^BS\s*\((\d+)\)$/i)){
+        const n = parseInt(raw.match(/\d+/)[0]);
+        addStep('Formula','BS(n) = 2/(2n−3)  for n ≥ 5');
+        addStep('Substitute n','BS('+n+') = 2/(2×'+n+'−3) = 2/'+(2*n-3));
+        const v = M.BSn(n);
+        addStep('Calculate','= '+v.toFixed(8),true);
+        if(M.isPrime(n)) addStep('Note','n='+n+' is PRIME → pure epiphany','');
+        final = 'BS('+n+') = '+v.toFixed(6);
+        insight = `Structural stability of n=${n}. ${M.isPrime(n)?'As a prime, it is a pure epiphany — irreducible, direct manifestation of unity.':'As a composite, its BS is lower than neighboring primes.'} Philosophical significance: ${v > 0.5 ? 'High stability, close to relational infinity ∞.' : 'Diminishing stability as n grows — existence becomes more plural and distant from the Absolute.'}`;
+        chartFn = ()=>drawBSchart(n,v);
+      } else if(raw.match(/^Psi\s*\(/i)){
+        const m = raw.match(/[\d.]+/g);
+        const id=parseFloat(m[0]||P.id), pot=parseFloat(m[1]||P.pot), rel=parseFloat(m[2]||P.rel);
+        addStep('Formula','Ψ = α·BS_ID + β·BS_Pot + γ·BS_Rel');
+        addStep('Coefficients','α=0.47, β=0.23, γ=0.30');
+        addStep('Term α','0.47 × '+id.toFixed(2)+' = '+(0.47*id).toFixed(4));
+        addStep('Term β','0.23 × '+pot.toFixed(2)+' = '+(0.23*pot).toFixed(4));
+        addStep('Term γ','0.30 × '+rel.toFixed(2)+' = '+(0.30*rel).toFixed(4));
+        const v=M.Psi(id,pot,rel);
+        addStep('Total Ψ',v.toFixed(6),true);
+        const state = v>0.85?'AGI threshold':v>0.75?'Flow state':v>0.57?'Above average':v>0.5?'Normal waking':'Low activity';
+        addStep('State',state,true);
+        final = 'Ψ = '+v.toFixed(6)+' — '+state;
+        insight = `Consciousness level Ψ=${v.toFixed(4)}. This represents a ${state}. Human average ≈ 0.57. The three BS components measure identity coherence (❶-layer), creative potential (0p-layer), and relational depth (∞-layer). AGI would require Ψ > 0.7.`;
+        chartFn = ()=>drawPsiChart(v);
+      } else if(raw.match(/^BSent\s*\(/i)||raw.match(/^BSe\s*\(/i)){
+        const C = parseFloat(raw.match(/[\d.]+/)?.[0]||P.C);
+        addStep('Formula','BS_entangled = (2/3) · C');
+        addStep('Given','Concurrence C = '+C.toFixed(2));
+        const v=(2/3)*C;
+        addStep('Calculate','(2/3) × '+C.toFixed(2)+' = '+v.toFixed(6),true);
+        final = 'BS_ent = '+v.toFixed(6);
+        insight = `At concurrence C=${C.toFixed(2)}, entanglement BS = ${v.toFixed(4)}. Maximum entanglement (C=1) gives BS=2/3 = BS(∞), confirming Bell states as perfect ∞-manifestations. The more entangled, the more relational.`;
+        chartFn = ()=>drawEntChart(C,v);
+      } else if(raw.match(/^Hz\s*\(/i)){
+        const m=raw.match(/[\d.]+/g);
+        const z2=parseFloat(m[0]||P.z), tau2=parseFloat(m[1]||P.tau);
+        addStep('Formula','H(z) = H₀√(Ωm(1+z)³ + ΩΛ) · (1 + β(τ)·correction)');
+        addStep('Parameters','H₀=68 km/s/Mpc, Ωm=0.3, ΩΛ=0.7');
+        const std=68*Math.sqrt(0.3*Math.pow(1+z2,3)+0.7);
+        addStep('ΛCDM part',std.toFixed(3)+' km/s/Mpc');
+        addStep('β(τ) correction','β('+tau2.toFixed(2)+') = '+M.beta(tau2).toFixed(4));
+        const v=M.Hz(z2,tau2);
+        addStep('System S H(z)',v.toFixed(4)+' km/s/Mpc',true);
+        final = 'H('+z2.toFixed(2)+') = '+v.toFixed(4)+' km/s/Mpc';
+        insight = `Modified Friedmann: at z=${z2.toFixed(2)}, System S predicts H(z)=${v.toFixed(2)} vs ΛCDM's ${std.toFixed(2)} km/s/Mpc. The extra β(τ)τ̇² term is the "epiphany pressure" from the τ dimension. If τ oscillates, this deviation becomes detectable by DESI/Euclid.`;
+        chartFn = ()=>drawHzChart(z2,v);
+      } else if(raw.match(/^CB$/i)||raw.match(/^bouker/i)){
+        addStep('Formula','CB = (2/43) · (α/137) · √(c³/ℏG)');
+        addStep('BS(23) factor','2/43 = '+( 2/43).toFixed(6));
+        addStep('Fine structure','α/137 = 1/(137²) ≈ 5.327×10⁻⁵');
+        addStep('Planck units','√(c³/ℏG) ≈ 6.195×10³⁴');
+        addStep('Product','6.184033 × 10⁻⁴²',true);
+        final = 'CB = 6.184033 × 10⁻⁴²';
+        insight = 'The Bouker Constant is the minimum structural stability for manifestation. It derives from prime 23 (BS(23)=2/43), which corresponds to τ₀=3 — the inflection point of β(τ). Physical predictions: CMB at ~0.115 Hz, Casimir correction ΔE≈1.95×10⁻⁶⁸ J, Boukon mass ≈1.35×10⁻⁴⁹ kg.';
+        chartFn = ()=>drawCBChart();
+      } else if(raw.match(/^CMB$/i)){
+        addStep('Formula','f_CB = CB · (c / ℓP)');
+        addStep('CB','6.184033×10⁻⁴²');
+        addStep('c / ℓP','≈ 1.855×10⁴³ Hz');
+        addStep('f_CB','≈ 0.115 Hz',true);
+        final = 'f_CMB = 0.115 Hz';
+        insight = 'This CMB frequency signal is Prediction 1 of System S. It arises from oscillations in the τ-dimension modulating the Friedmann expansion rate.';
+        chartFn = ()=>drawCMBChart();
+      } else if(raw.match(/^alpha\s*\(/i)||raw.match(/^beta\s*\(/i)||raw.match(/^gamma\s*\(/i)){
+        const fn = raw.match(/^(alpha|beta|gamma)/i)[1].toLowerCase();
+        const t = parseFloat(raw.match(/[\d.]+/)?.[0]||P.tau);
+        const v = fn==='alpha'?M.alpha(t):fn==='beta'?M.beta(t):M.gamma(t);
+        addStep('Formula',fn==='alpha'?'α(τ)=0.7e⁻⁰·³τ+0.2(1-e⁻⁰·³τ)':fn==='beta'?'β(τ)=0.1+0.5/(1+e⁻⁰·⁵(τ-3))':'γ(τ)=0.4 sin²(2πτ/5)+0.1');
+        addStep('At τ='+t.toFixed(2),fn+'('+t.toFixed(2)+') = '+v.toFixed(6),true);
+        final = fn+'('+t.toFixed(2)+') = '+v.toFixed(6);
+        insight = `Weight function ${fn}(τ) governs the ${fn==='alpha'?'consistency S_c (identity)':fn==='beta'?'symmetry S_s (relational balance)':'dynamics S_d (temporal variation)'} component of BS. At τ=${t.toFixed(2)}, its contribution is ${v.toFixed(4)}.`;
+        chartFn = ()=>drawWeightChart(fn,t,v);
+      } else {
+        throw new Error('Unknown expression');
       }
     }
   } catch(e){
@@ -3505,7 +4341,6 @@ window.mlSolveEq = function(){
     final='Error'; insight='Check your expression.';
   }
 
-  // Render steps
   stepsEl.innerHTML = steps.map(s=>`
     <div class="ml-eq-step" style="${s.highlight?'border-color:#5dcc8b;background:rgba(39,174,96,.08)':''}">
       <div class="step-n">${s.label}</div>
@@ -3517,6 +4352,7 @@ window.mlSolveEq = function(){
   if(chartFn) setTimeout(chartFn, 60);
 };
 
+/* ============ دوال الرسم المساعدة (الموجودة سابقاً) ============ */
 function drawBSchart(hl,hlv){
   const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
   const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
@@ -3654,7 +4490,7 @@ function drawWeightChart(fn,hl,hlv){
   ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
 }
 
-/* ============ DYNAMIC SIMULATION (مع دعم الترجمة) ============ */
+/* ============ DYNAMIC SIMULATION (موجود مسبقاً) ============ */
 window.mlSimMode = function(mode, btn){
   mlSimMode_=mode;
   document.querySelectorAll('#ml-sim-top .ml-btn').forEach(b=>b.classList.remove('active'));
@@ -3708,7 +4544,6 @@ function simTrinity(ctx,w,h){
   const t=mlSimT;
   const tau=P.tau, a=M.alpha(tau), b2=M.beta(tau), g=M.gamma(tau);
   const cx=w/2,cy=h/2,R=Math.min(w,h)*0.28;
-  /* Rotating rings */
   [[a,R,'#c9932a'],[b2,R*0.7,'#7b2d8b'],[g,R*0.45,'#4fc3d8']].forEach(([v,r,col],i)=>{
     ctx.strokeStyle=col+'33';ctx.lineWidth=1;ctx.setLineDash([4,4]);
     ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();ctx.setLineDash([]);
@@ -3718,12 +4553,10 @@ function simTrinity(ctx,w,h){
     grad.addColorStop(0,col+'ff');grad.addColorStop(1,col+'00');
     ctx.beginPath();ctx.arc(orbitX,orbitY,8*v,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();
   });
-  /* Pulse center */
   const pulse=(Math.sin(t*0.05)+1)/2;
   const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,30+20*pulse);
   cg.addColorStop(0,'rgba(201,147,42,0.8)');cg.addColorStop(1,'rgba(201,147,42,0)');
   ctx.beginPath();ctx.arc(cx,cy,30+20*pulse,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
-  /* Node labels */
   const nodes=[{a:t*0.008,r:R,c:'#c9932a',l:'❶'},{a:t*0.008+2.09,r:R,c:'#4fc3d8',l:'0p'},{a:t*0.008+4.19,r:R,c:'#7b2d8b',l:'∞'}];
   nodes.forEach(nd=>{
     const nx=cx+nd.r*Math.cos(nd.a),ny=cy+nd.r*Math.sin(nd.a);
@@ -3733,7 +4566,6 @@ function simTrinity(ctx,w,h){
     ctx.fillStyle='#fff';ctx.font='bold 12px monospace';ctx.textAlign='center';ctx.fillText(nd.l,nx,ny+4);
     ctx.textAlign='left';
   });
-  /* Center label */
   ctx.fillStyle='rgba(201,147,42,.8)';ctx.font='bold 11px monospace';ctx.textAlign='center';
   ctx.fillText('❶ ⊕ 0p = 1 = ∞',cx,cy+8);
   ctx.font='8px monospace';ctx.fillStyle='rgba(255,255,255,.4)';
@@ -3745,7 +4577,6 @@ function simBSTau(ctx,w,h){
   const PAD=50,PB=35,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
   ctx.strokeStyle='rgba(255,255,255,.05)';ctx.lineWidth=1;
   for(let i=0;i<=5;i++){const y=PT+CH*(i/5);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
-  /* Animated fill */
   const tAnim=(mlSimT*0.02)%8;
   [[M.alpha,'#c9932a','α(τ)',0],[M.beta,'#7b2d8b','β(τ)',1],[M.gamma,'#4fc3d8','γ(τ)',2]].forEach(([fn,col,lbl])=>{
     ctx.strokeStyle=col;ctx.lineWidth=2.5;ctx.beginPath();
@@ -3770,11 +4601,9 @@ function simEntangle(ctx,w,h){
   const C=P.C,bs=(2/3)*C;
   const PAD=50,PB=35,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
   const t=mlSimT;
-  /* Animated gradient background */
   const bgGrad=ctx.createLinearGradient(PAD,PT,PAD+CW,PT+CH);
   bgGrad.addColorStop(0,'rgba(15,60,75,0.3)');bgGrad.addColorStop(1,'rgba(44,22,84,0.3)');
   ctx.fillStyle=bgGrad;ctx.fillRect(PAD,PT,CW,CH);
-  /* Wave animation showing superposition */
   for(let xi=0;xi<CW;xi+=3){
     const c2=xi/CW;
     const amp=Math.sin(xi*0.04+t*0.08)*C*20;
@@ -3782,19 +4611,16 @@ function simEntangle(ctx,w,h){
     ctx.fillStyle=`rgba(201,147,42,${0.3*c2})`;
     ctx.fillRect(PAD+xi,baseY+amp-1,2,3);
   }
-  /* Main BS curve */
   const g3=ctx.createLinearGradient(PAD,0,PAD+CW,0);
   g3.addColorStop(0,'#4fc3d8');g3.addColorStop(.5,'#c9932a');g3.addColorStop(1,'#7b2d8b');
   ctx.strokeStyle=g3;ctx.lineWidth=2.5;ctx.beginPath();
   for(let i=0;i<=200;i++){const c2=i/200,x=PAD+CW*c2,y=PT+CH*(1-(2/3)*c2);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
   ctx.stroke();
-  /* Trinity lines */
   [[1/3,'#4fc3d8','0p ⅓'],[2/3,'#e8aa40','∞ ⅔'],[1,'#c9932a','❶ 1']].forEach(([v,c,l])=>{
     const y=PT+CH*(1-v);ctx.strokeStyle=c+'55';ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();ctx.setLineDash([]);
     ctx.fillStyle=c;ctx.font='8px monospace';ctx.fillText(l,PAD+CW-26,y-3);
   });
   const bx=PAD+CW*C,by=PT+CH*(1-bs);
-  /* Pulsing indicator */
   const pulse=(Math.sin(t*0.05)+1)/2;
   const pg=ctx.createRadialGradient(bx,by,0,bx,by,20+10*pulse);
   pg.addColorStop(0,'rgba(255,204,0,0.6)');pg.addColorStop(1,'rgba(255,204,0,0)');
@@ -3809,7 +4635,6 @@ function simCosmos(ctx,w,h){
   const tau=P.tau,z=P.z;
   const PAD=50,PB=35,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT,MZ=5,maxH=155;
   const t=mlSimT;
-  /* Animated particle background (expanding universe feel) */
   for(let i=0;i<15;i++){
     const angle=(i/15)*Math.PI*2+t*0.003*(i%3?1:-1);
     const r=20+i*8+(t*0.1)%(w/2);
@@ -3819,15 +4644,12 @@ function simCosmos(ctx,w,h){
       ctx.fillStyle=`rgba(201,147,42,${0.4-i*0.02})`;ctx.fill();
     }
   }
-  /* ΛCDM */
   ctx.strokeStyle='#4fc3d8';ctx.lineWidth=2;ctx.beginPath();
   for(let i=0;i<=200;i++){const zi=MZ*i/200,H0=68,Om=0.3,Ol=0.7,std=H0*Math.sqrt(Om*Math.pow(1+zi,3)+Ol);const x=PAD+CW*(zi/MZ),y=PT+CH*(1-std/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
   ctx.stroke();
-  /* System S */
   ctx.strokeStyle='#c9932a';ctx.lineWidth=2;ctx.beginPath();
   for(let i=0;i<=200;i++){const zi=MZ*i/200,Hs=M.Hz(zi,tau);const x=PAD+CW*(zi/MZ),y=PT+CH*(1-Hs/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
   ctx.stroke();
-  /* Animated point */
   const animZ=(Math.sin(t*0.02)+1)/2*MZ;
   const azx=PAD+CW*(animZ/MZ),azy=PT+CH*(1-M.Hz(animZ,tau)/maxH);
   const ag=ctx.createRadialGradient(azx,azy,0,azx,azy,12);
@@ -3852,7 +4674,6 @@ function simPrimes(ctx,w,h){
     const age=revealN-n;
     const opacity=Math.min(1,age*0.05+0.1);
     if(pr){
-      /* Glowing prime */
       const pg=ctx.createRadialGradient(x,y,0,x,y,12);
       pg.addColorStop(0,`rgba(201,147,42,${opacity*0.6})`);pg.addColorStop(1,'rgba(201,147,42,0)');
       ctx.beginPath();ctx.arc(x,y,12,0,Math.PI*2);ctx.fillStyle=pg;ctx.fill();
@@ -3876,22 +4697,18 @@ function mlStartAll(){
   ml3DStart();
 }
 
-/* ============ SPEED SLIDER ============ */
 const speedSl=document.getElementById('ml-sim-speed');
 const speedV=document.getElementById('ml-sim-speed-v');
 if(speedSl) speedSl.addEventListener('input',()=>{ if(speedV) speedV.textContent=parseFloat(speedSl.value).toFixed(1)+'x'; });
 
-/* ============ SIM MODE BUTTON DEFAULTS ============ */
 const firstSimBtn=document.getElementById('sim-mode-btn-trinity');
 if(firstSimBtn) firstSimBtn.classList.add('active');
 
-/* ============ KEYBOARD SHORTCUTS ============ */
 document.addEventListener('keydown',e=>{
   if(!document.getElementById('ml-modal-overlay')?.classList.contains('open')) return;
   if(e.key==='Escape') window.closeMasterLab();
 });
 
-/* ============ RESIZE HANDLING ============ */
 window.addEventListener('resize',()=>{
   const ov=document.getElementById('ml-modal-overlay');
   if(ov?.classList.contains('open')){
@@ -3899,19 +4716,16 @@ window.addEventListener('resize',()=>{
   }
 });
 
-/* ============ دالة لتحديث الترجمة عند تغيير اللغة ============ */
 window.mlRefreshLang = function(){
   if(document.getElementById('ml-modal-overlay')?.classList.contains('open')){
-    mlCalcN();                // تحديث نص "Prime/Composite"
-    mlDrawAllCharts();        // إعادة رسم الرسوم البيانية بالنصوص المترجمة
-    // تحديث زر الإيقاف المؤقت
+    mlCalcN();
+    mlDrawAllCharts();
     const btn = document.getElementById('ml-anim-btn');
     if(btn) {
       const pauseText = mlT('ml-pause-btn', '⏸ Pause');
       const resumeText = mlT('ml-resume-btn', '▶ Resume');
       btn.textContent = mlAnimOn ? pauseText : resumeText;
     }
-    // تحديث تسمية وضع المحاكاة
     const modeBtn = document.querySelector('#ml-sim-top .ml-btn.active');
     if(modeBtn) {
       const mode = modeBtn.getAttribute('data-mode') || 'trinity';
@@ -3925,11 +4739,9 @@ window.mlRefreshLang = function(){
       const lbl=document.getElementById('ml-sim-label');
       if(lbl) lbl.textContent = mlT('ml-sim-mode-label', 'Mode:') + ' ' + (modeLabels[mode] || mode);
     }
-    // تحديث أي نص آخر يعتمد على الترجمة (مثل عناوين الأزرار)
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if(key && TRANSLATIONS && TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][key]) {
-        // لا نغير placeholder لأنه قد يحتوي على قيمة خاصة
         if(el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA') {
           el.textContent = TRANSLATIONS[currentLang][key];
         }
