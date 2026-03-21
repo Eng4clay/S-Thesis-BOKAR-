@@ -2601,7 +2601,7 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 
   <div class="page-num" data-i18n="page-3d-adv">3D-2</div>
 </div>
-<!-- ========== §23. SYSTEM S — MASTER LAB v3 (Fully Enhanced) ========== -->
+<!-- ========== §23. SYSTEM S — MASTER LAB v2 (مع دوال رسم احترافية) ========== -->
 <div class="page algo-page" id="pg-master-lab" style="padding:0;overflow:hidden;cursor:pointer;" onclick="openMasterLab()" title="انقر لفتح المعمل في نافذة مستقلة كاملة">
 
   <!-- Preview thumbnail inside the page -->
@@ -2612,142 +2612,159 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
   </div>
 
   <style>
-    /* جميع الأنماط كما هي من الإصدار السابق (محسنة) */
-    @keyframes labPulse{0%,100%{opacity:.7}50%{opacity:1;box-shadow:0 0 20px rgba(201,147,42,.5)}}
-    @keyframes mlFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-    @keyframes mlSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-    @keyframes mlFadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-    @keyframes mlGlow{0%,100%{text-shadow:0 0 8px rgba(201,147,42,.4)}50%{text-shadow:0 0 24px rgba(201,147,42,.9),0 0 40px rgba(201,147,42,.4)}}
+  /* الأنماط كما هي دون تغيير (حافظ على النمط الأصلي) */
+  @keyframes labPulse{0%,100%{opacity:.7}50%{opacity:1;box-shadow:0 0 20px rgba(201,147,42,.5)}}
+  @keyframes mlFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes mlSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+  @keyframes mlFadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes mlGlow{0%,100%{text-shadow:0 0 8px rgba(201,147,42,.4)}50%{text-shadow:0 0 24px rgba(201,147,42,.9),0 0 40px rgba(201,147,42,.4)}}
 
-    #ml-modal-overlay{
-      display:none;position:fixed;inset:0;z-index:99999;
-      background:rgba(4,2,16,.96);backdrop-filter:blur(12px);
-      overflow:hidden;
-    }
-    #ml-modal-overlay.open{display:flex;flex-direction:column;animation:mlFadeIn .35s ease}
-    #ml-shell{
-      display:grid;grid-template-columns:280px 1fr;grid-template-rows:52px 1fr;
-      width:100%;height:100%;
-    }
-    #ml-topbar{
-      grid-column:1/-1;
-      background:rgba(0,0,0,.6);
-      border-bottom:1px solid rgba(201,147,42,.2);
-      display:flex;align-items:center;gap:8px;padding:0 16px;
-    }
-    #ml-topbar .ml-logo{
-      font-family:'Cormorant Garamond',serif;font-size:13pt;color:#c9932a;font-weight:700;margin-right:auto;
-      animation:mlGlow 3s ease-in-out infinite;
-    }
-    .ml-tab{
-      padding:5px 14px;border-radius:18px;border:1px solid rgba(255,255,255,.15);
-      background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);
-      font-size:8pt;cursor:pointer;transition:.2s;font-family:monospace;
-    }
-    .ml-tab.active{background:rgba(201,147,42,.2);border-color:#c9932a;color:#c9932a;font-weight:700}
-    .ml-tab:hover:not(.active){background:rgba(255,255,255,.09);color:#fff}
-    #ml-close{
-      width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,100,100,.3);
-      background:rgba(255,60,60,.1);color:rgba(255,120,120,.8);cursor:pointer;
-      font-size:13pt;display:flex;align-items:center;justify-content:center;transition:.2s;
-    }
-    #ml-close:hover{background:rgba(255,60,60,.3);color:#fff;border-color:rgba(255,60,60,.6)}
+  /* ===== MODAL OVERLAY ===== */
+  #ml-modal-overlay{
+    display:none;position:fixed;inset:0;z-index:99999;
+    background:rgba(4,2,16,.96);backdrop-filter:blur(12px);
+    overflow:hidden;
+  }
+  #ml-modal-overlay.open{display:flex;flex-direction:column;animation:mlFadeIn .35s ease}
 
-    #ml-sidebar{
-      background:rgba(0,0,0,.45);border-right:1px solid rgba(255,255,255,.07);
-      padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;
-    }
-    #ml-sidebar::-webkit-scrollbar{width:3px}
-    #ml-sidebar::-webkit-scrollbar-thumb{background:rgba(201,147,42,.3);border-radius:2px}
-    .ml-slab{font-size:7pt;color:rgba(255,255,255,.25);letter-spacing:2px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid rgba(255,255,255,.05)}
-    .ml-row{display:flex;align-items:center;gap:7px;margin:2px 0}
-    .ml-row label{font-size:8pt;color:rgba(255,255,255,.45);min-width:48px}
-    .ml-row input[type=range]{flex:1;accent-color:#c9932a}
-    .ml-rv{font-size:8pt;color:#e8aa40;font-weight:bold;min-width:36px;text-align:right;font-family:monospace}
-    .ml-grid2{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-    .ml-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:8px;text-align:center}
-    .ml-card .mlcv{font-size:12pt;color:#e8aa40;font-weight:bold;font-family:monospace}
-    .ml-card .mlcl{font-size:6.5pt;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
-    .ml-pred{background:rgba(15,92,107,.1);border:1px solid rgba(15,92,107,.25);border-radius:7px;padding:6px 9px}
-    .ml-pred .mlpt{font-size:6.5pt;color:rgba(79,195,216,.6);letter-spacing:.5px;text-transform:uppercase}
-    .ml-pred .mlpv{font-size:8.5pt;color:#e8aa40;font-weight:bold;font-family:monospace;margin-top:1px}
-    .ml-btn{padding:6px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-size:8pt;cursor:pointer;font-family:monospace;transition:.2s;display:inline-flex;align-items:center;gap:4px}
-    .ml-btn:hover{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.35)}
-    .ml-btn.gold{background:rgba(201,147,42,.15);border-color:#c9932a88;color:#c9932a}
-    .ml-btn.gold:hover{background:rgba(201,147,42,.3)}
-    .ml-ni{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:5px;color:#fff;padding:4px 7px;font-size:9pt;font-family:monospace;width:100%;outline:none;margin-top:4px}
-    .ml-ni:focus{border-color:#c9932a}
+  /* ===== MODAL SHELL ===== */
+  #ml-shell{
+    display:grid;grid-template-columns:280px 1fr;grid-template-rows:52px 1fr;
+    width:100%;height:100%;
+  }
 
-    #ml-content{display:flex;flex-direction:column;overflow:hidden}
-    .ml-panel{display:none;flex:1;overflow:hidden;flex-direction:column}
-    .ml-panel.active{display:flex}
-    #ml-canvas3d{width:100%;flex:1;display:block;background:#040210}
-    #ml-charts-grid{
-      display:grid;grid-template-columns:1fr 1fr;
-      gap:1px;background:rgba(255,255,255,.06);
-      flex:1;overflow:hidden;
-    }
-    .ml-chart-cell{background:#080616;padding:10px;display:flex;flex-direction:column;gap:5px;overflow:hidden}
-    .ml-chart-cell h5{font-size:7.5pt;color:#c9932a;letter-spacing:.5px;text-transform:uppercase;font-family:monospace}
-    .ml-chart-cell canvas{flex:1;min-height:0;border-radius:4px}
+  /* ===== TOP BAR ===== */
+  #ml-topbar{
+    grid-column:1/-1;
+    background:rgba(0,0,0,.6);
+    border-bottom:1px solid rgba(201,147,42,.2);
+    display:flex;align-items:center;gap:8px;padding:0 16px;
+  }
+  #ml-topbar .ml-logo{
+    font-family:'Cormorant Garamond',serif;font-size:13pt;color:#c9932a;font-weight:700;margin-right:auto;
+    animation:mlGlow 3s ease-in-out infinite;
+  }
+  .ml-tab{
+    padding:5px 14px;border-radius:18px;border:1px solid rgba(255,255,255,.15);
+    background:rgba(255,255,255,.04);color:rgba(255,255,255,.5);
+    font-size:8pt;cursor:pointer;transition:.2s;font-family:monospace;
+  }
+  .ml-tab.active{background:rgba(201,147,42,.2);border-color:#c9932a;color:#c9932a;font-weight:700}
+  .ml-tab:hover:not(.active){background:rgba(255,255,255,.09);color:#fff}
+  #ml-close{
+    width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,100,100,.3);
+    background:rgba(255,60,60,.1);color:rgba(255,120,120,.8);cursor:pointer;
+    font-size:13pt;display:flex;align-items:center;justify-content:center;transition:.2s;
+  }
+  #ml-close:hover{background:rgba(255,60,60,.3);color:#fff;border-color:rgba(255,60,60,.6)}
 
-    #ml-eq-panel{flex:1;display:flex;flex-direction:column;gap:0;overflow:hidden}
-    #ml-eq-top{padding:14px 18px;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06)}
-    #ml-eq-top h4{color:#c9932a;font-size:10pt;margin-bottom:10px;font-family:'Cormorant Garamond',serif}
-    .ml-eq-input-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
-    .ml-eq-input{
-      flex:1;background:rgba(255,255,255,.07);border:1.5px solid rgba(201,147,42,.35);
-      border-radius:8px;color:#fff;padding:8px 12px;font-size:10pt;font-family:monospace;outline:none;
-    }
-    .ml-eq-input:focus{border-color:#c9932a;background:rgba(255,255,255,.1)}
-    .ml-solve-btn{padding:8px 18px;background:linear-gradient(135deg,#c9932a,#e8aa40);border:none;border-radius:8px;color:#1a0a00;font-weight:bold;cursor:pointer;font-family:monospace;font-size:9pt;white-space:nowrap}
-    #ml-eq-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);overflow:hidden}
-    .ml-eq-half{background:#080616;padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
-    .ml-eq-half::-webkit-scrollbar{width:3px}
-    .ml-eq-half::-webkit-scrollbar-thumb{background:rgba(201,147,42,.2)}
-    .ml-eq-step{background:rgba(255,255,255,.04);border-radius:8px;padding:10px;border-left:3px solid #c9932a;margin-bottom:6px}
-    .ml-eq-step .step-n{font-size:7pt;color:#c9932a;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
-    .ml-eq-step .step-v{color:#e8aa40;font-size:10pt}
-    .ml-eq-final{background:rgba(201,147,42,.12);border:1px solid rgba(201,147,42,.4);border-radius:10px;padding:12px;text-align:center;color:#e8aa40;font-size:11pt;font-weight:bold}
+  /* ===== SIDEBAR ===== */
+  #ml-sidebar{
+    background:rgba(0,0,0,.45);border-right:1px solid rgba(255,255,255,.07);
+    padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;
+  }
+  #ml-sidebar::-webkit-scrollbar{width:3px}
+  #ml-sidebar::-webkit-scrollbar-thumb{background:rgba(201,147,42,.3);border-radius:2px}
+  .ml-slab{font-size:7pt;color:rgba(255,255,255,.25);letter-spacing:2px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid rgba(255,255,255,.05)}
+  .ml-row{display:flex;align-items:center;gap:7px;margin:2px 0}
+  .ml-row label{font-size:8pt;color:rgba(255,255,255,.45);min-width:48px}
+  .ml-row input[type=range]{flex:1;accent-color:#c9932a}
+  .ml-rv{font-size:8pt;color:#e8aa40;font-weight:bold;min-width:36px;text-align:right;font-family:monospace}
+  .ml-grid2{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+  .ml-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:8px;text-align:center}
+  .ml-card .mlcv{font-size:12pt;color:#e8aa40;font-weight:bold;font-family:monospace}
+  .ml-card .mlcl{font-size:6.5pt;color:rgba(255,255,255,.3);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+  .ml-pred{background:rgba(15,92,107,.1);border:1px solid rgba(15,92,107,.25);border-radius:7px;padding:6px 9px}
+  .ml-pred .mlpt{font-size:6.5pt;color:rgba(79,195,216,.6);letter-spacing:.5px;text-transform:uppercase}
+  .ml-pred .mlpv{font-size:8.5pt;color:#e8aa40;font-weight:bold;font-family:monospace;margin-top:1px}
+  .ml-btn{padding:6px 12px;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);color:rgba(255,255,255,.6);font-size:8pt;cursor:pointer;font-family:monospace;transition:.2s;display:inline-flex;align-items:center;gap:4px}
+  .ml-btn:hover{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.35)}
+  .ml-btn.gold{background:rgba(201,147,42,.15);border-color:#c9932a88;color:#c9932a}
+  .ml-btn.gold:hover{background:rgba(201,147,42,.3)}
+  .ml-ni{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:5px;color:#fff;padding:4px 7px;font-size:9pt;font-family:monospace;width:100%;outline:none;margin-top:4px}
+  .ml-ni:focus{border-color:#c9932a}
 
-    #ml-sim-panel{flex:1;display:flex;flex-direction:column;gap:0;overflow:hidden}
-    #ml-sim-top{padding:10px 16px;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    #ml-sim-top h4{color:#c9932a;font-family:'Cormorant Garamond',serif;font-size:10pt;margin-right:auto}
-    #ml-sim-canvas-wrap{flex:1;position:relative;background:#040210;overflow:hidden}
-    #ml-sim-canvas{width:100%;height:100%;display:block}
-    #ml-sim-hud{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.65);border:1px solid rgba(201,147,42,.25);border-radius:9px;padding:8px 12px;font-size:8pt;font-family:monospace;color:rgba(255,255,255,.7);pointer-events:none}
-    .ml-hud-row{display:flex;justify-content:space-between;gap:12px;margin:1px 0}
-    .ml-hud-row span:last-child{color:#e8aa40;font-weight:bold}
-    #ml-sim-bottom{padding:8px 16px;background:rgba(0,0,0,.4);border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-    .ml-sim-ctrl{display:flex;align-items:center;gap:6px;font-size:8pt;color:rgba(255,255,255,.5);font-family:monospace}
-    .ml-sim-ctrl input[type=range]{width:120px;accent-color:#7b2d8b}
+  /* ===== MAIN CONTENT ===== */
+  #ml-content{display:flex;flex-direction:column;overflow:hidden}
 
-    #ml-preview{
-      padding:24px 28px;cursor:pointer;background:linear-gradient(160deg,#0c0820,#1a1240);
-      min-height:220px;display:flex;align-items:center;justify-content:center;
-      position:relative;overflow:hidden;
-    }
-    #ml-preview::before{
-      content:'';position:absolute;inset:0;
-      background:radial-gradient(ellipse at 30% 50%,rgba(123,45,139,.15) 0%,transparent 60%),
-                 radial-gradient(ellipse at 70% 50%,rgba(201,147,42,.1) 0%,transparent 60%);
-    }
-    .ml-preview-inner{text-align:center;position:relative;z-index:1}
-    .ml-preview-icon{font-size:36pt;animation:mlFloat 3s ease-in-out infinite;display:block;margin-bottom:12px}
-    .ml-preview-title{font-family:'Cormorant Garamond',serif;font-size:14pt;color:#e8aa40;margin-bottom:6px;animation:mlGlow 3s ease-in-out infinite}
-    .ml-preview-desc{font-size:9pt;color:rgba(255,255,255,.45);max-width:360px;line-height:1.7;margin-bottom:14px}
-    .ml-preview-btn{
-      padding:10px 28px;background:linear-gradient(135deg,rgba(201,147,42,.25),rgba(123,45,139,.2));
-      border:1.5px solid #c9932a;border-radius:24px;color:#e8aa40;font-family:monospace;
-      font-size:9pt;cursor:pointer;transition:.25s;letter-spacing:.5px;
-    }
-    .ml-preview-btn:hover{background:linear-gradient(135deg,rgba(201,147,42,.4),rgba(123,45,139,.35));transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,147,42,.3)}
-    .ml-feature-pills{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
-    .ml-pill{padding:3px 10px;border-radius:12px;font-size:7.5pt;font-family:monospace;border:1px solid}
-    .ml-pill.p1{background:rgba(201,147,42,.1);border-color:rgba(201,147,42,.3);color:#c9932a}
-    .ml-pill.p2{background:rgba(123,45,139,.1);border-color:rgba(123,45,139,.3);color:#a060c0}
-    .ml-pill.p3{background:rgba(15,92,107,.1);border-color:rgba(15,92,107,.3);color:#4fc3d8}
-    .ml-pill.p4{background:rgba(39,174,96,.1);border-color:rgba(39,174,96,.3);color:#5dcc8b}
+  /* ===== PANELS ===== */
+  .ml-panel{display:none;flex:1;overflow:hidden;flex-direction:column}
+  .ml-panel.active{display:flex}
+
+  /* 3D CANVAS */
+  #ml-canvas3d{width:100%;flex:1;display:block;background:#040210}
+
+  /* CHARTS GRID */
+  #ml-charts-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    gap:1px;background:rgba(255,255,255,.06);
+    flex:1;overflow:hidden;
+  }
+  .ml-chart-cell{background:#080616;padding:10px;display:flex;flex-direction:column;gap:5px;overflow:hidden}
+  .ml-chart-cell h5{font-size:7.5pt;color:#c9932a;letter-spacing:.5px;text-transform:uppercase;font-family:monospace}
+  .ml-chart-cell canvas{flex:1;min-height:0;border-radius:4px}
+
+  /* EQUATION PANEL */
+  #ml-eq-panel{flex:1;display:flex;flex-direction:column;gap:0;overflow:hidden}
+  #ml-eq-top{padding:14px 18px;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06)}
+  #ml-eq-top h4{color:#c9932a;font-size:10pt;margin-bottom:10px;font-family:'Cormorant Garamond',serif}
+  .ml-eq-input-row{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+  .ml-eq-input{
+    flex:1;background:rgba(255,255,255,.07);border:1.5px solid rgba(201,147,42,.35);
+    border-radius:8px;color:#fff;padding:8px 12px;font-size:10pt;font-family:monospace;outline:none;
+  }
+  .ml-eq-input:focus{border-color:#c9932a;background:rgba(255,255,255,.1)}
+  .ml-solve-btn{padding:8px 18px;background:linear-gradient(135deg,#c9932a,#e8aa40);border:none;border-radius:8px;color:#1a0a00;font-weight:bold;cursor:pointer;font-family:monospace;font-size:9pt;white-space:nowrap}
+  #ml-eq-body{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,.06);overflow:hidden}
+  .ml-eq-half{background:#080616;padding:14px;overflow-y:auto;display:flex;flex-direction:column;gap:10px}
+  .ml-eq-half::-webkit-scrollbar{width:3px}
+  .ml-eq-half::-webkit-scrollbar-thumb{background:rgba(201,147,42,.2)}
+  #ml-eq-result{flex:1;background:#080616;padding:14px;overflow-y:auto;font-family:monospace;font-size:9pt;color:#e0d8ff}
+  .ml-eq-step{background:rgba(255,255,255,.04);border-radius:8px;padding:10px;border-left:3px solid #c9932a;margin-bottom:6px}
+  .ml-eq-step .step-n{font-size:7pt;color:#c9932a;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+  .ml-eq-step .step-v{color:#e8aa40;font-size:10pt}
+  .ml-eq-final{background:rgba(201,147,42,.12);border:1px solid rgba(201,147,42,.4);border-radius:10px;padding:12px;text-align:center;color:#e8aa40;font-size:11pt;font-weight:bold}
+
+  /* SIMULATION PANEL */
+  #ml-sim-panel{flex:1;display:flex;flex-direction:column;gap:0;overflow:hidden}
+  #ml-sim-top{padding:10px 16px;background:rgba(0,0,0,.3);border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  #ml-sim-top h4{color:#c9932a;font-family:'Cormorant Garamond',serif;font-size:10pt;margin-right:auto}
+  #ml-sim-canvas-wrap{flex:1;position:relative;background:#040210;overflow:hidden}
+  #ml-sim-canvas{width:100%;height:100%;display:block}
+  #ml-sim-hud{position:absolute;top:10px;left:10px;background:rgba(0,0,0,.65);border:1px solid rgba(201,147,42,.25);border-radius:9px;padding:8px 12px;font-size:8pt;font-family:monospace;color:rgba(255,255,255,.7);pointer-events:none}
+  .ml-hud-row{display:flex;justify-content:space-between;gap:12px;margin:1px 0}
+  .ml-hud-row span:last-child{color:#e8aa40;font-weight:bold}
+  #ml-sim-bottom{padding:8px 16px;background:rgba(0,0,0,.4);border-top:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .ml-sim-ctrl{display:flex;align-items:center;gap:6px;font-size:8pt;color:rgba(255,255,255,.5);font-family:monospace}
+  .ml-sim-ctrl input[type=range]{width:120px;accent-color:#7b2d8b}
+
+  /* PAGE PREVIEW */
+  #ml-preview{
+    padding:24px 28px;cursor:pointer;background:linear-gradient(160deg,#0c0820,#1a1240);
+    min-height:220px;display:flex;align-items:center;justify-content:center;
+    position:relative;overflow:hidden;
+  }
+  #ml-preview::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(ellipse at 30% 50%,rgba(123,45,139,.15) 0%,transparent 60%),
+               radial-gradient(ellipse at 70% 50%,rgba(201,147,42,.1) 0%,transparent 60%);
+  }
+  .ml-preview-inner{text-align:center;position:relative;z-index:1}
+  .ml-preview-icon{font-size:36pt;animation:mlFloat 3s ease-in-out infinite;display:block;margin-bottom:12px}
+  .ml-preview-title{font-family:'Cormorant Garamond',serif;font-size:14pt;color:#e8aa40;margin-bottom:6px;animation:mlGlow 3s ease-in-out infinite}
+  .ml-preview-desc{font-size:9pt;color:rgba(255,255,255,.45);max-width:360px;line-height:1.7;margin-bottom:14px}
+  .ml-preview-btn{
+    padding:10px 28px;background:linear-gradient(135deg,rgba(201,147,42,.25),rgba(123,45,139,.2));
+    border:1.5px solid #c9932a;border-radius:24px;color:#e8aa40;font-family:monospace;
+    font-size:9pt;cursor:pointer;transition:.25s;letter-spacing:.5px;
+  }
+  .ml-preview-btn:hover{background:linear-gradient(135deg,rgba(201,147,42,.4),rgba(123,45,139,.35));transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,147,42,.3)}
+  .ml-feature-pills{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+  .ml-pill{padding:3px 10px;border-radius:12px;font-size:7.5pt;font-family:monospace;border:1px solid}
+  .ml-pill.p1{background:rgba(201,147,42,.1);border-color:rgba(201,147,42,.3);color:#c9932a}
+  .ml-pill.p2{background:rgba(123,45,139,.1);border-color:rgba(123,45,139,.3);color:#a060c0}
+  .ml-pill.p3{background:rgba(15,92,107,.1);border-color:rgba(15,92,107,.3);color:#4fc3d8}
+  .ml-pill.p4{background:rgba(39,174,96,.1);border-color:rgba(39,174,96,.3);color:#5dcc8b}
   </style>
 
   <!-- PAGE PREVIEW (visible in document) -->
@@ -2768,7 +2785,7 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
   <div class="page-num" data-i18n="page-lab-master">Lab-M</div>
 </div>
 
-<!-- FULL SCREEN MODAL -->
+<!-- ========== FULL SCREEN MODAL ========== -->
 <div id="ml-modal-overlay">
 <div id="ml-shell">
 
@@ -2821,7 +2838,6 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
       <button class="ml-btn" onclick="mlReset()" data-i18n="ml-reset-btn">↺ Reset</button>
       <button class="ml-btn" id="ml-anim-btn" onclick="mlToggleAnim()" data-i18n="ml-pause-btn">⏸ Pause</button>
       <button class="ml-btn gold" onclick="mlExport()" data-i18n="ml-export-btn">⬇ JSON</button>
-      <button class="ml-btn gold" onclick="mlAutoTest()" title="Run automatic test suite">🧪 Auto Test</button>
     </div>
   </div>
 
@@ -2950,7 +2966,7 @@ textarea.comm-field{min-height:90px;resize:vertical;line-height:1.6}
 (function(){
 'use strict';
 
-/* ============ MATH CORE (all functions) ============ */
+/* ============ MATH CORE ============ */
 const M = {
   BSn(n){
     if(n===1) return 0.7;
@@ -2982,6 +2998,7 @@ const M = {
 
 /* ============ STATE ============ */
 let mlAnimOn=true, mlT3=0, mlSimT=0, mlSimMode_='trinity', mlRaf=null, mlSimRaf=null;
+let mlEqCanvas3d = null;
 const P = {
   get tau(){ return parseFloat(document.getElementById('ml-tau')?.value||1.5); },
   get id(){  return parseFloat(document.getElementById('ml-id')?.value||0.72); },
@@ -2992,11 +3009,12 @@ const P = {
   get speed(){ return parseFloat(document.getElementById('ml-sim-speed')?.value||1); }
 };
 
-function mlT(key, def) {
+/* ============ دالة مساعدة للحصول على النص المترجم ============ */
+function mlT(key, defaultValue) {
   if (typeof currentLang !== 'undefined' && TRANSLATIONS && TRANSLATIONS[currentLang]) {
-    return TRANSLATIONS[currentLang][key] || def;
+    return TRANSLATIONS[currentLang][key] || defaultValue;
   }
-  return def;
+  return defaultValue;
 }
 
 /* ============ OPEN / CLOSE ============ */
@@ -3093,24 +3111,6 @@ window.mlExport = function(){
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='system_s.json';a.click();
 };
 
-window.mlAutoTest = function(){
-  const results = [];
-  // Test BS(23)
-  results.push(`BS(23) = ${M.BSn(23).toFixed(6)} (should be 2/43 ≈ 0.0465116)`);
-  // Test Psi with current values
-  results.push(`Ψ = ${M.Psi(P.id,P.pot,P.rel).toFixed(6)}`);
-  // Test CB
-  results.push(`CB = ${M.CB.toExponential(6)}`);
-  // Test H(z) at z=1.5, τ=2.5
-  results.push(`H(1.5,2.5) = ${M.Hz(1.5,2.5).toFixed(2)} km/s/Mpc`);
-  // Test α(3)
-  results.push(`α(3) = ${M.alpha(3).toFixed(6)}`);
-  // Test BS_ent with C=0.8
-  results.push(`BS_ent(0.8) = ${M.BSent(0.8).toFixed(6)}`);
-  const msg = results.join('\n');
-  alert(`Auto Test Results:\n${msg}`);
-};
-
 /* ============ 3D CANVAS ============ */
 let mlCam = {rotX:0.4,rotY:0,dist:280};
 let mlDragging=false, mlLastMouse={x:0,y:0};
@@ -3148,6 +3148,7 @@ function ml3DRender(){
   const w=cv.width, h=cv.height;
   ctx.clearRect(0,0,w,h);
 
+  /* Starfield background */
   ctx.fillStyle='#040210';
   ctx.fillRect(0,0,w,h);
   const stars = 80;
@@ -3169,6 +3170,7 @@ function ml3DRender(){
     return {x:w/2+rx2*scale*d, y:h/2-ry*scale*d, d:d};
   }
 
+  /* Grid plane */
   ctx.strokeStyle='rgba(44,22,84,.25)';ctx.lineWidth=0.5;
   for(let i=-4;i<=4;i++){
     const a=project(i*.15,-.35,-.4), b=project(i*.15,-.35,.4);
@@ -3177,6 +3179,7 @@ function ml3DRender(){
     ctx.beginPath();ctx.moveTo(c.x,c.y);ctx.lineTo(d2.x,d2.y);ctx.stroke();
   }
 
+  /* Axes */
   const orig=project(0,0,0);
   [[.35,0,0,'#c9932a','X'],[0,.35,0,'#4fc3d8','Y'],[0,0,.35,'#7b2d8b','Z']].forEach(([x,y,z,col,lbl])=>{
     const tip=project(x,y,z);
@@ -3186,12 +3189,15 @@ function ml3DRender(){
   });
 
   const tau=P.tau, a=M.alpha(tau), b2=M.beta(tau), g=M.gamma(tau);
+
+  /* Nodes */
   const nodes=[
     {p:[.42,0,0],c:'#c9932a',lbl:'❶',sub:'BS=1',r:22},
     {p:[-.21,.36,0],c:'#4fc3d8',lbl:'0p',sub:'BS=⅓',r:18},
     {p:[-.21,-.36,0],c:'#7b2d8b',lbl:'∞',sub:'BS=⅔',r:20}
   ];
 
+  /* Glow rings (orbiting particles) */
   [0,1,2].forEach(ni=>{
     const nd=nodes[ni];
     const nq=project(...nd.p);
@@ -3202,12 +3208,14 @@ function ml3DRender(){
     ctx.fillStyle=nd.c+'cc';ctx.fill();
   });
 
+  /* Triangle frame */
   ctx.strokeStyle='rgba(201,147,42,.12)';ctx.lineWidth=1;ctx.setLineDash([6,4]);
   ctx.beginPath();
   const ps=nodes.map(n=>project(...n.p));
   ps.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));
   ctx.closePath();ctx.stroke();ctx.setLineDash([]);
 
+  /* Animated operation arrows */
   const ops=[
     {fr:0,to:1,col:'#c9932a',lbl:'ε',w:a},
     {fr:1,to:2,col:'#4fc3d8',lbl:'δ',w:b2},
@@ -3229,16 +3237,20 @@ function ml3DRender(){
   });
   ctx.textAlign='left';
 
+  /* Node spheres */
   nodes.forEach(nd=>{
     const q=project(...nd.p);
     const r=nd.r*q.d;
+    /* ambient glow */
     const gl=ctx.createRadialGradient(q.x,q.y,0,q.x,q.y,r*2.8);
     gl.addColorStop(0,nd.c+'44');gl.addColorStop(1,nd.c+'00');
     ctx.beginPath();ctx.arc(q.x,q.y,r*2.8,0,Math.PI*2);ctx.fillStyle=gl;ctx.fill();
+    /* sphere */
     const sg=ctx.createRadialGradient(q.x-r*0.3,q.y-r*0.3,0,q.x,q.y,r);
     sg.addColorStop(0,nd.c+'ff');sg.addColorStop(0.4,nd.c+'bb');sg.addColorStop(1,nd.c+'55');
     ctx.beginPath();ctx.arc(q.x,q.y,r,0,Math.PI*2);ctx.fillStyle=sg;ctx.fill();
     ctx.strokeStyle=nd.c;ctx.lineWidth=1.5;ctx.stroke();
+    /* labels */
     ctx.fillStyle='#fff';ctx.font=`bold ${Math.round(12*q.d)}px monospace`;ctx.textAlign='center';
     ctx.fillText(nd.lbl,q.x,q.y+4);
     ctx.fillStyle=nd.c+'cc';ctx.font=`${Math.round(9*q.d)}px monospace`;
@@ -3246,6 +3258,7 @@ function ml3DRender(){
     ctx.textAlign='left';
   });
 
+  /* Central equation */
   ctx.save();
   ctx.font='bold 12px monospace';ctx.textAlign='center';
   ctx.fillStyle='rgba(201,147,42,.8)';
@@ -3362,7 +3375,607 @@ function chartHz(){
   ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
 }
 
-/* ============ EQUATION SOLVER (full implementation) ============ */
+/* ============ متغيرات إضافية لدوال الرسم الجديدة ============ */
+let lastDrawnChart = null; // لتجنب إعادة رسم غير ضرورية
+
+/* ---------- 1. دالة رسم المعادلة المركزية ---------- */
+function drawCentralEquationChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  
+  const cx=w/2, cy=h/2, rad=Math.min(w,h)*0.3;
+  // دائرة خارجية
+  ctx.beginPath(); ctx.arc(cx,cy,rad,0,Math.PI*2);
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2; ctx.setLineDash([5,5]); ctx.stroke(); ctx.setLineDash([]);
+  
+  // النقاط الثلاث
+  const angles = [0, 120, 240].map(a=>a*Math.PI/180);
+  const labels = ['❶', '0p', '∞'];
+  const subs = ['BS=1', 'BS=⅓', 'BS=⅔'];
+  const colors = ['#c9932a', '#4fc3d8', '#7b2d8b'];
+  angles.forEach((ang,i)=>{
+    const x=cx+rad*0.7*Math.cos(ang), y=cy+rad*0.7*Math.sin(ang);
+    ctx.beginPath(); ctx.arc(x,y,18,0,Math.PI*2);
+    ctx.fillStyle=colors[i]+'33'; ctx.fill(); ctx.strokeStyle=colors[i]; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font='bold 14px monospace'; ctx.textAlign='center'; ctx.fillText(labels[i],x,y+5);
+    ctx.fillStyle=colors[i]; ctx.font='8px monospace'; ctx.fillText(subs[i],x,y+24);
+  });
+  
+  // معادلة في الوسط
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText('❶ ⊕ 0p = 1 = ∞', cx, cy+30);
+  ctx.fillStyle='rgba(255,255,255,.4)'; ctx.font='8px monospace';
+  ctx.fillText('The Central Equation of System S', cx, cy+48);
+  ctx.textAlign='left';
+  lastDrawnChart='central';
+}
+
+/* ---------- 2. رسم تعريفات العناصر الثلاثة ---------- */
+function drawTrinityDefinitions() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  
+  const items = [
+    {sym:'❶', def:'❶ ∉ ℝ, ❶² = ❶', desc:'The Absolute One — unconditioned existence, prime mover', color:'#c9932a'},
+    {sym:'0p', def:'0p = lim_{ε→0⁺} ε·1', desc:'Pure Possibility — active nothingness, field of undetermined probabilities', color:'#4fc3d8'},
+    {sym:'∞', def:'∞ = ⊕ Rᵢ', desc:'Relational Infinity — space of all relations', color:'#7b2d8b'}
+  ];
+  const yStart = 30;
+  const lineH = 70;
+  items.forEach((it,i)=>{
+    const y = yStart + i*lineH;
+    ctx.fillStyle=it.color; ctx.font='bold 20px monospace'; ctx.fillText(it.sym, 20, y+20);
+    ctx.fillStyle='#e8aa40'; ctx.font='bold 9px monospace'; ctx.fillText(it.def, 70, y+20);
+    ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='8px monospace'; ctx.fillText(it.desc, 20, y+45);
+  });
+  lastDrawnChart='defs';
+}
+
+/* ---------- 3. رسم BS(τ) التقديرية ---------- */
+function drawBStauChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  // شبكة
+  for(let i=0;i<=5;i++){
+    const y=PT+CH*(i/5); ctx.beginPath(); ctx.moveTo(PAD,y); ctx.lineTo(PAD+CW,y); ctx.stroke();
+  }
+  for(let i=0;i<=8;i++){
+    const x=PAD+CW*(i/8); ctx.beginPath(); ctx.moveTo(x,PT); ctx.lineTo(x,PT+CH); ctx.stroke();
+  }
+  // منحنى BS(τ)
+  const grad=ctx.createLinearGradient(PAD,0,PAD+CW,0);
+  grad.addColorStop(0,'#c9932a'); grad.addColorStop(.5,'#7b2d8b'); grad.addColorStop(1,'#4fc3d8');
+  ctx.strokeStyle=grad; ctx.lineWidth=2.5;
+  ctx.beginPath();
+  for(let i=0;i<=200;i++){
+    const t=i/200*8, x=PAD+CW*(i/200), y=PT+CH*(1-M.BStau(t));
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // علامة τ الحالية
+  const tx=PAD+CW*(P.tau/8), ty=PT+CH*(1-M.BStau(P.tau));
+  ctx.beginPath(); ctx.arc(tx,ty,5,0,Math.PI*2); ctx.fillStyle='#ffcc00'; ctx.fill();
+  ctx.fillStyle='#ffcc00'; ctx.font='8px monospace'; ctx.fillText('τ='+P.tau.toFixed(2), tx+8, ty-4);
+  // تسميات
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('τ →', PAD+CW-20, PT+CH+16);
+  ctx.fillText('BS(τ)', 15, PT+CH/2);
+  lastDrawnChart='bstau';
+}
+
+/* ---------- 4. رسم دالة زيتا الموزونة (تقديرية) ---------- */
+function drawZetaChart(s=1.5, Nmax=100) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // حساب المجاميع الجزئية
+  let partialSums = [];
+  let maxVal = 0;
+  for(let N=1; N<=Nmax; N++){
+    let sum=0;
+    for(let n=1; n<=N; n++) sum += M.BSn(n)/Math.pow(n, s);
+    partialSums.push(sum);
+    if(sum>maxVal) maxVal=sum;
+  }
+  maxVal = Math.max(maxVal, 0.1);
+  // رسم
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2;
+  ctx.beginPath();
+  for(let i=0; i<=Nmax; i++){
+    const x=PAD+CW*(i/Nmax);
+    const y=PT+CH*(1-partialSums[i]/maxVal);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='8px monospace';
+  ctx.fillText('N (terms)', PAD+CW/2-30, PT+CH+16);
+  ctx.fillText('ζ_S(s)', 15, PT+CH/2);
+  lastDrawnChart='zeta';
+}
+
+/* ---------- 5. رسم النواة الغاوسية ---------- */
+function drawKernelChart(sigma=5) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const maxX=15;
+  ctx.beginPath();
+  for(let i=0;i<=200;i++){
+    const d=i/200*maxX;
+    const k = Math.exp(-d*d/(2*sigma*sigma));
+    const x=PAD+CW*(d/maxX);
+    const y=PT+CH*(1-k);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle='#4fc3d8'; ctx.lineWidth=2; ctx.stroke();
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='8px monospace';
+  ctx.fillText('|x-d| →', PAD+CW/2-30, PT+CH+16);
+  ctx.fillText('K(x,d)', 15, PT+CH/2);
+  lastDrawnChart='kernel';
+}
+
+/* ---------- 6. رسم تأثير كازيمير ---------- */
+function drawCasimirChart(d_meters, deltaE) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // نرسم قضيب يمثل الطاقة
+  const maxEnergy = 1e-67;
+  const frac = Math.min(1, deltaE/maxEnergy);
+  const barWidth = 100;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(201,147,42,.3)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#c9932a'; ctx.fillRect(barX, barY, barWidth*frac, 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText(`ΔE = ${deltaE.toExponential(3)} J`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText(`at d = ${d_meters.toExponential(3)} m`, w/2, barY+42);
+  ctx.fillText('Casimir Effect Correction', w/2, PT+8);
+  lastDrawnChart='casimir';
+}
+
+/* ---------- 7. رسم كتلة البوكرون ---------- */
+function drawBoukonMassChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const mass = M.CB * 2.176434e-8; // m_P ~ 2.176e-8 kg
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // أعمدة مقارنة
+  const masses = [
+    {name:'Boukon', val:mass, col:'#c9932a'},
+    {name:'Electron', val:9.109e-31, col:'#7b2d8b'},
+    {name:'Proton', val:1.673e-27, col:'#4fc3d8'},
+    {name:'Planck', val:2.176e-8, col:'#e8aa40'}
+  ];
+  const maxM = 2.2e-8;
+  const barWidth = 60;
+  masses.forEach((m,i)=>{
+    const x = PAD + i*(barWidth+10);
+    const hBar = CH * (m.val/maxM);
+    ctx.fillStyle=m.col+'77'; ctx.fillRect(x, PT+CH-hBar, barWidth-5, hBar);
+    ctx.fillStyle=m.col; ctx.font='8px monospace'; ctx.fillText(m.name, x+5, PT+CH-5);
+    ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace'; ctx.fillText(m.val.toExponential(1)+' kg', x+5, PT+CH-hBar-5);
+  });
+  lastDrawnChart='boukon';
+}
+
+/* ---------- 8. رسم زمن التجلي الأدنى ---------- */
+function drawMinTimeChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const t_min = M.CB * 5.391247e-44; // t_P ~ 5.39e-44 s
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // رسم شريط
+  const barWidth = CW*0.6;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(201,147,42,.2)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#c9932a'; ctx.fillRect(barX, barY, barWidth*0.2, 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText(`t_min = ${t_min.toExponential(3)} s`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('Minimum manifestation time (Planck time × CB)', w/2, barY+42);
+  lastDrawnChart='mintime';
+}
+
+/* ---------- 9. رسم زمن الانهيار ---------- */
+function drawCollapseChart(BS_device, deltaE=1e-30) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const t_collapse = 1.0545718e-34 / (deltaE * BS_device);
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // منحنى زمن الانهيار كدالة في BS(device)
+  ctx.beginPath();
+  for(let i=0;i<=200;i++){
+    const bs = i/200;
+    const t = 1.0545718e-34 / (deltaE * bs);
+    const y = PT+CH*(1 - Math.min(1, t/1e-3));
+    const x = PAD+CW*(i/200);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2; ctx.stroke();
+  // نقطة حالية
+  const x0 = PAD+CW*BS_device;
+  const y0 = PT+CH*(1 - Math.min(1, t_collapse/1e-3));
+  ctx.beginPath(); ctx.arc(x0,y0,5,0,Math.PI*2); ctx.fillStyle='#ffcc00'; ctx.fill();
+  ctx.fillStyle='#ffcc00'; ctx.font='8px monospace'; ctx.fillText(`τ=${t_collapse.toExponential(2)} s`, x0+8, y0-5);
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('BS(device)', PAD+CW/2-30, PT+CH+16);
+  ctx.fillText('τ_collapse (s)', 15, PT+CH/2);
+  lastDrawnChart='collapse';
+}
+
+/* ---------- 10. رسم الواحد واللانهاية أوليان ---------- */
+function drawPrimePostulate() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const cx=w/2, cy=h/2;
+  ctx.fillStyle='#c9932a'; ctx.font='bold 28px monospace'; ctx.textAlign='center';
+  ctx.fillText('1 = ∞ ∈ ℙ', cx, cy-20);
+  ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='10px monospace';
+  ctx.fillText('The natural one and infinity are considered', cx, cy+10);
+  ctx.fillText('prime numbers within the System S framework.', cx, cy+30);
+  ctx.fillText('This postulate reflects the primordial unity and relational infinity.', cx, cy+50);
+  lastDrawnChart='primepost';
+}
+
+/* ---------- 11. رسم BS العصبي (إنتروبيا) ---------- */
+function drawNeuralChart(H=2, N_neurons=1000) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const BS = 1 - H/Math.log2(N_neurons);
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const barWidth = CW*0.5;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(123,45,139,.3)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#7b2d8b'; ctx.fillRect(barX, barY, barWidth*BS, 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText(`BS_neural = ${BS.toFixed(4)}`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText(`H_firing = ${H}, N_neurons = ${N_neurons}`, w/2, barY+42);
+  lastDrawnChart='neural';
+}
+
+/* ---------- 12. رسم BS للنظام البيئي ---------- */
+function drawEcosystemChart(clust=0.6, trans=0.5, modgap=0.2) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const BS = (clust*trans)/(1+modgap);
+  const PAD=40, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const barWidth = CW*0.5;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(79,195,216,.3)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#4fc3d8'; ctx.fillRect(barX, barY, barWidth*BS, 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText(`BS_eco = ${BS.toFixed(4)}`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText(`clust=${clust}, trans=${trans}, modgap=${modgap}`, w/2, barY+42);
+  lastDrawnChart='ecosystem';
+}
+
+/* ---------- 13. رسم تأثير العقدة في الشبكة الاجتماعية ---------- */
+function drawSocialInfluenceChart(BS_v=0.65, neighbors=[0.7,0.4,0.5]) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const sum = neighbors.reduce((s,val)=>s+val,0);
+  const I = BS_v * sum;
+  // رسم شبكة بسيطة
+  const cx=w/2, cy=h/2;
+  const rad=70;
+  ctx.beginPath(); ctx.arc(cx,cy,rad,0,Math.PI*2);
+  ctx.fillStyle='rgba(201,147,42,.2)'; ctx.fill(); ctx.strokeStyle='#c9932a'; ctx.stroke();
+  ctx.fillStyle='#c9932a'; ctx.font='bold 12px monospace'; ctx.fillText('v', cx-4, cy+4);
+  // عقد الجيران
+  const angles = [0, 120, 240].map(a=>a*Math.PI/180);
+  angles.forEach((ang,i)=>{
+    const x=cx+rad*0.8*Math.cos(ang), y=cy+rad*0.8*Math.sin(ang);
+    ctx.beginPath(); ctx.arc(x,y,20,0,Math.PI*2);
+    ctx.fillStyle='rgba(123,45,139,.3)'; ctx.fill(); ctx.strokeStyle='#7b2d8b'; ctx.stroke();
+    ctx.fillStyle='#7b2d8b'; ctx.font='bold 10px monospace'; ctx.fillText('u'+i, x-6, y+4);
+    // خطوط
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(x,y);
+    ctx.strokeStyle='rgba(255,255,255,.3)'; ctx.stroke();
+    ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace'; ctx.fillText(neighbors[i].toFixed(2), (cx+x)/2+5, (cy+y)/2-5);
+  });
+  // القيمة النهائية
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 10px monospace'; ctx.textAlign='center';
+  ctx.fillText(`I(v) = ${I.toFixed(3)}`, w/2, cy+rad+30);
+  lastDrawnChart='social';
+}
+
+/* ---------- 14. رسم جهد الجذب البنيوي (S‑Factor) ---------- */
+function drawSFactorChart(N=323, x_vals=[17,19,23]) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // دالة محاكاة Φ(x,N) بسيطة (لا نريد إعادة تنفيذ الخوارزمية الكاملة)
+  function phi(x,N){
+    const BSx = M.BSn(x);
+    const div = (N%x===0) ? 0.5 : 0;
+    let kernel=0;
+    for(let d=2; d<=Math.sqrt(N); d++){
+      if(N%d===0){
+        const dist=Math.abs(x-d);
+        kernel += Math.exp(-dist*dist/(2*25));
+        const companion = N/d;
+        if(companion<2*Math.sqrt(N)){
+          const dist2=Math.abs(x-companion);
+          kernel += Math.exp(-dist2*dist2/50)*0.5;
+        }
+      }
+    }
+    return 0.25*BSx + 0.35*div + 0.2*kernel;
+  }
+  // رسم المنحنى
+  const maxX=Math.min(100,Math.sqrt(N)+20);
+  ctx.beginPath();
+  for(let x=2; x<=maxX; x+=0.5){
+    const px = PAD+CW*((x-2)/(maxX-2));
+    const py = PT+CH*(1-phi(x,N));
+    if(x===2) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2; ctx.stroke();
+  // نقاط معينة
+  x_vals.forEach(x=>{
+    const px = PAD+CW*((x-2)/(maxX-2));
+    const py = PT+CH*(1-phi(x,N));
+    ctx.beginPath(); ctx.arc(px,py,6,0,Math.PI*2); ctx.fillStyle='#ffcc00'; ctx.fill();
+    ctx.fillStyle='#fff'; ctx.font='8px monospace'; ctx.fillText(x, px-6, py-8);
+  });
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('x →', PAD+CW/2-20, PT+CH+16);
+  ctx.fillText('Φ(x,N)', 15, PT+CH/2);
+  lastDrawnChart='sfactor';
+}
+
+/* ---------- 15. رسم كتلة الجسيم في الأوتار ---------- */
+function drawStringMassChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const maxN=20;
+  const masses = [];
+  for(let n=1;n<=maxN;n++){
+    masses.push(1/M.BSn(n));
+  }
+  const maxMass = Math.max(...masses);
+  ctx.fillStyle='#7b2d8b';
+  for(let n=1;n<=maxN;n++){
+    const x = PAD + (n-1)/(maxN-1)*CW;
+    const barH = CH * (masses[n-1]/maxMass);
+    ctx.fillRect(x-5, PT+CH-barH, 8, barH);
+    ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='6px monospace';
+    if(n%3===0) ctx.fillText(n, x-2, PT+CH+8);
+    ctx.fillStyle='#7b2d8b';
+  }
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 9px monospace'; ctx.textAlign='center';
+  ctx.fillText('m_n ∝ 1/BS(n)', w/2, PT+10);
+  lastDrawnChart='string';
+}
+
+/* ---------- 16. رسم مجموع BS(p) للأعداد الأولية ---------- */
+function drawPrimeSumChart(xmax=100) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  let primes=[];
+  for(let p=2;p<=xmax;p++) if(M.isPrime(p)) primes.push(p);
+  let sumBS=0, sumPoints=[];
+  for(let i=0;i<primes.length;i++){
+    sumBS += M.BSn(primes[i]);
+    sumPoints.push({x:primes[i], y:sumBS});
+  }
+  const maxSum = sumPoints[sumPoints.length-1].y;
+  ctx.beginPath();
+  sumPoints.forEach((pt,i)=>{
+    const x = PAD + CW*(pt.x/xmax);
+    const y = PT+CH*(1-pt.y/maxSum);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2; ctx.stroke();
+  // منحنى ½ log log x
+  ctx.beginPath();
+  for(let x=2;x<=xmax;x+=0.5){
+    const yhat = 0.5 * Math.log(Math.log(x));
+    const px = PAD + CW*(x/xmax);
+    const py = PT+CH*(1-yhat/maxSum);
+    if(x===2) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.strokeStyle='rgba(79,195,216,.7)'; ctx.setLineDash([5,4]); ctx.stroke(); ctx.setLineDash([]);
+  // محاور
+  ctx.strokeStyle='rgba(255,255,255,.2)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(PAD,PT); ctx.lineTo(PAD,PT+CH); ctx.lineTo(PAD+CW,PT+CH); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('x (primes ≤ x)', PAD+CW/2-50, PT+CH+16);
+  ctx.fillText('Σ BS(p)', 15, PT+CH/2);
+  lastDrawnChart='primesum';
+}
+
+/* ---------- 17. رسم تكامل الوعي Ψ_integral (محاكاة رقمية) ---------- */
+function drawPsiIntegralChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  // محاكاة تكامل من τ=0 إلى 5
+  let integral=0, points=[];
+  const steps=200;
+  for(let i=0;i<=steps;i++){
+    const tau = i/steps * 5;
+    const inner = 0.47*P.id + 0.23*P.pot + 0.30*P.rel;
+    const eta = M.alpha(tau)*0.5 + M.beta(tau)*0.3 + M.gamma(tau)*0.2; // تقريب η
+    integral += inner * eta * (5/steps);
+    points.push({tau,integral});
+  }
+  const maxInt = points[points.length-1].integral;
+  ctx.beginPath();
+  points.forEach((p,i)=>{
+    const x = PAD + CW*(p.tau/5);
+    const y = PT+CH*(1-p.integral/maxInt);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.strokeStyle='#c9932a'; ctx.lineWidth=2; ctx.stroke();
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 9px monospace'; ctx.textAlign='center';
+  ctx.fillText(`Ψ_integral ≈ ${integral.toFixed(4)}`, w/2, PT+12);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText('τ (epiphany parameter)', PAD+CW/2-40, PT+CH+16);
+  ctx.fillText('Ψ_integral', 15, PT+CH/2);
+  lastDrawnChart='psiint';
+}
+
+/* ---------- 18. رسم الزمرة الأساسية (تمثيل رمزي) ---------- */
+function drawPi1Chart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const cx=w/2, cy=h/2;
+  ctx.fillStyle='#c9932a'; ctx.font='bold 12px monospace'; ctx.textAlign='center';
+  ctx.fillText('π₁^S(X) = π₁(X) × [0,1]_BS', cx, cy-20);
+  ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='9px monospace';
+  ctx.fillText('The fundamental group enriched by structural stability BS.', cx, cy+10);
+  ctx.fillText('Each loop in X carries a BS weight, representing its stability.', cx, cy+30);
+  ctx.fillText('This connects algebraic topology to the System S ontology.', cx, cy+50);
+  lastDrawnChart='pi1';
+}
+
+/* ---------- 19. رسم حاصل الضرب الداخلي الموزون ---------- */
+function drawInnerProductChart() {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const cx=w/2, cy=h/2;
+  ctx.fillStyle='#c9932a'; ctx.font='bold 12px monospace'; ctx.textAlign='center';
+  ctx.fillText('⟨f,g⟩_S = ∫ f(x) g̅(x) BS(x) dμ(x)', cx, cy-20);
+  ctx.fillStyle='rgba(255,255,255,.6)'; ctx.font='9px monospace';
+  ctx.fillText('The inner product weighted by BS defines an S-Hilbert space.', cx, cy+10);
+  ctx.fillText('Functions are integrated with respect to the structural stability.', cx, cy+30);
+  ctx.fillText('This generalizes standard L² spaces.', cx, cy+50);
+  lastDrawnChart='inner';
+}
+
+/* ---------- 20. رسم مبدأ الريبة المعدل ---------- */
+function drawUncertaintyChart(BS_app=0.8) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const minProd = 0.5 * 1.0545718e-34; // ħ/2
+  const actual = minProd / BS_app;
+  const barWidth = CW*0.5;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(201,147,42,.3)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#c9932a'; ctx.fillRect(barX, barY, barWidth * Math.min(1, actual/minProd*0.5), 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 9px monospace'; ctx.textAlign='center';
+  ctx.fillText(`Δx·Δp ≥ ${(minProd/BS_app).toExponential(2)} J·s`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText(`Standard ħ/2 = ${minProd.toExponential(2)} · 1/BS with BS=${BS_app}`, w/2, barY+42);
+  lastDrawnChart='uncertainty';
+}
+
+/* ---------- 21. رسم قاعدة بورن المعدلة ---------- */
+function drawBornChart(prob=0.6, BS_app=0.8, eta=0.7) {
+  const cv = document.getElementById('ml-eq-canvas');
+  if(!cv) return;
+  const ctx=cv.getContext('2d'), w=cv.width, h=cv.height;
+  ctx.clearRect(0,0,w,h);
+  ctx.fillStyle='rgba(4,2,16,.9)'; ctx.fillRect(0,0,w,h);
+  const P = prob * BS_app * eta;
+  const PAD=50, PT=20, PR=30, PB=35, CW=w-PAD-PR, CH=h-PB-PT;
+  const barWidth = CW*0.5;
+  const barX = PAD+CW/2-barWidth/2;
+  const barY = PT+CH/2;
+  ctx.fillStyle='rgba(79,195,216,.3)'; ctx.fillRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#4fc3d8'; ctx.fillRect(barX, barY, barWidth*P, 30);
+  ctx.strokeStyle='#fff'; ctx.strokeRect(barX, barY, barWidth, 30);
+  ctx.fillStyle='#e8aa40'; ctx.font='bold 9px monospace'; ctx.textAlign='center';
+  ctx.fillText(`P(a) = ${P.toFixed(4)}`, w/2, barY-8);
+  ctx.fillStyle='rgba(255,255,255,.5)'; ctx.font='7px monospace';
+  ctx.fillText(`|⟨a|ψ⟩|²=${prob}, BS=${BS_app}, η=${eta}`, w/2, barY+42);
+  lastDrawnChart='born';
+}
+
+/* ============ EQUATION SOLVER (موسع) ============ */
 const EQ_PRESETS = {
   central: {expr:'Central', desc:'Central equation'},
   def_abs: {expr:'DefAbs', desc:'Definition of Absolute One'},
@@ -3420,31 +4033,37 @@ window.mlSolveEq = function(){
   }
 
   try {
+    // المعادلة المركزية
     if(raw.match(/^central$/i)){
       addStep('Concept','The Central Equation of System S');
       addStep('Equation','❶ ⊕ 0p = 1 = ∞');
       addStep('Meaning','The Absolute One acting through Pure Possibility generates the Natural One, which equals Relational Infinity.');
+      addStep('Significance','This is the foundational ontological statement unifying mathematics and existence.');
       final = '❶ ⊕ 0p = 1 = ∞';
       insight = 'This equation expresses that the transcendent Absolute (❶) and the field of undetermined possibilities (0p) together manifest the first stable number (1), which is identical to the space of all relations (∞). It is the core of System S.';
       chartFn = ()=>drawCentralEquationChart();
+
     } else if(raw.match(/^defabs$/i)){
       addStep('Definition','❶ ∉ ℝ, ❶² = ❶');
       addStep('Interpretation','The Absolute One is not a real number; it is idempotent and transcendent.');
       final = '❶ ∉ ℝ, ❶² = ❶';
       insight = 'The Absolute One is the unconditioned source, beyond mathematical formalization, yet its self‑reference gives it a unique algebraic property.';
       chartFn = ()=>drawTrinityDefinitions();
+
     } else if(raw.match(/^def0p$/i)){
       addStep('Definition','0p = lim_{ε→0⁺} ε·1');
       addStep('Interpretation','Pure Possibility is the limit of arbitrarily small positive numbers, representing the threshold of actualization.');
       final = '0p = 0⁺';
       insight = '0p is not absolute nothingness but the active field of undetermined probabilities, the "nothing that is everything".';
       chartFn = ()=>drawTrinityDefinitions();
+
     } else if(raw.match(/^definf$/i)){
       addStep('Definition','∞ = ⊕ Rᵢ');
       addStep('Interpretation','Relational Infinity is the infinite sum (or collection) of all relations.');
       final = '∞ = ⊕ Rᵢ';
       insight = 'This defines infinity not as a mere cardinal but as the totality of all relations in the universe.';
       chartFn = ()=>drawTrinityDefinitions();
+
     } else if(raw.match(/^bs_trinity$/i)){
       addStep('BS(❶)','= 1');
       addStep('BS(0p)','= 1/3 ≈ 0.3333');
@@ -3452,6 +4071,7 @@ window.mlSolveEq = function(){
       final = 'BS(❶)=1, BS(0p)=⅓, BS(∞)=⅔';
       insight = 'The three axioms have precise numerical BS values, forming the backbone of the stability measure.';
       chartFn = ()=>drawTrinityDefinitions();
+
     } else if(raw.match(/^bstau$/i)){
       const t=P.tau;
       const v = M.BStau(t);
@@ -3464,6 +4084,7 @@ window.mlSolveEq = function(){
       final = `BS(τ) = ${v.toFixed(6)}`;
       insight = `The estimated BS(τ) from the weight functions. At τ=${t.toFixed(2)}, the structural stability is ${v.toFixed(4)}. This evolves with the epiphany parameter.`;
       chartFn = ()=>drawBStauChart();
+
     } else if(raw.match(/^zeta$/i)){
       const s=1.5;
       addStep('Function','ζ_S(s) = Σ_{n=1}^∞ BS(n)/n^s');
@@ -3472,18 +4093,21 @@ window.mlSolveEq = function(){
       final = 'ζ_S(1.5) ≈ 0.732';
       insight = 'The BS-weighted zeta function has a new analytic structure and may encode prime information.';
       chartFn = ()=>drawZetaChart(s,100);
+
     } else if(raw.match(/^pi1$/i)){
       addStep('Formula','π₁^S(X) = π₁(X) × [0,1]_BS');
       final = 'π₁^S(X) = π₁(X) × [0,1]_BS';
       insight = 'The fundamental group is enriched by a BS weight, associating each homotopy class with a stability value.';
       chartFn = ()=>drawPi1Chart();
+
     } else if(raw.match(/^inner$/i)){
       addStep('Formula','⟨f,g⟩_S = ∫ f(x) g̅(x) BS(x) dμ(x)');
       final = '⟨f,g⟩_S = ∫ f·\overline{g}·BS dμ';
       insight = 'This defines an inner product where the measure is weighted by structural stability, creating a Hilbert space adapted to System S.';
       chartFn = ()=>drawInnerProductChart();
+
     } else if(raw.match(/^uncertainty$/i)){
-      const BS_app = P.id;
+      const BS_app = P.id; // using BS_ID as device BS
       const minProd = 0.5 * 1.0545718e-34;
       addStep('Modified Uncertainty','Δx·Δp ≥ ħ/2 · 1/BS');
       addStep('ħ/2', minProd.toExponential(3)+' J·s');
@@ -3492,6 +4116,7 @@ window.mlSolveEq = function(){
       final = `Δx·Δp ≥ ${(minProd/BS_app).toExponential(3)} J·s`;
       insight = `For a measuring apparatus with BS = ${BS_app.toFixed(3)}, the uncertainty product is larger than the standard quantum limit. This links measurement accuracy to structural stability.`;
       chartFn = ()=>drawUncertaintyChart(BS_app);
+
     } else if(raw.match(/^born$/i)){
       const prob=0.6, BS_app=P.id, eta=0.7;
       const P_meas = prob * BS_app * eta;
@@ -3503,6 +4128,7 @@ window.mlSolveEq = function(){
       final = `P(a) = ${P_meas.toFixed(6)}`;
       insight = `The actual probability of obtaining outcome a is modulated by the apparatus stability and the epiphany intensity. For perfect BS=1 and η=1, it reduces to the Born rule.`;
       chartFn = ()=>drawBornChart(prob, BS_app, eta);
+
     } else if(raw.match(/^casimir/i)){
       const d = parseFloat(raw.match(/[\d.]+/)?.[0]||1e-6);
       const deltaE = M.CB * 1.0545718e-34 * 299792458 / d;
@@ -3512,6 +4138,7 @@ window.mlSolveEq = function(){
       final = `ΔE = ${deltaE.toExponential(4)} J`;
       insight = `Predicted correction to the Casimir effect at distance ${d.toExponential(3)} m. For d=1 μm, ΔE ≈ 1.95×10⁻⁶⁸ J.`;
       chartFn = ()=>drawCasimirChart(d, deltaE);
+
     } else if(raw.match(/^boukon$/i)){
       const mass = M.CB * 2.176434e-8;
       addStep('Formula','m_Boukon = CB·m_P');
@@ -3521,6 +4148,7 @@ window.mlSolveEq = function(){
       final = `m_Boukon = ${mass.toExponential(3)} kg`;
       insight = 'Ultra‑light dark matter candidate, 1.35×10⁻⁴⁹ kg. Could be detected via gravitational lensing anomalies.';
       chartFn = ()=>drawBoukonMassChart();
+
     } else if(raw.match(/^mintime$/i)){
       const t_min = M.CB * 5.391247e-44;
       addStep('Formula','t_min = CB·t_P');
@@ -3530,6 +4158,7 @@ window.mlSolveEq = function(){
       final = `t_min = ${t_min.toExponential(3)} s`;
       insight = 'The minimum time interval for a manifestation event to occur. Anything faster dissolves into pure possibility.';
       chartFn = ()=>drawMinTimeChart();
+
     } else if(raw.match(/^collapse$/i)){
       const deltaE = 1e-30;
       const BS_dev = P.id;
@@ -3541,6 +4170,7 @@ window.mlSolveEq = function(){
       final = `τ_collapse = ${t_collapse.toExponential(3)} s`;
       insight = 'Collapse time depends on energy uncertainty and the structural stability of the measuring device. More stable devices cause faster collapse.';
       chartFn = ()=>drawCollapseChart(BS_dev, deltaE);
+
     } else if(raw.match(/^neural$/i)){
       const H=2, N=1000;
       const BS_neural = 1 - H/Math.log2(N);
@@ -3552,6 +4182,7 @@ window.mlSolveEq = function(){
       final = `BS_neural = ${BS_neural.toFixed(6)}`;
       insight = 'A measure of neural coherence. High BS corresponds to synchronized, meaningful brain activity.';
       chartFn = ()=>drawNeuralChart(H, N);
+
     } else if(raw.match(/^ecosystem$/i)){
       const clust=0.6, trans=0.5, modgap=0.2;
       const BS_eco = (clust*trans)/(1+modgap);
@@ -3563,6 +4194,7 @@ window.mlSolveEq = function(){
       final = `BS_eco = ${BS_eco.toFixed(6)}`;
       insight = 'Ecosystem stability measure. Values below 0.2 indicate collapse risk.';
       chartFn = ()=>drawEcosystemChart(clust, trans, modgap);
+
     } else if(raw.match(/^social$/i)){
       const BS_v = P.id;
       const neighbors = [0.7,0.4,0.5];
@@ -3575,6 +4207,7 @@ window.mlSolveEq = function(){
       final = `I(v) = ${I.toFixed(6)}`;
       insight = 'The influence of node v in a network. High-BS nodes propagate information more effectively.';
       chartFn = ()=>drawSocialInfluenceChart(BS_v, neighbors);
+
     } else if(raw.match(/^sfactor$/i)){
       const N=323;
       addStep('Potential','Φ(x,N) = α·BS(x) + β·1_{x|N} + γ·Σ ω(d)·K(x,d)');
@@ -3583,6 +4216,7 @@ window.mlSolveEq = function(){
       final = 'Φ(17,323) ≈ 0.666';
       insight = 'The structural attraction potential finds prime factors by locating local maxima.';
       chartFn = ()=>drawSFactorChart(N, [17,19,23]);
+
     } else if(raw.match(/^kernel$/i)){
       const sigma=5;
       addStep('Formula','K(x,d) = exp(-(x-d)²/(2σ²))');
@@ -3591,6 +4225,7 @@ window.mlSolveEq = function(){
       final = 'Gaussian kernel used in S‑Factor potential';
       insight = 'The kernel gives higher weight to candidates close to true divisors.';
       chartFn = ()=>drawKernelChart(sigma);
+
     } else if(raw.match(/^string$/i)){
       addStep('Relation','m_n ∝ 1/BS(n)');
       addStep('For n=1', 'BS=0.7 → m ∝ 1.4286');
@@ -3598,18 +4233,21 @@ window.mlSolveEq = function(){
       final = 'm_n ∝ 1/BS(n)';
       insight = 'In string theory, higher vibrational modes (larger n) have smaller BS and thus larger mass.';
       chartFn = ()=>drawStringMassChart();
+
     } else if(raw.match(/^primesum$/i)){
       addStep('Prime sum theorem','Σ_{p≤x} BS(p) ~ ½ log log x');
       addStep('For x=100','Sum ≈ 1.234, ½ log log 100 ≈ 0.93');
       final = 'Sum BS(p) ~ ½ log log x';
       insight = 'The sum of structural stability over primes grows slowly, confirming primes are pure epiphanies.';
       chartFn = ()=>drawPrimeSumChart(100);
+
     } else if(raw.match(/^primepostulate$/i)){
       addStep('Postulate','1 = ∞ ∈ ℙ');
       addStep('Interpretation','The natural one and relational infinity are considered prime numbers.');
       final = '1 = ∞ ∈ ℙ';
       insight = 'This philosophical postulate elevates 1 and ∞ to the status of primes, emphasizing their fundamental role.';
       chartFn = ()=>drawPrimePostulate();
+
     } else if(raw.match(/^psiint$/i)){
       addStep('Consciousness Integral','Ψ_integral = ∮ (α·BS_ID + β·BS_Pot + γ·BS_Rel)·η(τ) dτ');
       addStep('Integration range','τ from 0 to 5');
@@ -3617,8 +4255,10 @@ window.mlSolveEq = function(){
       final = 'Ψ_integral ≈ 0.614';
       insight = 'The integrated consciousness measure accounts for τ evolution. Human average is around 0.57–0.6.';
       chartFn = ()=>drawPsiIntegralChart();
+
     } else {
-      // standard BS(n), Psi, BSent, Hz, CB, alpha, beta, gamma, CMB
+      // باقي المعادلات السابقة (BS(n), Psi, BSent, Hz, CB, alpha, beta, gamma, CMB) كما هي
+      // سنضيف فقط بعض الحالات الإضافية المهمة
       if(raw.match(/^BS\s*\((\d+)\)$/i)){
         const n = parseInt(raw.match(/\d+/)[0]);
         addStep('Formula','BS(n) = 2/(2n−3)  for n ≥ 5');
@@ -3712,415 +4352,145 @@ window.mlSolveEq = function(){
   if(chartFn) setTimeout(chartFn, 60);
 };
 
-/* ==== Drawing functions for all charts (high quality) ==== */
-function drawCentralEquationChart(){
+/* ============ دوال الرسم المساعدة (الموجودة سابقاً) ============ */
+function drawBSchart(hl,hlv){
   const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
   const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
   ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const cx=w/2, cy=h/2, rad=Math.min(w,h)*0.3;
-  ctx.beginPath();ctx.arc(cx,cy,rad,0,Math.PI*2);
-  ctx.strokeStyle='#c9932a';ctx.lineWidth=2;ctx.setLineDash([5,5]);ctx.stroke();ctx.setLineDash([]);
-  const angles=[0,120,240].map(a=>a*Math.PI/180);
-  const labels=['❶','0p','∞'], subs=['BS=1','BS=⅓','BS=⅔'], colors=['#c9932a','#4fc3d8','#7b2d8b'];
-  angles.forEach((ang,i)=>{
-    const x=cx+rad*0.7*Math.cos(ang), y=cy+rad*0.7*Math.sin(ang);
-    ctx.beginPath();ctx.arc(x,y,18,0,Math.PI*2);ctx.fillStyle=colors[i]+'33';ctx.fill();
-    ctx.strokeStyle=colors[i];ctx.lineWidth=2;ctx.stroke();
-    ctx.fillStyle='#fff';ctx.font='bold 14px monospace';ctx.textAlign='center';ctx.fillText(labels[i],x,y+5);
-    ctx.fillStyle=colors[i];ctx.font='8px monospace';ctx.fillText(subs[i],x,y+24);
+  const PAD=44,PB=30,PT=14,PR=12,CW=w-PAD-PR,CH=h-PB-PT,MN=Math.max(30,hl+5);
+  [[1,'#c9932a','❶=1'],[2/3,'#e8aa40','∞=⅔'],[1/3,'#4fc3d8','0p=⅓']].forEach(([v,c,l])=>{
+    ctx.strokeStyle=c+'55';ctx.lineWidth=1;ctx.setLineDash([4,3]);
+    const y=PT+CH*(1-v);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=c;ctx.font='8px monospace';ctx.fillText(l,PAD+3,y-3);
   });
-  ctx.fillStyle='#e8aa40';ctx.font='bold 10px monospace';ctx.textAlign='center';
-  ctx.fillText('❶ ⊕ 0p = 1 = ∞', cx, cy+30);
-  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='8px monospace';
-  ctx.fillText('The Central Equation of System S', cx, cy+48);
+  const g=ctx.createLinearGradient(PAD,0,PAD+CW,0);g.addColorStop(0,'#c9932a');g.addColorStop(.5,'#7b2d8b');g.addColorStop(1,'#2c6b80');
+  ctx.strokeStyle=g;ctx.lineWidth=2;ctx.beginPath();
+  for(let n=1;n<=MN;n++){const x=PAD+CW*((n-1)/(MN-1)),y=PT+CH*(1-Math.min(M.BSn(n),1));n===1?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  ctx.stroke();
+  const hx=PAD+CW*((hl-1)/(MN-1)),hy=PT+CH*(1-Math.min(hlv,1));
+  ctx.beginPath();ctx.arc(hx,hy,8,0,Math.PI*2);ctx.fillStyle='rgba(255,204,0,.3)';ctx.fill();ctx.strokeStyle='#ffcc00';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#ffcc00';ctx.font='bold 9px monospace';ctx.fillText('n='+hl,hx-14,hy-12);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+}
+function drawPsiChart(psi){
+  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
+  const PAD=100,PB=30,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
+  const bars=[
+    {lbl:'BS_ID',v:P.id,c:'#c9932a',w:.47},
+    {lbl:'BS_Pot',v:P.pot,c:'#7b2d8b',w:.23},
+    {lbl:'BS_Rel',v:P.rel,c:'#4fc3d8',w:.30},
+    {lbl:'Ψ result',v:psi,c:'#ffcc00',w:1}
+  ];
+  bars.forEach((b,i)=>{
+    const bh=CH/5, by=PT+i*(bh+8);
+    ctx.fillStyle='rgba(255,255,255,.04)';ctx.fillRect(PAD,by,CW,bh);
+    const g2=ctx.createLinearGradient(PAD,0,PAD+CW,0);g2.addColorStop(0,b.c+'44');g2.addColorStop(1,b.c+'cc');
+    ctx.fillStyle=g2;ctx.fillRect(PAD,by,CW*b.v,bh);
+    ctx.strokeStyle=b.c+'44';ctx.lineWidth=1;ctx.strokeRect(PAD,by,CW,bh);
+    ctx.fillStyle=b.c;ctx.font='bold 8px monospace';ctx.textAlign='right';ctx.fillText(b.lbl,PAD-5,by+bh/2+3);
+    ctx.textAlign='left';ctx.fillText(b.v.toFixed(3),PAD+CW*b.v+6,by+bh/2+3);
+  });
   ctx.textAlign='left';
 }
-function drawTrinityDefinitions(){
+function drawEntChart(C,bs){
   const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
   const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
   ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const items=[
-    {sym:'❶', def:'❶ ∉ ℝ, ❶² = ❶', desc:'The Absolute One — unconditioned existence, prime mover', color:'#c9932a'},
-    {sym:'0p', def:'0p = lim_{ε→0⁺} ε·1', desc:'Pure Possibility — active nothingness, field of undetermined probabilities', color:'#4fc3d8'},
-    {sym:'∞', def:'∞ = ⊕ Rᵢ', desc:'Relational Infinity — space of all relations', color:'#7b2d8b'}
-  ];
-  const yStart=30,lineH=70;
-  items.forEach((it,i)=>{
-    const y=yStart+i*lineH;
-    ctx.fillStyle=it.color;ctx.font='bold 20px monospace';ctx.fillText(it.sym,20,y+20);
-    ctx.fillStyle='#e8aa40';ctx.font='bold 9px monospace';ctx.fillText(it.def,70,y+20);
-    ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='8px monospace';ctx.fillText(it.desc,20,y+45);
-  });
-}
-function drawBStauChart(){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const PAD=40,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;
-  ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
-  for(let i=0;i<=5;i++){const y=PT+CH*(i/5);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();}
-  for(let i=0;i<=8;i++){const x=PAD+CW*(i/8);ctx.beginPath();ctx.moveTo(x,PT);ctx.lineTo(x,PT+CH);ctx.stroke();}
-  const grad=ctx.createLinearGradient(PAD,0,PAD+CW,0);
-  grad.addColorStop(0,'#c9932a');grad.addColorStop(.5,'#7b2d8b');grad.addColorStop(1,'#4fc3d8');
-  ctx.strokeStyle=grad;ctx.lineWidth=2.5;ctx.beginPath();
-  for(let i=0;i<=200;i++){const t=i/200*8,x=PAD+CW*(i/200),y=PT+CH*(1-M.BStau(t));i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+  const PAD=44,PB=30,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
+  const g2=ctx.createLinearGradient(PAD,0,PAD+CW,0);g2.addColorStop(0,'#4fc3d8');g2.addColorStop(.5,'#c9932a');g2.addColorStop(1,'#7b2d8b');
+  ctx.strokeStyle=g2;ctx.lineWidth=2.5;ctx.beginPath();
+  for(let i=0;i<=200;i++){const c=i/200,x=PAD+CW*c,y=PT+CH*(1-(2/3)*c);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
   ctx.stroke();
-  const tx=PAD+CW*(P.tau/8),ty=PT+CH*(1-M.BStau(P.tau));
-  ctx.beginPath();ctx.arc(tx,ty,5,0,Math.PI*2);ctx.fillStyle='#ffcc00';ctx.fill();
-  ctx.fillStyle='#ffcc00';ctx.font='8px monospace';ctx.fillText('τ='+P.tau.toFixed(2),tx+8,ty-4);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText('τ →',PAD+CW-20,PT+CH+16);
-  ctx.fillText('BS(τ)',15,PT+CH/2);
-}
-function drawZetaChart(s,Nmax){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const PAD=40,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  let partialSums=[],maxVal=0;
-  for(let N=1;N<=Nmax;N++){
-    let sum=0;for(let n=1;n<=N;n++) sum+=M.BSn(n)/Math.pow(n,s);
-    partialSums.push(sum);if(sum>maxVal) maxVal=sum;
-  }
-  maxVal=Math.max(maxVal,0.1);
-  ctx.strokeStyle='#c9932a';ctx.lineWidth=2;ctx.beginPath();
-  for(let i=0;i<=Nmax;i++){
-    const x=PAD+CW*(i/Nmax),y=PT+CH*(1-partialSums[i]/maxVal);
-    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-  }
-  ctx.stroke();
-  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;
-  ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='8px monospace';
-  ctx.fillText('N (terms)',PAD+CW/2-30,PT+CH+16);
-  ctx.fillText('ζ_S(s)',15,PT+CH/2);
-}
-function drawPi1Chart(){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const cx=w/2,cy=h/2;
-  ctx.fillStyle='#c9932a';ctx.font='bold 12px monospace';ctx.textAlign='center';
-  ctx.fillText('π₁^S(X) = π₁(X) × [0,1]_BS',cx,cy-20);
-  ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='9px monospace';
-  ctx.fillText('The fundamental group enriched by structural stability BS.',cx,cy+10);
-  ctx.fillText('Each loop in X carries a BS weight, representing its stability.',cx,cy+30);
-  ctx.fillText('This connects algebraic topology to the System S ontology.',cx,cy+50);
-}
-function drawInnerProductChart(){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const cx=w/2,cy=h/2;
-  ctx.fillStyle='#c9932a';ctx.font='bold 12px monospace';ctx.textAlign='center';
-  ctx.fillText('⟨f,g⟩_S = ∫ f(x) g̅(x) BS(x) dμ(x)',cx,cy-20);
-  ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='9px monospace';
-  ctx.fillText('The inner product weighted by BS defines an S-Hilbert space.',cx,cy+10);
-  ctx.fillText('Functions are integrated with respect to the structural stability.',cx,cy+30);
-  ctx.fillText('This generalizes standard L² spaces.',cx,cy+50);
-}
-function drawUncertaintyChart(BS_app){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const minProd=0.5*1.0545718e-34, actual=minProd/BS_app;
-  const PAD=50,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  const barWidth=CW*0.5,barX=PAD+CW/2-barWidth/2,barY=PT+CH/2;
-  ctx.fillStyle='rgba(201,147,42,.3)';ctx.fillRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#c9932a';ctx.fillRect(barX,barY,barWidth*Math.min(1,actual/minProd*0.5),30);
-  ctx.strokeStyle='#fff';ctx.strokeRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#e8aa40';ctx.font='bold 9px monospace';ctx.textAlign='center';
-  ctx.fillText(`Δx·Δp ≥ ${(minProd/BS_app).toExponential(2)} J·s`,w/2,barY-8);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText(`Standard ħ/2 = ${minProd.toExponential(2)} · 1/BS with BS=${BS_app.toFixed(3)}`,w/2,barY+42);
-}
-function drawBornChart(prob,BS_app,eta){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const P=prob*BS_app*eta;
-  const PAD=50,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  const barWidth=CW*0.5,barX=PAD+CW/2-barWidth/2,barY=PT+CH/2;
-  ctx.fillStyle='rgba(79,195,216,.3)';ctx.fillRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#4fc3d8';ctx.fillRect(barX,barY,barWidth*P,30);
-  ctx.strokeStyle='#fff';ctx.strokeRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#e8aa40';ctx.font='bold 9px monospace';ctx.textAlign='center';
-  ctx.fillText(`P(a) = ${P.toFixed(4)}`,w/2,barY-8);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText(`|⟨a|ψ⟩|²=${prob}, BS=${BS_app}, η=${eta}`,w/2,barY+42);
-}
-function drawCasimirChart(d,deltaE){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const PAD=50,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  const maxEnergy=1e-67,frac=Math.min(1,deltaE/maxEnergy);
-  const barWidth=100,barX=PAD+CW/2-barWidth/2,barY=PT+CH/2;
-  ctx.fillStyle='rgba(201,147,42,.3)';ctx.fillRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#c9932a';ctx.fillRect(barX,barY,barWidth*frac,30);
-  ctx.strokeStyle='#fff';ctx.strokeRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#e8aa40';ctx.font='bold 10px monospace';ctx.textAlign='center';
-  ctx.fillText(`ΔE = ${deltaE.toExponential(3)} J`,w/2,barY-8);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText(`at d = ${d.toExponential(3)} m`,w/2,barY+42);
-  ctx.fillText('Casimir Effect Correction',w/2,PT+8);
-}
-function drawBoukonMassChart(){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const mass=M.CB*2.176434e-8;
-  const PAD=40,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  const masses=[{name:'Boukon',val:mass,col:'#c9932a'},{name:'Electron',val:9.109e-31,col:'#7b2d8b'},{name:'Proton',val:1.673e-27,col:'#4fc3d8'},{name:'Planck',val:2.176e-8,col:'#e8aa40'}];
-  const maxM=2.2e-8,barWidth=60;
-  masses.forEach((m,i)=>{
-    const x=PAD+i*(barWidth+10),hBar=CH*(m.val/maxM);
-    ctx.fillStyle=m.col+'77';ctx.fillRect(x,PT+CH-hBar,barWidth-5,hBar);
-    ctx.fillStyle=m.col;ctx.font='8px monospace';ctx.fillText(m.name,x+5,PT+CH-5);
-    ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';ctx.fillText(m.val.toExponential(1)+' kg',x+5,PT+CH-hBar-5);
+  [[1/3,'#4fc3d8','0p⅓'],[2/3,'#e8aa40','∞⅔'],[1,'#c9932a','❶1']].forEach(([v,c,l])=>{
+    const y=PT+CH*(1-v);ctx.strokeStyle=c+'44';ctx.lineWidth=1;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(PAD,y);ctx.lineTo(PAD+CW,y);ctx.stroke();ctx.setLineDash([]);
+    ctx.fillStyle=c;ctx.font='8px monospace';ctx.fillText(l,PAD+CW-26,y-3);
   });
+  const cx2=PAD+CW*C,cy=PT+CH*(1-bs);
+  ctx.beginPath();ctx.arc(cx2,cy,8,0,Math.PI*2);ctx.fillStyle='rgba(255,204,0,.25)';ctx.fill();ctx.strokeStyle='#ffcc00';ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle='#ffcc00';ctx.font='bold 9px monospace';ctx.fillText('C='+C.toFixed(2),cx2+10,cy-8);ctx.fillText('BS='+bs.toFixed(3),cx2+10,cy+6);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
 }
-function drawMinTimeChart(){
+function drawHzChart(z2,v2){
   const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
   const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
   ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const t_min=M.CB*5.391247e-44;
-  const PAD=40,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  const barWidth=CW*0.6,barX=PAD+CW/2-barWidth/2,barY=PT+CH/2;
-  ctx.fillStyle='rgba(201,147,42,.2)';ctx.fillRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#c9932a';ctx.fillRect(barX,barY,barWidth*0.2,30);
-  ctx.strokeStyle='#fff';ctx.strokeRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#e8aa40';ctx.font='bold 10px monospace';ctx.textAlign='center';
-  ctx.fillText(`t_min = ${t_min.toExponential(3)} s`,w/2,barY-8);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText('Minimum manifestation time (Planck time × CB)',w/2,barY+42);
+  const PAD=44,PB=30,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT,MZ=5,maxH=155;
+  [[P.tau,'#c9932a','System S'],[0,'#4fc3d8','ΛCDM']].forEach(([tau2,col,lbl])=>{
+    ctx.strokeStyle=col;ctx.lineWidth=2;ctx.beginPath();
+    for(let i=0;i<=200;i++){const zi=MZ*i/200,H0=68,Om=0.3,Ol=0.7;
+      const h2=tau2>0?M.Hz(zi,tau2):H0*Math.sqrt(Om*Math.pow(1+zi,3)+Ol);
+      const x=PAD+CW*(zi/MZ),y=PT+CH*(1-h2/maxH);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();ctx.fillStyle=col;ctx.font='8px monospace';ctx.fillText(lbl,PAD+CW-50,PT+CH*(1-M.Hz(5,tau2)/maxH)+3);
+  });
+  const zx=PAD+CW*(z2/MZ),zy=PT+CH*(1-v2/maxH);
+  ctx.beginPath();ctx.arc(zx,zy,6,0,Math.PI*2);ctx.fillStyle='#c9932a';ctx.fill();
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='8px monospace';ctx.fillText('Redshift z →',PAD+CW/2-35,h-5);
 }
-function drawCollapseChart(BS_dev,deltaE){
+function drawCBChart(){
   const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
   const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
   ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const t_collapse=1.0545718e-34/(deltaE*BS_dev);
-  const PAD=40,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  ctx.beginPath();
+  const bars=[{l:'BS(23)=2/43',v:.0465,c:'#c9932a',max:.1},{l:'α/137 ×10⁴',v:.05327,c:'#7b2d8b',max:.1},{l:'√(c³/ℏG)×10⁻³⁴',v:.62,c:'#4fc3d8',max:1}];
+  const PAD=120,PB=30,PT=30,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
+  ctx.fillStyle='rgba(201,147,42,.8)';ctx.font='bold 11px monospace';ctx.textAlign='center';
+  ctx.fillText('CB = 6.184033 × 10⁻⁴²',w/2,PT-10);ctx.textAlign='left';
+  bars.forEach((b,i)=>{
+    const bh=CH/4, by=PT+i*(bh+10);
+    ctx.fillStyle='rgba(255,255,255,.03)';ctx.fillRect(PAD,by,CW,bh);
+    const g2=ctx.createLinearGradient(PAD,0,PAD+CW*b.v/b.max,0);g2.addColorStop(0,b.c+'22');g2.addColorStop(1,b.c+'cc');
+    ctx.fillStyle=g2;ctx.fillRect(PAD,by,CW*(b.v/b.max),bh);
+    ctx.fillStyle=b.c;ctx.font='8px monospace';ctx.textAlign='right';ctx.fillText(b.l,PAD-5,by+bh/2+3);
+    ctx.textAlign='left';ctx.fillText(b.v.toFixed(4),PAD+CW*(b.v/b.max)+5,by+bh/2+3);
+  });
+  ctx.textAlign='left';
+}
+function drawCMBChart(){
+  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
+  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
+  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
+  const PAD=44,PB=30,PT=20,PR=20,CW=w-PAD-PR,CH=h-PB-PT;
+  const maxF=1;
   for(let i=0;i<=200;i++){
-    const bs=i/200,t=1.0545718e-34/(deltaE*bs);
-    const x=PAD+CW*(i/200),y=PT+CH*(1-Math.min(1,t/1e-3));
-    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    const f=maxF*i/200, x=PAD+CW*(f/maxF);
+    const bg=Math.exp(-Math.pow(f-0.5,2)*8)*40+Math.random()*8;
+    const height=Math.min(CH-2,bg*(CH/50));
+    ctx.fillStyle=`rgba(79,195,216,${0.1+bg/80})`;
+    ctx.fillRect(x,PT+CH-height,CW/200,height);
   }
-  ctx.strokeStyle='#c9932a';ctx.lineWidth=2;ctx.stroke();
-  const x0=PAD+CW*BS_dev,y0=PT+CH*(1-Math.min(1,t_collapse/1e-3));
-  ctx.beginPath();ctx.arc(x0,y0,5,0,Math.PI*2);ctx.fillStyle='#ffcc00';ctx.fill();
-  ctx.fillStyle='#ffcc00';ctx.font='8px monospace';ctx.fillText(`τ=${t_collapse.toExponential(2)} s`,x0+8,y0-5);
-  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;
-  ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText('BS(device)',PAD+CW/2-30,PT+CH+16);
-  ctx.fillText('τ_collapse (s)',15,PT+CH/2);
+  const fx=PAD+CW*0.115, spike=CH*0.75;
+  const sg=ctx.createLinearGradient(0,PT+CH-spike,0,PT+CH);
+  sg.addColorStop(0,'#c9932aff');sg.addColorStop(1,'#c9932a11');
+  ctx.fillStyle=sg;ctx.fillRect(fx-6,PT+CH-spike,12,spike);
+  ctx.strokeStyle='#ffcc00';ctx.lineWidth=2;ctx.setLineDash([4,3]);
+  ctx.beginPath();ctx.moveTo(fx,PT);ctx.lineTo(fx,PT+CH);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#ffcc00';ctx.font='bold 9px monospace';ctx.fillText('0.115 Hz',fx+8,PT+16);ctx.fillText('CB signal',fx+8,PT+28);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='8px monospace';ctx.fillText('Frequency (Hz) →',PAD+CW/2-40,h-5);
 }
-function drawNeuralChart(H,N){
+function drawWeightChart(fn,hl,hlv){
   const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
   const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
   ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const BS_neural=1-H/Math.log2(N);
-  const PAD=40,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  const barWidth=CW*0.5,barX=PAD+CW/2-barWidth/2,barY=PT+CH/2;
-  ctx.fillStyle='rgba(123,45,139,.3)';ctx.fillRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#7b2d8b';ctx.fillRect(barX,barY,barWidth*BS_neural,30);
-  ctx.strokeStyle='#fff';ctx.strokeRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#e8aa40';ctx.font='bold 10px monospace';ctx.textAlign='center';
-  ctx.fillText(`BS_neural = ${BS_neural.toFixed(4)}`,w/2,barY-8);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText(`H_firing = ${H}, N_neurons = ${N}`,w/2,barY+42);
-}
-function drawEcosystemChart(clust,trans,modgap){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const BS_eco=(clust*trans)/(1+modgap);
-  const PAD=40,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  const barWidth=CW*0.5,barX=PAD+CW/2-barWidth/2,barY=PT+CH/2;
-  ctx.fillStyle='rgba(79,195,216,.3)';ctx.fillRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#4fc3d8';ctx.fillRect(barX,barY,barWidth*BS_eco,30);
-  ctx.strokeStyle='#fff';ctx.strokeRect(barX,barY,barWidth,30);
-  ctx.fillStyle='#e8aa40';ctx.font='bold 10px monospace';ctx.textAlign='center';
-  ctx.fillText(`BS_eco = ${BS_eco.toFixed(4)}`,w/2,barY-8);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText(`clust=${clust}, trans=${trans}, modgap=${modgap}`,w/2,barY+42);
-}
-function drawSocialInfluenceChart(BS_v,neighbors){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const sum=neighbors.reduce((s,val)=>s+val,0),I=BS_v*sum;
-  const cx=w/2,cy=h/2,rad=70;
-  ctx.beginPath();ctx.arc(cx,cy,rad,0,Math.PI*2);
-  ctx.fillStyle='rgba(201,147,42,.2)';ctx.fill();ctx.strokeStyle='#c9932a';ctx.stroke();
-  ctx.fillStyle='#c9932a';ctx.font='bold 12px monospace';ctx.fillText('v',cx-4,cy+4);
-  const angles=[0,120,240].map(a=>a*Math.PI/180);
-  angles.forEach((ang,i)=>{
-    const x=cx+rad*0.8*Math.cos(ang),y=cy+rad*0.8*Math.sin(ang);
-    ctx.beginPath();ctx.arc(x,y,20,0,Math.PI*2);
-    ctx.fillStyle='rgba(123,45,139,.3)';ctx.fill();ctx.strokeStyle='#7b2d8b';ctx.stroke();
-    ctx.fillStyle='#7b2d8b';ctx.font='bold 10px monospace';ctx.fillText('u'+i,x-6,y+4);
-    ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(x,y);
-    ctx.strokeStyle='rgba(255,255,255,.3)';ctx.stroke();
-    ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';ctx.fillText(neighbors[i].toFixed(2),(cx+x)/2+5,(cy+y)/2-5);
+  const PAD=40,PB=30,PT=14,PR=12,CW=w-PAD-PR,CH=h-PB-PT;
+  [[M.alpha,'#c9932a','α'],[M.beta,'#7b2d8b','β'],[M.gamma,'#4fc3d8','γ']].forEach(([f,col,lbl])=>{
+    const isHl=(fn[0]===lbl.toLowerCase());
+    ctx.strokeStyle=isHl?col:col+'44';ctx.lineWidth=isHl?2.5:1;ctx.beginPath();
+    for(let i=0;i<=200;i++){const t=8*i/200,x=PAD+CW*(t/8),y=PT+CH*(1-f(t));i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}
+    ctx.stroke();
   });
-  ctx.fillStyle='#e8aa40';ctx.font='bold 10px monospace';ctx.textAlign='center';
-  ctx.fillText(`I(v) = ${I.toFixed(3)}`,w/2,cy+rad+30);
+  const hx=PAD+CW*(hl/8), col={alpha:'#c9932a',beta:'#7b2d8b',gamma:'#4fc3d8'}[fn];
+  ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=1;ctx.setLineDash([5,3]);
+  ctx.beginPath();ctx.moveTo(hx,PT);ctx.lineTo(hx,PT+CH);ctx.stroke();ctx.setLineDash([]);
+  const hy=PT+CH*(1-hlv);
+  ctx.beginPath();ctx.arc(hx,hy,6,0,Math.PI*2);ctx.fillStyle=col+'88';ctx.fill();ctx.strokeStyle=col;ctx.lineWidth=2;ctx.stroke();
+  ctx.fillStyle=col;ctx.font='bold 9px monospace';ctx.fillText(fn+'('+hl.toFixed(1)+')='+hlv.toFixed(4),hx+8,hy-6);
+  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
 }
-function drawSFactorChart(N,x_vals){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  function phi(x,N){
-    const BSx=M.BSn(x),div=(N%x===0)?0.5:0;
-    let kernel=0;
-    for(let d=2;d<=Math.sqrt(N);d++){
-      if(N%d===0){
-        const dist=Math.abs(x-d);
-        kernel+=Math.exp(-dist*dist/(2*25));
-        const companion=N/d;
-        if(companion<2*Math.sqrt(N)){
-          const dist2=Math.abs(x-companion);
-          kernel+=Math.exp(-dist2*dist2/50)*0.5;
-        }
-      }
-    }
-    return 0.25*BSx+0.35*div+0.2*kernel;
-  }
-  const PAD=50,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  const maxX=Math.min(100,Math.sqrt(N)+20);
-  ctx.beginPath();
-  for(let x=2;x<=maxX;x+=0.5){
-    const px=PAD+CW*((x-2)/(maxX-2)),py=PT+CH*(1-phi(x,N));
-    if(x===2) ctx.moveTo(px,py); else ctx.lineTo(px,py);
-  }
-  ctx.strokeStyle='#c9932a';ctx.lineWidth=2;ctx.stroke();
-  x_vals.forEach(x=>{
-    const px=PAD+CW*((x-2)/(maxX-2)),py=PT+CH*(1-phi(x,N));
-    ctx.beginPath();ctx.arc(px,py,6,0,Math.PI*2);ctx.fillStyle='#ffcc00';ctx.fill();
-    ctx.fillStyle='#fff';ctx.font='8px monospace';ctx.fillText(x,px-6,py-8);
-  });
-  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;
-  ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText('x →',PAD+CW/2-20,PT+CH+16);
-  ctx.fillText('Φ(x,N)',15,PT+CH/2);
-}
-function drawKernelChart(sigma){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const PAD=50,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  const maxX=15;
-  ctx.beginPath();
-  for(let i=0;i<=200;i++){
-    const d=i/200*maxX,k=Math.exp(-d*d/(2*sigma*sigma));
-    const x=PAD+CW*(d/maxX),y=PT+CH*(1-k);
-    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-  }
-  ctx.strokeStyle='#4fc3d8';ctx.lineWidth=2;ctx.stroke();
-  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;
-  ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='8px monospace';
-  ctx.fillText('|x-d| →',PAD+CW/2-30,PT+CH+16);
-  ctx.fillText('K(x,d)',15,PT+CH/2);
-}
-function drawStringMassChart(){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const PAD=50,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  const maxN=20,masses=[];
-  for(let n=1;n<=maxN;n++) masses.push(1/M.BSn(n));
-  const maxMass=Math.max(...masses);
-  ctx.fillStyle='#7b2d8b';
-  for(let n=1;n<=maxN;n++){
-    const x=PAD+(n-1)/(maxN-1)*CW,barH=CH*(masses[n-1]/maxMass);
-    ctx.fillRect(x-5,PT+CH-barH,8,barH);
-    ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='6px monospace';
-    if(n%3===0) ctx.fillText(n,x-2,PT+CH+8);
-    ctx.fillStyle='#7b2d8b';
-  }
-  ctx.fillStyle='#e8aa40';ctx.font='bold 9px monospace';ctx.textAlign='center';
-  ctx.fillText('m_n ∝ 1/BS(n)',w/2,PT+10);
-}
-function drawPrimeSumChart(xmax){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const PAD=50,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  let primes=[];
-  for(let p=2;p<=xmax;p++) if(M.isPrime(p)) primes.push(p);
-  let sumBS=0,sumPoints=[];
-  for(let i=0;i<primes.length;i++){sumBS+=M.BSn(primes[i]);sumPoints.push({x:primes[i],y:sumBS});}
-  const maxSum=sumPoints[sumPoints.length-1].y;
-  ctx.beginPath();
-  sumPoints.forEach((pt,i)=>{
-    const x=PAD+CW*(pt.x/xmax),y=PT+CH*(1-pt.y/maxSum);
-    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-  });
-  ctx.strokeStyle='#c9932a';ctx.lineWidth=2;ctx.stroke();
-  ctx.beginPath();
-  for(let x=2;x<=xmax;x+=0.5){
-    const yhat=0.5*Math.log(Math.log(x));
-    const px=PAD+CW*(x/xmax),py=PT+CH*(1-yhat/maxSum);
-    if(x===2) ctx.moveTo(px,py); else ctx.lineTo(px,py);
-  }
-  ctx.strokeStyle='rgba(79,195,216,.7)';ctx.setLineDash([5,4]);ctx.stroke();ctx.setLineDash([]);
-  ctx.strokeStyle='rgba(255,255,255,.2)';ctx.lineWidth=1;
-  ctx.beginPath();ctx.moveTo(PAD,PT);ctx.lineTo(PAD,PT+CH);ctx.lineTo(PAD+CW,PT+CH);ctx.stroke();
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText('x (primes ≤ x)',PAD+CW/2-50,PT+CH+16);
-  ctx.fillText('Σ BS(p)',15,PT+CH/2);
-}
-function drawPrimePostulate(){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const cx=w/2,cy=h/2;
-  ctx.fillStyle='#c9932a';ctx.font='bold 28px monospace';ctx.textAlign='center';
-  ctx.fillText('1 = ∞ ∈ ℙ',cx,cy-20);
-  ctx.fillStyle='rgba(255,255,255,.6)';ctx.font='10px monospace';
-  ctx.fillText('The natural one and infinity are considered',cx,cy+10);
-  ctx.fillText('prime numbers within the System S framework.',cx,cy+30);
-  ctx.fillText('This postulate reflects the primordial unity and relational infinity.',cx,cy+50);
-}
-function drawPsiIntegralChart(){
-  const cv=document.getElementById('ml-eq-canvas');if(!cv)return;
-  const ctx=cv.getContext('2d'),w=cv.width,h=cv.height;
-  ctx.clearRect(0,0,w,h);ctx.fillStyle='rgba(4,2,16,.9)';ctx.fillRect(0,0,w,h);
-  const PAD=50,PT=20,PR=30,PB=35,CW=w-PAD-PR,CH=h-PB-PT;
-  let integral=0,points=[];
-  const steps=200;
-  for(let i=0;i<=steps;i++){
-    const tau=i/steps*5;
-    const inner=0.47*P.id+0.23*P.pot+0.30*P.rel;
-    const eta=M.alpha(tau)*0.5+M.beta(tau)*0.3+M.gamma(tau)*0.2;
-    integral+=inner*eta*(5/steps);
-    points.push({tau,integral});
-  }
-  const maxInt=points[points.length-1].integral;
-  ctx.beginPath();
-  points.forEach((p,i)=>{
-    const x=PAD+CW*(p.tau/5),y=PT+CH*(1-p.integral/maxInt);
-    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-  });
-  ctx.strokeStyle='#c9932a';ctx.lineWidth=2;ctx.stroke();
-  ctx.fillStyle='#e8aa40';ctx.font='bold 9px monospace';ctx.textAlign='center';
-  ctx.fillText(`Ψ_integral ≈ ${integral.toFixed(4)}`,w/2,PT+12);
-  ctx.fillStyle='rgba(255,255,255,.5)';ctx.font='7px monospace';
-  ctx.fillText('τ (epiphany parameter)',PAD+CW/2-40,PT+CH+16);
-  ctx.fillText('Ψ_integral',15,PT+CH/2);
-}
-// Reuse existing drawing functions: drawBSchart, drawPsiChart, drawEntChart, drawHzChart, drawCBChart, drawCMBChart, drawWeightChart
-// We have them defined earlier, but they must be in scope. We'll copy them here for completeness.
-// (Already included above; we don't need to redefine them.)
-// For brevity, we keep the already defined ones.
 
-/* ============ DYNAMIC SIMULATION (kept from original) ============ */
+/* ============ DYNAMIC SIMULATION (موجود مسبقاً) ============ */
 window.mlSimMode = function(mode, btn){
   mlSimMode_=mode;
   document.querySelectorAll('#ml-sim-top .ml-btn').forEach(b=>b.classList.remove('active'));
@@ -4382,7 +4752,7 @@ window.mlRefreshLang = function(){
 
 })(); // end IIFE
 </script>
-<!-- ========== END §23 ========== -->٠
+<!-- ========== END §23 ========== -->
 </div><!-- end #doc -->
 <!-- ===== NOTIFICATION TOAST ===== -->
 <div id="comm-toast">✅ <span id="toast-msg">Comment submitted successfully!</span></div>
